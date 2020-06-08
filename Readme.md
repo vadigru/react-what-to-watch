@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Vadim Grunenko](https://up.htmlacademy.ru/react/4/user/507341).
-* Наставник: `Неизвестно`.
+* Наставник: [Илья Шайна](https://htmlacademy.ru/profile/id1517699).
 
 ---
 
