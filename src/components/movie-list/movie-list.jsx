@@ -8,12 +8,12 @@ class MovieList extends PureComponent {
     this.state = {
       activeMovieCard: null
     };
+    this.handleMovieCardHover = this.handleMovieCardHover.bind(this);
   }
 
   handleMovieCardHover(movieCardId) {
-    this.setState({activeMovieCard: movieCardId});
+    return () => this.setState({activeMovieCard: movieCardId});
   }
-
 
   render() {
     const {movies, onMovieTitleClick} = this.props;
@@ -25,7 +25,7 @@ class MovieList extends PureComponent {
             key={movie.title + index}
             movie={movie}
             onMovieTitleClick={onMovieTitleClick}
-            onMovieCardHover={() => this.handleMovieCardHover(index)}
+            onMovieCardHover={this.handleMovieCardHover(index)}
           />
         ))}
       </div>
