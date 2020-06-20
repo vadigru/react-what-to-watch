@@ -1,12 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Main from "./main.jsx";
-
-const FilmData = {
-  TITLE: `Joker`,
-  GENRE: `Drama`,
-  YEAR: 2019
-};
+import MovieList from "./movie-list.jsx";
 
 const films = [
   {
@@ -22,20 +16,18 @@ const films = [
     posterUrl: `https://upload.wikimedia.org/wikipedia/en/9/93/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg`
   },
   {
-    title: `Star Wars: Episode IV: A New Hope`,
+    title: `Star Wars: Episode IV - A New Hope`,
     posterUrl: `https://m.media-amazon.com/images/I/51c6S4kGFmL.jpg`
   },
 ];
 
-it(`Should render Main component`, () => {
+it(`Should render MovieList component`, () => {
   const tree = renderer
     .create(
-        <Main
-          title={FilmData.TITLE}
-          genre={FilmData.GENRE}
-          year={FilmData.YEAR}
+        <MovieList
           movies={films}
-          onMovieTitleClick={()=> {}}
+          onMovieTitleClick={() => {}}
+          onMovieCardHover={() => {}}
         />)
   .toJSON();
 

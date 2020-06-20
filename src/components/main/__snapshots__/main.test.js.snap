@@ -81,7 +81,7 @@ Array [
           <h2
             className="movie-card__title"
           >
-            The Shining 
+            Joker
           </h2>
           <p
             className="movie-card__meta"
@@ -89,12 +89,12 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Horror
+              Drama
             </span>
             <span
               className="movie-card__year"
             >
-              1980
+              2019
             </span>
           </p>
           <div
@@ -259,14 +259,15 @@ Array [
       >
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseOver={[Function]}
         >
           <div
             className="small-movie-card__image"
           >
             <img
-              alt="AAliens"
+              alt="Star Wars: Episode I - The Phantom Menace"
               height="175"
-              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              src="https://m.media-amazon.com/images/M/MV5BYTRhNjcwNWQtMGJmMi00NmQyLWE2YzItODVmMTdjNWI0ZDA2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg"
               width="280"
             />
           </div>
@@ -278,20 +279,21 @@ Array [
               className="small-movie-card__link"
               href="movie-page.html"
             >
-              AAliens
+              Star Wars: Episode I - The Phantom Menace
             </a>
           </h3>
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseOver={[Function]}
         >
           <div
             className="small-movie-card__image"
           >
             <img
-              alt="Avengers: Infinity War"
+              alt="Star Wars: Episode II - Attack of the Clones"
               height="175"
-              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              src="https://images-na.ssl-images-amazon.com/images/I/61zAkpvYLqL._AC_SY679_.jpg"
               width="280"
             />
           </div>
@@ -303,20 +305,21 @@ Array [
               className="small-movie-card__link"
               href="movie-page.html"
             >
-              Avengers: Infinity War
+              Star Wars: Episode II - Attack of the Clones
             </a>
           </h3>
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseOver={[Function]}
         >
           <div
             className="small-movie-card__image"
           >
             <img
-              alt="L.A. Confidential"
+              alt="Star Wars: Episode III - Revenge of the Sith"
               height="175"
-              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              src="https://upload.wikimedia.org/wikipedia/en/9/93/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg"
               width="280"
             />
           </div>
@@ -328,7 +331,33 @@ Array [
               className="small-movie-card__link"
               href="movie-page.html"
             >
-              L.A. Confidential
+              Star Wars: Episode III - Revenge of the Sith
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+          onMouseOver={[Function]}
+        >
+          <div
+            className="small-movie-card__image"
+          >
+            <img
+              alt="Star Wars: Episode IV: A New Hope"
+              height="175"
+              src="https://m.media-amazon.com/images/I/51c6S4kGFmL.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+            onClick={[Function]}
+          >
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
+            >
+              Star Wars: Episode IV: A New Hope
             </a>
           </h3>
         </article>
