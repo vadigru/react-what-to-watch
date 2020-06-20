@@ -10,11 +10,12 @@ exports[`Should render MovieList component 1`] = `
   >
     <div
       className="small-movie-card__image"
+      onClick={[Function]}
     >
       <img
-        alt="Star Wars: Episode I - The Phantom Menace"
+        alt="Movie Title"
         height="175"
-        src="https://m.media-amazon.com/images/M/MV5BYTRhNjcwNWQtMGJmMi00NmQyLWE2YzItODVmMTdjNWI0ZDA2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg"
+        src="https://url.com/poster.jpg"
         width="280"
       />
     </div>
@@ -26,85 +27,7 @@ exports[`Should render MovieList component 1`] = `
         className="small-movie-card__link"
         href="movie-page.html"
       >
-        Star Wars: Episode I - The Phantom Menace
-      </a>
-    </h3>
-  </article>
-  <article
-    className="small-movie-card catalog__movies-card"
-    onMouseOver={[Function]}
-  >
-    <div
-      className="small-movie-card__image"
-    >
-      <img
-        alt="Star Wars: Episode II - Attack of the Clones"
-        height="175"
-        src="https://images-na.ssl-images-amazon.com/images/I/61zAkpvYLqL._AC_SY679_.jpg"
-        width="280"
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-      onClick={[Function]}
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
-      >
-        Star Wars: Episode II - Attack of the Clones
-      </a>
-    </h3>
-  </article>
-  <article
-    className="small-movie-card catalog__movies-card"
-    onMouseOver={[Function]}
-  >
-    <div
-      className="small-movie-card__image"
-    >
-      <img
-        alt="Star Wars: Episode III - Revenge of the Sith"
-        height="175"
-        src="https://upload.wikimedia.org/wikipedia/en/9/93/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg"
-        width="280"
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-      onClick={[Function]}
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
-      >
-        Star Wars: Episode III - Revenge of the Sith
-      </a>
-    </h3>
-  </article>
-  <article
-    className="small-movie-card catalog__movies-card"
-    onMouseOver={[Function]}
-  >
-    <div
-      className="small-movie-card__image"
-    >
-      <img
-        alt="Star Wars: Episode IV - A New Hope"
-        height="175"
-        src="https://m.media-amazon.com/images/I/51c6S4kGFmL.jpg"
-        width="280"
-      />
-    </div>
-    <h3
-      className="small-movie-card__title"
-      onClick={[Function]}
-    >
-      <a
-        className="small-movie-card__link"
-        href="movie-page.html"
-      >
-        Star Wars: Episode IV - A New Hope
+        Movie Title
       </a>
     </h3>
   </article>

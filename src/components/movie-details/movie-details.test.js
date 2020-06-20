@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MovieCard from "./movie-card.jsx";
+import MovieList from "./movie-details.jsx";
 
 const movie = {
   title: `Movie Title`,
@@ -16,13 +16,11 @@ const movie = {
   description: `Movie Description`
 };
 
-it(`Should render MovieCard component`, () => {
+it(`Should render MovieDetails component`, () => {
   const tree = renderer
     .create(
-        <MovieCard
+        <MovieList
           movie={movie}
-          onMovieCardClick={() => () => {}}
-          onMovieCardHover={() => {}}
         />)
   .toJSON();
 

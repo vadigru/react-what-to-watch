@@ -1,14 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
+import movieType from "../../prop-types/types.js";
 
 const MovieCard = (props) => {
-  const {movie, onMovieTitleClick, onMovieCardHover} = props;
+  const {movie, onMovieCardClick, onMovieCardHover} = props;
+  const {title, posterUrl} = movie;
+
   return (
-    <article className="small-movie-card catalog__movies-card" onMouseOver={onMovieCardHover}>
-      <div className="small-movie-card__image">
-        <img src={movie.posterUrl} alt={movie.title} width="280" height="175" />
+    <article
+      className="small-movie-card catalog__movies-card"
+      onMouseOver={onMovieCardHover}
+    >
+      <div
+        className="small-movie-card__image"
+        onClick={onMovieCardClick}
+      >
+        <img
+          src={posterUrl}
+          alt={title}
+          width="280"
+          height="175"
+        />
       </div>
-      <h3 className="small-movie-card__title" onClick={onMovieTitleClick}>
+      <h3
+        className="small-movie-card__title"
+        onClick={(evt) => {
+          evt.preventDefault();
+          onMovieCardClick();
+        }}
+      >
         <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
       </h3>
     </article>
@@ -16,11 +36,8 @@ const MovieCard = (props) => {
 };
 
 MovieCard.propTypes = {
-  movie: PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    posterUrl: PropTypes.string.isRequired
-  }).isRequired,
-  onMovieTitleClick: PropTypes.func.isRequired,
+  movie: movieType.isRequired,
+  onMovieCardClick: PropTypes.func.isRequired,
   onMovieCardHover: PropTypes.func.isRequired
 };
 

@@ -15,25 +15,27 @@ const FilmData = {
 
 const films = [
   {
-    title: ` Star Wars: Episode I - The Phantom Menace`,
-    posterUrl: `https://m.media-amazon.com/images/M/MV5BYTRhNjcwNWQtMGJmMi00NmQyLWE2YzItODVmMTdjNWI0ZDA2XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_.jpg`
-  },
-  {
-    title: `Star Wars: Episode II - Attack of the Clones`,
-    posterUrl: `https://images-na.ssl-images-amazon.com/images/I/61zAkpvYLqL._AC_SY679_.jpg`
-  },
-  {
-    title: `Star Wars: Episode III - Revenge of the Sith`,
-    posterUrl: `https://upload.wikimedia.org/wikipedia/en/9/93/Star_Wars_Episode_III_Revenge_of_the_Sith_poster.jpg`
-  },
-  {
-    title: `Star Wars: Episode IV - A New Hope`,
-    posterUrl: `https://m.media-amazon.com/images/I/51c6S4kGFmL.jpg`
-  },
+    title: `Movie Title`,
+    posterUrl: `https://url.com/poster.jpg`,
+    backgroundUrl: `https://url.com/poster/1.jpg`,
+    genre: `Movie Genre`,
+    release: 2020,
+    director: `Director Name`,
+    starring: [`Actor One`, `Actor Two`, `Actor Three`],
+    time: `1h 00m`,
+    rating: 10,
+    votes: 1000,
+    description: `Movie Description`
+  }
 ];
 
-it(`Should movie title be pressed`, () => {
-  const handleMovieTitleClick = jest.fn();
+const preventEvent = {
+  preventDefault() {}
+};
+
+it(`Should movie card be pressed`, () => {
+
+  const handleMovieCardClick = jest.fn(() => () => {});
 
   const main = mount(
       <Main
@@ -41,13 +43,13 @@ it(`Should movie title be pressed`, () => {
         genre={FilmData.GENRE}
         year={FilmData.YEAR}
         movies={films}
-        onMovieTitleClick={handleMovieTitleClick}
+        onMovieCardClick={() => handleMovieCardClick}
       />
   );
 
-  const movieTitle = main.find(`h3.small-movie-card__title`).at(0);
-
-  movieTitle.props().onClick();
-
-  expect(handleMovieTitleClick.mock.calls.length).toBe(1);
+  const movieImage = main.find(`div.small-movie-card__image`);
+  const movieTitle = main.find(`h3.small-movie-card__title`);
+  movieImage.props().onClick();
+  movieTitle.props().onClick(preventEvent);
+  expect(handleMovieCardClick).toHaveBeenCalledTimes(2);
 });
