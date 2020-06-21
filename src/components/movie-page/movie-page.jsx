@@ -1,9 +1,10 @@
 import React from "react";
 import movieType from "../../prop-types/types.js";
+import {getTextedRating} from "../../utils/common.js";
 
-const MovieDetails = (props) => {
+const MoviePage = (props) => {
   const {movie} = props;
-  const {title, posterUrl, backgroundUrl, genre, release, director, starring, time} = movie;
+  const {title, posterUrl, backgroundUrl, genre, release, director, starring, rating, votes, description} = movie;
 
   return (
     <React.Fragment>
@@ -35,8 +36,8 @@ const MovieDetails = (props) => {
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{title}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">Drama</span>
-                <span className="movie-card__year">2014</span>
+                <span className="movie-card__genre">{genre}</span>
+                <span className="movie-card__year">{release}</span>
               </p>
 
               <div className="movie-card__buttons">
@@ -67,10 +68,10 @@ const MovieDetails = (props) => {
             <div className="movie-card__desc">
               <nav className="movie-nav movie-card__nav">
                 <ul className="movie-nav__list">
-                  <li className="movie-nav__item">
+                  <li className="movie-nav__item movie-nav__item--active">
                     <a href="#" className="movie-nav__link">Overview</a>
                   </li>
-                  <li className="movie-nav__item movie-nav__item--active">
+                  <li className="movie-nav__item">
                     <a href="#" className="movie-nav__link">Details</a>
                   </li>
                   <li className="movie-nav__item">
@@ -79,38 +80,22 @@ const MovieDetails = (props) => {
                 </ul>
               </nav>
 
-              <div className="movie-card__text movie-card__row">
-                <div className="movie-card__text-col">
-                  <p className="movie-card__details-item">
-                    <strong className="movie-card__details-name">Director</strong>
-                    <span className="movie-card__details-value">{director}</span>
-                  </p>
-                  <p className="movie-card__details-item">
-                    <strong className="movie-card__details-name">Starring</strong>
-                    <span className="movie-card__details-value">
-                      {starring.map((actor, index) => (
-                        <React.Fragment key={actor + index}>
-                          {actor} <br />
-                        </React.Fragment>
-                      ))}
-                    </span>
-                  </p>
-                </div>
+              <div className="movie-rating">
+                <div className="movie-rating__score">{rating}</div>
+                <p className="movie-rating__meta">
+                  <span className="movie-rating__level">{getTextedRating(rating)}</span>
+                  <span className="movie-rating__count">{votes} ratings</span>
+                </p>
+              </div>
 
-                <div className="movie-card__text-col">
-                  <p className="movie-card__details-item">
-                    <strong className="movie-card__details-name">Run Time</strong>
-                    <span className="movie-card__details-value">{time}</span>
-                  </p>
-                  <p className="movie-card__details-item">
-                    <strong className="movie-card__details-name">Genre</strong>
-                    <span className="movie-card__details-value">{genre}</span>
-                  </p>
-                  <p className="movie-card__details-item">
-                    <strong className="movie-card__details-name">Released</strong>
-                    <span className="movie-card__details-value">{release}</span>
-                  </p>
-                </div>
+              <div className="movie-card__text">
+                <p>{description}</p>
+
+                <p className="movie-card__director"><strong>Director: {director}</strong></p>
+
+                <p className="movie-card__starring"><strong>Starring:
+                  {starring.join(`, `)} and other</strong>
+                </p>
               </div>
             </div>
           </div>
@@ -159,6 +144,7 @@ const MovieDetails = (props) => {
             </article>
           </div>
         </section>
+
         <footer className="page-footer">
           <div className="logo">
             <a href="main.html" className="logo__link logo__link--light">
@@ -177,8 +163,8 @@ const MovieDetails = (props) => {
   );
 };
 
-MovieDetails.propTypes = {
+MoviePage.propTypes = {
   movie: movieType.isRequired
 };
 
-export default MovieDetails;
+export default MoviePage;

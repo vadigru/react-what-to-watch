@@ -2,8 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import Main from "../main/main.jsx";
-import MovieDetails from "../movie-details/movie-details.jsx";
-import MovieOverview from "../movie-overview/movie-overview.jsx";
+import MoviePage from "../movie-page/movie-page.jsx";
 import movieType from "../../prop-types/types.js";
 
 class App extends PureComponent {
@@ -26,7 +25,7 @@ class App extends PureComponent {
 
     if (activeMovieCard !== null) {
       return (
-        <MovieOverview movie={movies[activeMovieCard]}/>
+        <MoviePage movie={movies[activeMovieCard]}/>
       );
     }
 
@@ -48,13 +47,8 @@ class App extends PureComponent {
           <Route exact path="/">
             {this._renderApp()}
           </Route>
-          <Route exact path="/dev-movie-overview">
-            <MovieOverview
-              movie={this.props.movies[0]}
-            />
-          </Route>
-          <Route exact path="/dev-movie-details">
-            <MovieDetails
+          <Route exact path="/dev-movie-page">
+            <MoviePage
               movie={this.props.movies[0]}
             />
           </Route>

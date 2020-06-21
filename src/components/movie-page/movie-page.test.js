@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MovieList from "./movie-overview.jsx";
+import MovieList from "./movie-page.jsx";
 
 const movie = {
   title: `Movie Title`,
