@@ -12,7 +12,7 @@ class VideoPlayer extends PureComponent {
   render() {
     const {poster, preview} = this.props;
     return (
-      <video poster={poster} autoPlay muted>
+      <video poster={poster} autoPlay muted width="100%">
         <source src={preview} />
       </video>
     );

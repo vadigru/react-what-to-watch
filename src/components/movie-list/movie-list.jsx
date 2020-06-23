@@ -6,6 +6,9 @@ import movieType from "../../prop-types/types.js";
 class MovieList extends PureComponent {
   constructor(props) {
     super(props);
+
+    this.timer = null;
+
     this.state = {
       activeMovieCard: null,
       isPlaying: false
@@ -13,15 +16,14 @@ class MovieList extends PureComponent {
 
     this.handleMovieCardMouseOver = this.handleMovieCardMouseOver.bind(this);
     this.handleMovieCardMouseOut = this.handleMovieCardMouseOut.bind(this);
+    this.togglePlay = this.togglePlay.bind(this);
   }
 
-  togglePlay(movieCardId) {
-    setTimeout(() => {
-      if (this.state.activeMovieCard === movieCardId) {
-        this.setState((prevState) => ({
-          isPlaying: !prevState.isPlaying
-        }));
-      }
+  togglePlay() {
+    this.timer = setTimeout(() => {
+      this.setState((prevState) => ({
+        isPlaying: !prevState.isPlaying
+      }));
     }, 1000);
   }
 
@@ -34,6 +36,7 @@ class MovieList extends PureComponent {
   }
 
   handleMovieCardMouseOut() {
+    clearTimeout(this.timer);
     this.setState(() => ({
       activeMovieCard: null,
       isPlaying: false
@@ -51,6 +54,7 @@ class MovieList extends PureComponent {
             onMovieCardClick={onMovieCardClick(index)}
             onMovieCardMouseOver={this.handleMovieCardMouseOver(index)}
             onMovieCardMouseOut={this.handleMovieCardMouseOut}
+            isPlaying={this.state.activeMovieCard === index && this.state.isPlaying}
           />
         ))}
       </div>
