@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import movieType from "../../prop-types/types.js";
 
 const MovieCard = (props) => {
-  const {movie, onMovieCardClick, onMovieCardHover} = props;
+  const {movie, onMovieCardClick, onMovieCardMouseOver, onMovieCardMouseOut} = props;
   const {title, posterUrl} = movie;
 
   return (
     <article
       className="small-movie-card catalog__movies-card"
-      onMouseOver={onMovieCardHover}
+      onMouseOver={onMovieCardMouseOver}
+      onMouseOut={onMovieCardMouseOut}
     >
       <div
         className="small-movie-card__image"
@@ -29,7 +30,7 @@ const MovieCard = (props) => {
           onMovieCardClick();
         }}
       >
-        <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
+        <a className="small-movie-card__link" href="movie-page.html">{title}</a>
       </h3>
     </article>
   );
@@ -38,7 +39,8 @@ const MovieCard = (props) => {
 MovieCard.propTypes = {
   movie: movieType.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
-  onMovieCardHover: PropTypes.func.isRequired
+  onMovieCardMouseOver: PropTypes.func.isRequired,
+  onMovieCardMouseOut: PropTypes.func.isRequired,
 };
 
 export default MovieCard;
