@@ -7,11 +7,12 @@ exports[`Should render MovieCard component 1`] = `
 >
   <div
     className="small-movie-card__image"
+    onClick={[Function]}
   >
     <img
-      alt="Matrix"
+      alt="Movie Title"
       height="175"
-      src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c1/The_Matrix_Poster.jpg/220px-The_Matrix_Poster.jpg"
+      src="https://url.com/poster.jpg"
       width="280"
     />
   </div>
@@ -23,7 +24,7 @@ exports[`Should render MovieCard component 1`] = `
       className="small-movie-card__link"
       href="movie-page.html"
     >
-      Matrix
+      Movie Title
     </a>
   </h3>
 </article>

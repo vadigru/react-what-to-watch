@@ -8,17 +8,27 @@ Enzyme.configure({
 });
 
 const movie = {
-  title: `Matrix`,
-  posterUrl: `https://upload.wikimedia.org/wikipedia/en/thumb/c/c1/The_Matrix_Poster.jpg/220px-The_Matrix_Poster.jpg`,
+  title: `Movie Title`,
+  posterUrl: `https://url.com/poster.jpg`,
+  backgroundUrl: `https://url.com/poster/1.jpg`,
+  genre: `Movie Genre`,
+  release: 2020,
+  director: `Director Name`,
+  starring: [`Actor One`, `Actor Two`, `Actor Three`],
+  time: `1h 00m`,
+  rating: 10,
+  votes: 1000,
+  description: `Movie Description`
 };
 
 it(`Should pass data to the handler when hovering over a MoviCard`, () => {
   const handleMovieCardHover = jest.fn();
+  const handleMovieCardClick = jest.fn();
 
   const movieCard = shallow(
       <MovieCard
         movie={movie}
-        onMovieTitleClick={() => {}}
+        onMovieCardClick={handleMovieCardClick}
         onMovieCardHover={() => handleMovieCardHover(movie)}
       />
   );
