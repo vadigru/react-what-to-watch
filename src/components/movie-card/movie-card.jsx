@@ -10,8 +10,8 @@ const MovieCard = (props) => {
   return (
     <article
       className="small-movie-card catalog__movies-card"
-      onMouseOver={onMovieCardMouseOver}
-      onMouseOut={onMovieCardMouseOut}
+      onMouseEnter={onMovieCardMouseOver}
+      onMouseLeave={onMovieCardMouseOut}
     >
       <div
         className="small-movie-card__image"
