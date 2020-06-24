@@ -14,8 +14,8 @@ class MovieList extends PureComponent {
       isPlaying: false
     };
 
-    this.handleMovieCardMouseOver = this.handleMovieCardMouseOver.bind(this);
-    this.handleMovieCardMouseOut = this.handleMovieCardMouseOut.bind(this);
+    this.handleMovieCardMouseEnter = this.handleMovieCardMouseEnter.bind(this);
+    this.handleMovieCardMouseLeave = this.handleMovieCardMouseLeave.bind(this);
     this.togglePlay = this.togglePlay.bind(this);
   }
 
@@ -29,7 +29,7 @@ class MovieList extends PureComponent {
     };
   }
 
-  handleMovieCardMouseOver(movieCardId) {
+  handleMovieCardMouseEnter(movieCardId) {
     return () => {
       this.setState(() => ({activeMovieCard: movieCardId}),
           this.togglePlay(movieCardId)
@@ -37,7 +37,7 @@ class MovieList extends PureComponent {
     };
   }
 
-  handleMovieCardMouseOut() {
+  handleMovieCardMouseLeave() {
     clearTimeout(this.timer);
     this.setState(() => ({
       activeMovieCard: null,
@@ -54,8 +54,8 @@ class MovieList extends PureComponent {
             key={movie.title + index}
             movie={movie}
             onMovieCardClick={onMovieCardClick(index)}
-            onMovieCardMouseOver={this.handleMovieCardMouseOver(index)}
-            onMovieCardMouseOut={this.handleMovieCardMouseOut}
+            onMovieCardMouseEnter={this.handleMovieCardMouseEnter(index)}
+            onMovieCardMouseLeave={this.handleMovieCardMouseLeave}
             isPlaying={this.state.activeMovieCard === index && this.state.isPlaying}
           />
         ))}

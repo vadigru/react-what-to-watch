@@ -23,24 +23,24 @@ const movie = {
 };
 
 it(`Should pass data to the handler when hovering over a MoviCard`, () => {
-  const handleMovieCardMouseOver = jest.fn();
-  const handleMovieCardMouseOut = jest.fn();
+  const handleMovieCardMouseEnter = jest.fn();
+  const handleMovieCardMouseLeave = jest.fn();
   const handleMovieCardClick = jest.fn();
 
   const movieCard = shallow(
       <MovieCard
         movie={movie}
         onMovieCardClick={handleMovieCardClick}
-        onMovieCardMouseOver={() => handleMovieCardMouseOver(movie)}
-        onMovieCardMouseOut={() => handleMovieCardMouseOut(movie)}
+        onMovieCardMouseEnter={() => handleMovieCardMouseEnter(movie)}
+        onMovieCardMouseLeave={() => handleMovieCardMouseLeave(movie)}
         isPlaying={true}
       />
   );
 
-  movieCard.simulate(`mouseOver`);
-  movieCard.simulate(`mouseOut`);
+  movieCard.simulate(`mouseEnter`);
+  movieCard.simulate(`mouseLeave`);
 
-  expect(handleMovieCardMouseOver.mock.calls.length).toBe(1);
-  expect(handleMovieCardMouseOver.mock.calls[0][0]).toMatchObject(movie);
-  expect(handleMovieCardMouseOut.mock.calls.length).toBe(1);
+  expect(handleMovieCardMouseEnter.mock.calls.length).toBe(1);
+  expect(handleMovieCardMouseEnter.mock.calls[0][0]).toMatchObject(movie);
+  expect(handleMovieCardMouseLeave.mock.calls.length).toBe(1);
 });

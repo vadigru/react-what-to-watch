@@ -4,14 +4,14 @@ import movieType from "../../prop-types/types.js";
 import VideoPlayer from "../video-player/video-player.jsx";
 
 const MovieCard = (props) => {
-  const {movie, onMovieCardClick, onMovieCardMouseOver, onMovieCardMouseOut, isPlaying} = props;
+  const {movie, onMovieCardClick, onMovieCardMouseEnter, onMovieCardMouseLeave, isPlaying} = props;
   const {title, posterUrl, previewUrl} = movie;
 
   return (
     <article
       className="small-movie-card catalog__movies-card"
-      onMouseEnter={onMovieCardMouseOver}
-      onMouseLeave={onMovieCardMouseOut}
+      onMouseEnter={onMovieCardMouseEnter}
+      onMouseLeave={onMovieCardMouseLeave}
     >
       <div
         className="small-movie-card__image"
@@ -51,8 +51,8 @@ const MovieCard = (props) => {
 MovieCard.propTypes = {
   movie: movieType.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
-  onMovieCardMouseOver: PropTypes.func.isRequired,
-  onMovieCardMouseOut: PropTypes.func.isRequired,
+  onMovieCardMouseEnter: PropTypes.func.isRequired,
+  onMovieCardMouseLeave: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool.isRequired
 };
 

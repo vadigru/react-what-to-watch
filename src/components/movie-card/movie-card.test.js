@@ -23,8 +23,8 @@ it(`Should render MovieCard component`, () => {
         <MovieCard
           movie={movie}
           onMovieCardClick={() => () => {}}
-          onMovieCardMouseOver={() => {}}
-          onMovieCardMouseOut={() => {}}
+          onMovieCardMouseEnter={() => {}}
+          onMovieCardMouseLeave={() => {}}
           isPlaying={true}
         />)
   .toJSON();
