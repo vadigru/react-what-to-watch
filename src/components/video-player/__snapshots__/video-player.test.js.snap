@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render VideoPlayer component 1`] = `
+<video
+  autoPlay={true}
+  height="175"
+  muted={true}
+  onClick={[Function]}
+  poster="https://url.com/poster.jpg"
+  width="100%"
+>
+  <source
+    src="https://url.com/preview/video.mp4"
+  />
+</video>
+`;

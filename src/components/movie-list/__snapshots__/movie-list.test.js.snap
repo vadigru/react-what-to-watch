@@ -6,6 +6,7 @@ exports[`Should render MovieList component 1`] = `
 >
   <article
     className="small-movie-card catalog__movies-card"
+    onMouseOut={[Function]}
     onMouseOver={[Function]}
   >
     <div

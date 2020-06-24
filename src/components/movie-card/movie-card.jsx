@@ -26,7 +26,12 @@ const MovieCard = (props) => {
           />
         )}
         {isPlaying && (
-          <VideoPlayer poster={posterUrl} preview={previewUrl} />
+          <VideoPlayer
+            poster={posterUrl}
+            preview={previewUrl}
+            autoplay={true}
+            mute={true}
+          />
         )}
 
       </div>
