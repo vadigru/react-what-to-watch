@@ -6,10 +6,7 @@ exports[`Should render VideoPlayer component 1`] = `
   height="175"
   muted={true}
   onClick={[Function]}
+  src="https://url.com/preview/video.mp4"
   width="100%"
->
-  <source
-    src="https://url.com/preview/video.mp4"
-  />
-</video>
+/>
 `;

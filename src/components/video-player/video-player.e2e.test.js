@@ -23,7 +23,7 @@ it(`Should change VideoPlayer state on click`, () => {
 
   const videoPlayer = mount(
       <VideoPlayer
-        preview={previewUrl}
+        src={previewUrl}
         autoplay={autoplay}
         mute={mute}
       />

@@ -15,12 +15,9 @@ exports[`Should render MovieCard component 1`] = `
       height="175"
       muted={true}
       onClick={[Function]}
+      src="https://url.com/preview/video.mp4"
       width="100%"
-    >
-      <source
-        src="https://url.com/preview/video.mp4"
-      />
-    </video>
+    />
   </div>
   <h3
     className="small-movie-card__title"

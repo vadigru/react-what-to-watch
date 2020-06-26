@@ -27,7 +27,7 @@ const MovieCard = (props) => {
         )}
         {isPlaying && (
           <VideoPlayer
-            preview={previewUrl}
+            src={previewUrl}
             autoplay={true}
             mute={true}
           />

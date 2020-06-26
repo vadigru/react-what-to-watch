@@ -14,7 +14,7 @@ it(`Should render VideoPlayer component`, () => {
   const tree = renderer
     .create(
         <VideoPlayer
-          preview={previewUrl}
+          src={previewUrl}
           autoplay={autoplay}
           mute={mute}
         />)

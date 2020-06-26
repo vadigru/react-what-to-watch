@@ -31,25 +31,25 @@ class VideoPlayer extends PureComponent {
   }
 
   render() {
-    const {preview, autoplay, mute} = this.props;
+    const {src, autoplay, mute} = this.props;
 
     return (
       <video
         ref={this.videoRef}
+        src={src}
         autoPlay={autoplay}
         muted={mute}
         onClick={this.handleVideoPlay}
         width="100%"
         height="175"
       >
-        <source src={preview} />
       </video>
     );
   }
 }
 
 VideoPlayer.propTypes = {
-  preview: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
   autoplay: PropTypes.bool.isRequired,
   mute: PropTypes.bool
 };
