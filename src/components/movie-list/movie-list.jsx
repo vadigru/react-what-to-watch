@@ -20,19 +20,17 @@ class MovieList extends PureComponent {
   }
 
   togglePlay() {
-    return () => {
-      this.timer = setTimeout(() => {
-        this.setState((prevState) => ({
-          isPlaying: !prevState.isPlaying
-        }));
-      }, 1000);
-    };
+    this.timer = setTimeout(() => {
+      this.setState((prevState) => ({
+        isPlaying: !prevState.isPlaying
+      }));
+    }, 1000);
   }
 
   handleMovieCardMouseEnter(movieCardId) {
     return () => {
       this.setState(() => ({activeMovieCard: movieCardId}),
-          this.togglePlay(movieCardId)
+          this.togglePlay()
       );
     };
   }
