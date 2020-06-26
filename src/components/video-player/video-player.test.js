@@ -10,11 +10,10 @@ const mock = {
 };
 
 it(`Should render VideoPlayer component`, () => {
-  const {posterUrl, previewUrl, autoplay, mute} = mock;
+  const {previewUrl, autoplay, mute} = mock;
   const tree = renderer
     .create(
         <VideoPlayer
-          poster={posterUrl}
           preview={previewUrl}
           autoplay={autoplay}
           mute={mute}

@@ -15,7 +15,6 @@ exports[`Should render MovieCard component 1`] = `
       height="175"
       muted={true}
       onClick={[Function]}
-      poster="https://url.com/poster.jpg"
       width="100%"
     >
       <source

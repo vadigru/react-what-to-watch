@@ -6,7 +6,7 @@ import VideoPlayer from "../video-player/video-player.jsx";
 const MovieCard = (props) => {
   const {movie, onMovieCardClick, onMovieCardMouseEnter, onMovieCardMouseLeave, isPlaying} = props;
   const {title, posterUrl, previewUrl} = movie;
-
+  console.log(`render`);
   return (
     <article
       className="small-movie-card catalog__movies-card"
@@ -27,7 +27,6 @@ const MovieCard = (props) => {
         )}
         {isPlaying && (
           <VideoPlayer
-            poster={posterUrl}
             preview={previewUrl}
             autoplay={true}
             mute={true}

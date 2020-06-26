@@ -15,7 +15,7 @@ const mock = {
 };
 
 it(`Should change VideoPlayer state on click`, () => {
-  const {posterUrl, previewUrl, autoplay, mute} = mock;
+  const {previewUrl, autoplay, mute} = mock;
 
   const spy = jest
     .spyOn(window.HTMLMediaElement.prototype, `play`)
@@ -23,7 +23,6 @@ it(`Should change VideoPlayer state on click`, () => {
 
   const videoPlayer = mount(
       <VideoPlayer
-        poster={posterUrl}
         preview={previewUrl}
         autoplay={autoplay}
         mute={mute}
