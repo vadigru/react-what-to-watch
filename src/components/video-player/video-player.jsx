@@ -8,14 +8,10 @@ class VideoPlayer extends PureComponent {
     this.videoRef = React.createRef();
 
     this.state = {
-      isPlaying: false
+      isPlaying: props.autoplay
     };
 
     this.handleVideoPlay = this.handleVideoPlay.bind(this);
-  }
-
-  componentDidMount() {
-    this.setState({isPlaying: this.props.autoplay});
   }
 
   handleVideoPlay() {

@@ -25,10 +25,9 @@ it(`Should change VideoPlayer state on click`, () => {
       <VideoPlayer
         src={previewUrl}
         autoplay={autoplay}
-        mute={mute}
+        muted={mute}
       />
   );
-
   expect(videoPlayer.state(`isPlaying`)).toBe(false);
   videoPlayer.simulate(`click`);
   expect(videoPlayer.state(`isPlaying`)).toBe(true);

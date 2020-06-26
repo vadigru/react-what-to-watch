@@ -16,9 +16,12 @@ it(`Should render VideoPlayer component`, () => {
         <VideoPlayer
           src={previewUrl}
           autoplay={autoplay}
-          mute={mute}
-        />)
-  .toJSON();
+          muted={mute}
+        />, {
+          createNodeMock: () => {
+            return {};
+          }
+        }).toJSON();
 
   expect(tree).toMatchSnapshot();
 });
