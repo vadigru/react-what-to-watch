@@ -35,7 +35,6 @@ const preventEvent = {
 };
 
 it(`Should movie card be pressed`, () => {
-
   const handleMovieCardClick = jest.fn(() => () => {});
 
   const main = mount(

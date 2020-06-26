@@ -1,3 +1,5 @@
+export const START_DELAY = 1000;
+
 export const RatingLevel = {
   ZERO: 0,
   BAD: 3,

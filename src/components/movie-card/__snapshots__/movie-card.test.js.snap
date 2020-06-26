@@ -10,13 +10,11 @@ exports[`Should render MovieCard component 1`] = `
     className="small-movie-card__image"
     onClick={[Function]}
   >
-    <video
-      autoPlay={true}
+    <img
+      alt="Movie Title"
       height="175"
-      muted={true}
-      onClick={[Function]}
-      src="https://url.com/preview/video.mp4"
-      width="100%"
+      src="https://url.com/poster.jpg"
+      width="280"
     />
   </div>
   <h3

@@ -26,7 +26,7 @@ it(`Should render MovieList component`, () => {
           movies={films}
           onMovieCardClick={() => () => {}}
         />)
-  .toJSON();
+      .toJSON();
 
   expect(tree).toMatchSnapshot();
 });

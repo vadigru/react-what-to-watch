@@ -31,8 +31,8 @@ it(`Should pass data to the handler when hovering over a MoviCard`, () => {
       <MovieCard
         movie={movie}
         onMovieCardClick={handleMovieCardClick}
-        onMovieCardMouseEnter={() => handleMovieCardMouseEnter(movie)}
-        onMovieCardMouseLeave={() => handleMovieCardMouseLeave(movie)}
+        onMovieCardMouseHover={() => handleMovieCardMouseEnter(movie)}
+        onMovieCardMouseOut={() => handleMovieCardMouseLeave(movie)}
         isPlaying={true}
       />
   );

@@ -5,23 +5,18 @@ import VideoPlayer from "./video-player.jsx";
 const mock = {
   posterUrl: `https://url.com/poster.jpg`,
   previewUrl: `https://url.com/preview/video.mp4`,
-  autoplay: true,
-  mute: true
 };
 
 it(`Should render VideoPlayer component`, () => {
-  const {previewUrl, autoplay, mute} = mock;
+  const {previewUrl} = mock;
   const tree = renderer
     .create(
         <VideoPlayer
+          isPlaying={false}
           src={previewUrl}
-          autoplay={autoplay}
-          muted={mute}
-        />, {
-          createNodeMock: () => {
-            return {};
-          }
-        }).toJSON();
+          autoPlay={true}
+        />)
+      .toJSON();
 
   expect(tree).toMatchSnapshot();
 });

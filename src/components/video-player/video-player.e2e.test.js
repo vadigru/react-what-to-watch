@@ -10,12 +10,10 @@ Enzyme.configure({
 const mock = {
   posterUrl: `https://url.com/poster.jpg`,
   previewUrl: `https://url.com/preview/video.mp4`,
-  autoplay: false,
-  mute: true
 };
 
 it(`Should change VideoPlayer state on click`, () => {
-  const {previewUrl, autoplay, mute} = mock;
+  const {previewUrl} = mock;
 
   const spy = jest
     .spyOn(window.HTMLMediaElement.prototype, `play`)
@@ -23,9 +21,9 @@ it(`Should change VideoPlayer state on click`, () => {
 
   const videoPlayer = mount(
       <VideoPlayer
+        isPlaying={false}
         src={previewUrl}
-        autoplay={autoplay}
-        muted={mute}
+        autoPlay={false}
       />
   );
   expect(videoPlayer.state(`isPlaying`)).toBe(false);
