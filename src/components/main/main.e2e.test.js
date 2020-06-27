@@ -18,6 +18,7 @@ const films = [
     title: `Movie Title`,
     posterUrl: `https://url.com/poster.jpg`,
     backgroundUrl: `https://url.com/poster/1.jpg`,
+    previewUrl: `https://url.com/preview/video.mp4`,
     genre: `Movie Genre`,
     release: 2020,
     director: `Director Name`,
@@ -34,7 +35,6 @@ const preventEvent = {
 };
 
 it(`Should movie card be pressed`, () => {
-
   const handleMovieCardClick = jest.fn(() => () => {});
 
   const main = mount(

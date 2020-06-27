@@ -6,15 +6,27 @@ import movieType from "../../prop-types/types.js";
 class MovieList extends PureComponent {
   constructor(props) {
     super(props);
+
     this.state = {
-      activeMovieCard: null
+      activeMovieCard: null,
     };
 
-    this.handleMovieCardHover = this.handleMovieCardHover.bind(this);
+    this.handleMovieCardMouseHover = this.handleMovieCardMouseHover.bind(this);
+    this.handleMovieCardMouseOut = this.handleMovieCardMouseOut.bind(this);
   }
 
-  handleMovieCardHover(movieCardId) {
-    return () => this.setState({activeMovieCard: movieCardId});
+  handleMovieCardMouseHover(movie) {
+    return () => {
+      this.setState(() => (
+        {activeMovieCard: movie}
+      ));
+    };
+  }
+
+  handleMovieCardMouseOut() {
+    this.setState(() => ({
+      activeMovieCard: null,
+    }));
   }
 
   render() {
@@ -26,7 +38,8 @@ class MovieList extends PureComponent {
             key={movie.title + index}
             movie={movie}
             onMovieCardClick={onMovieCardClick(index)}
-            onMovieCardHover={this.handleMovieCardHover(index)}
+            onMovieCardMouseHover={this.handleMovieCardMouseHover}
+            onMovieCardMouseOut={this.handleMovieCardMouseOut}
           />
         ))}
       </div>
