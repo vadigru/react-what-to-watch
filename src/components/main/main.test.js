@@ -21,7 +21,15 @@ const films = [
     time: `1h 00m`,
     rating: 10,
     votes: 1000,
-    description: `Movie Description`
+    description: `Movie Description`,
+    reviews: [
+      {
+        date: `June 25, 2020`,
+        user: `John Doe`,
+        comment: `Comment text.`,
+        rating: 8.9
+      },
+    ]
   }
 ];
 

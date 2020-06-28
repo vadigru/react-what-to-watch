@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MovieList from "../movie-list/movie-list.jsx";
+import MoviesList from "../movies-list/movies-list.jsx";
 import movieType from "../../prop-types/types.js";
 
 const Main = (props) => {
@@ -100,7 +100,7 @@ const Main = (props) => {
             </li>
           </ul>
 
-          <MovieList movies={movies} onMovieCardClick={onMovieCardClick}/>
+          <MoviesList movies={movies} onMovieCardClick={onMovieCardClick}/>
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

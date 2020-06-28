@@ -15,8 +15,8 @@ class App extends PureComponent {
     this.handleMovieCardClick = this.handleMovieCardClick.bind(this);
   }
 
-  handleMovieCardClick(movieId) {
-    return () => this.setState({activeMovieCard: movieId});
+  handleMovieCardClick(movie) {
+    return () => this.setState({activeMovieCard: movie});
   }
 
   _renderApp() {
@@ -25,7 +25,7 @@ class App extends PureComponent {
 
     if (activeMovieCard !== null) {
       return (
-        <MoviePage movie={movies[activeMovieCard]}/>
+        <MoviePage movies={movies} movie={activeMovieCard} onMovieCardClick={this.handleMovieCardClick} />
       );
     }
 

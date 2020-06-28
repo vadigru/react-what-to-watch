@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import MovieCard from "../movie-card/movie-card.jsx";
 import movieType from "../../prop-types/types.js";
 
-class MovieList extends PureComponent {
+class MoviesList extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -37,7 +37,7 @@ class MovieList extends PureComponent {
           <MovieCard
             key={movie.title + index}
             movie={movie}
-            onMovieCardClick={onMovieCardClick(index)}
+            onMovieCardClick={onMovieCardClick(movie)}
             onMovieCardMouseHover={this.handleMovieCardMouseHover}
             onMovieCardMouseOut={this.handleMovieCardMouseOut}
           />
@@ -47,9 +47,9 @@ class MovieList extends PureComponent {
   }
 }
 
-MovieList.propTypes = {
+MoviesList.propTypes = {
   movies: PropTypes.arrayOf(movieType).isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
 };
 
-export default MovieList;
+export default MoviesList;

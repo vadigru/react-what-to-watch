@@ -38,7 +38,7 @@ class VideoPlayer extends PureComponent {
   handleVideoPlay() {
     const video = this.videoRef.current;
 
-    if (video.pause) {
+    if (video.paused) {
       video.play();
       this.setState({isPlaying: true});
     } else {

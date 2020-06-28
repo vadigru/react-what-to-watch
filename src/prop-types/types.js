@@ -12,7 +12,13 @@ const movieType = PropTypes.shape({
   time: PropTypes.string.isRequired,
   rating: PropTypes.number.isRequired,
   votes: PropTypes.number.isRequired,
-  description: PropTypes.string.isRequired
+  description: PropTypes.string.isRequired,
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    date: PropTypes.string.isRequired,
+    user: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired
+  })).isRequired
 });
 
 export default movieType;

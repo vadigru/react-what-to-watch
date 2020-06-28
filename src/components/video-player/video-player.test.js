@@ -16,7 +16,7 @@ it(`Should render VideoPlayer component`, () => {
           src={previewUrl}
           autoPlay={true}
         />)
-      .toJSON();
+  .toJSON();
 
   expect(tree).toMatchSnapshot();
 });

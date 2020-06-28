@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MovieCard from "./movie-card.jsx";
+import Tabs from "../tabs/tabs.jsx";
 
 const movie = {
   title: `Movie Title`,
@@ -25,15 +25,11 @@ const movie = {
   ]
 };
 
-it(`Should render MovieCard component`, () => {
+it(`Should render Tabs component`, () => {
   const tree = renderer
     .create(
-        <MovieCard
+        <Tabs
           movie={movie}
-          onMovieCardClick={() => () => {}}
-          onMovieCardMouseHover={() => {}}
-          onMovieCardMouseOut={() => {}}
-          isPlaying={true}
         />)
   .toJSON();
 

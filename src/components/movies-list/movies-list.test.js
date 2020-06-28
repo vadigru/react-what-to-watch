@@ -1,8 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MovieList from "./movie-list.jsx";
+import MoviesList from "./movies-list.jsx";
 
-const films = [
+const movies = [
   {
     title: `Movie Title`,
     posterUrl: `https://url.com/poster.jpg`,
@@ -15,18 +15,26 @@ const films = [
     time: `1h 00m`,
     rating: 10,
     votes: 1000,
-    description: `Movie Description`
+    description: `Movie Description`,
+    reviews: [
+      {
+        date: `June 25, 2020`,
+        user: `John Doe`,
+        comment: `Comment text.`,
+        rating: 8.9
+      },
+    ]
   }
 ];
 
 it(`Should render MovieList component`, () => {
   const tree = renderer
     .create(
-        <MovieList
-          movies={films}
+        <MoviesList
+          movies={movies}
           onMovieCardClick={() => () => {}}
         />)
-      .toJSON();
+  .toJSON();
 
   expect(tree).toMatchSnapshot();
 });
