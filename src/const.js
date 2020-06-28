@@ -1,8 +1,8 @@
 export const START_DELAY = 1000;
 export const Tab = {
-  OVERVIEW: `overview`,
-  DETAILS: `details`,
-  REVIEWS: `reviews`,
+  OVERVIEW: `Overview`,
+  DETAILS: `Details`,
+  REVIEWS: `Reviews`,
 };
 
 export const RatingLevel = {
