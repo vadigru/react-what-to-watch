@@ -157,51 +157,43 @@ Array [
           <nav
             className="movie-nav movie-card__nav"
           >
-            <div
-              className="movie-card__desc"
+            <ul
+              className="movie-nav__list"
             >
-              <nav
-                className="movie-nav movie-card__nav"
+              <li
+                className="movie-nav__item movie-nav__item--active"
               >
-                <ul
-                  className="movie-nav__list"
+                <a
+                  className="movie-nav__link"
+                  href="#"
+                  onClick={[Function]}
                 >
-                  <li
-                    className="movie-nav__item movie-nav__item--active"
-                  >
-                    <a
-                      className="movie-nav__link"
-                      href="#"
-                      onClick={[Function]}
-                    >
-                      Overview
-                    </a>
-                  </li>
-                  <li
-                    className="movie-nav__item "
-                  >
-                    <a
-                      className="movie-nav__link"
-                      href="#"
-                      onClick={[Function]}
-                    >
-                      Details
-                    </a>
-                  </li>
-                  <li
-                    className="movie-nav__item "
-                  >
-                    <a
-                      className="movie-nav__link"
-                      href="#"
-                      onClick={[Function]}
-                    >
-                      Reviews
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+                  Overview
+                </a>
+              </li>
+              <li
+                className="movie-nav__item "
+              >
+                <a
+                  className="movie-nav__link"
+                  href="#"
+                  onClick={[Function]}
+                >
+                  Details
+                </a>
+              </li>
+              <li
+                className="movie-nav__item "
+              >
+                <a
+                  className="movie-nav__link"
+                  href="#"
+                  onClick={[Function]}
+                >
+                  Reviews
+                </a>
+              </li>
+            </ul>
           </nav>
           <div
             className="movie-rating"

@@ -1,21 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {Tab} from "../../const";
 
 const Tabs = (props) => {
   const {tabNames, activeTab, onTabClick} = props;
 
+  const getClass = () => Object.values(tabNames).includes(Tab.OVERVIEW) ? `movie-nav__` : `catalog__genres-`;
+
+  const tabClassName = getClass();
+
   return (
-    <div className="movie-card__desc">
-      <nav className="movie-nav movie-card__nav">
-        <ul className="movie-nav__list">
-          {tabNames.map((tabName, index) => (
-            <li key={tabName + index} className={`movie-nav__item ${activeTab === tabName ? `movie-nav__item--active` : ``}`}>
-              <a href="#" className="movie-nav__link" onClick={onTabClick(tabName)}>{tabName}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
+    <React.Fragment>
+      {tabNames.map((tabName, index) => (
+        <li key={tabName + index} className={`${tabClassName + `item`} ${activeTab === tabName ? tabClassName + `item--active` : ``}`}>
+          <a href="#" className={tabClassName + `link`} onClick={onTabClick(tabName)}>{tabName}</a>
+        </li>
+      ))}
+    </React.Fragment>
   );
 };
 

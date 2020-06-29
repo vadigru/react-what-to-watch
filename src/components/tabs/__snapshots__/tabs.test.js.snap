@@ -1,46 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should render Tabs component 1`] = `
-<div
-  className="movie-card__desc"
->
-  <nav
-    className="movie-nav movie-card__nav"
+Array [
+  <li
+    className="movie-nav__item movie-nav__item--active"
   >
-    <ul
-      className="movie-nav__list"
+    <a
+      className="movie-nav__link"
+      href="#"
     >
-      <li
-        className="movie-nav__item movie-nav__item--active"
-      >
-        <a
-          className="movie-nav__link"
-          href="#"
-        >
-          Overview
-        </a>
-      </li>
-      <li
-        className="movie-nav__item "
-      >
-        <a
-          className="movie-nav__link"
-          href="#"
-        >
-          Details
-        </a>
-      </li>
-      <li
-        className="movie-nav__item "
-      >
-        <a
-          className="movie-nav__link"
-          href="#"
-        >
-          Reviews
-        </a>
-      </li>
-    </ul>
-  </nav>
-</div>
+      Overview
+    </a>
+  </li>,
+  <li
+    className="movie-nav__item "
+  >
+    <a
+      className="movie-nav__link"
+      href="#"
+    >
+      Details
+    </a>
+  </li>,
+  <li
+    className="movie-nav__item "
+  >
+    <a
+      className="movie-nav__link"
+      href="#"
+    >
+      Reviews
+    </a>
+  </li>,
+]
 `;
