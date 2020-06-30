@@ -1,17 +1,11 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import GenresList from "./genres-list.jsx";
 import {ALL_GENRES} from "../../const.js";
 
 const mockStore = configureStore([]);
-
-const FilmData = {
-  TITLE: `Joker`,
-  GENRE: `Drama`,
-  YEAR: 2019
-};
 
 const films = [
   {
@@ -38,24 +32,24 @@ const films = [
   }
 ];
 
-it(`Should render App component`, () => {
+it(`Should render GenresList component`, () => {
   const store = mockStore({
     genre: ALL_GENRES,
     films
   });
 
+  const onMovieCardClick = jest.fn();
+
   const tree = renderer
     .create(
         <Provider store={store}>
-          <App
-            title = {FilmData.TITLE}
-            genre = {FilmData.GENRE}
-            year = {FilmData.YEAR}
-            movies= {films}
+          <GenresList
+            movies={films}
+            onMovieCardClick={() => onMovieCardClick}
           />
         </Provider>
     )
-    .toJSON();
+  .toJSON();
 
   expect(tree).toMatchSnapshot();
 });

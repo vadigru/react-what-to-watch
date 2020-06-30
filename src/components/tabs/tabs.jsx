@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Tab} from "../../const";
+import {Tab} from "../../const.js";
 
 const Tabs = (props) => {
   const {tabNames, activeTab, onTabClick} = props;
@@ -13,7 +13,16 @@ const Tabs = (props) => {
     <React.Fragment>
       {tabNames.map((tabName, index) => (
         <li key={tabName + index} className={`${tabClassName + `item`} ${activeTab === tabName ? tabClassName + `item--active` : ``}`}>
-          <a href="#" className={tabClassName + `link`} onClick={onTabClick(tabName)}>{tabName}</a>
+          <a
+            href="#"
+            className={tabClassName + `link`}
+            onClick={(evt) => {
+              evt.preventDefault();
+              onTabClick(tabName);
+            }}
+          >
+            {tabName}
+          </a>
         </li>
       ))}
     </React.Fragment>

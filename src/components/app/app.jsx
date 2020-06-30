@@ -25,7 +25,11 @@ class App extends PureComponent {
 
     if (activeMovieCard !== null) {
       return (
-        <MoviePage movies={movies} movie={activeMovieCard} onMovieCardClick={this.handleMovieCardClick} />
+        <MoviePage
+          movies={movies}
+          movie={activeMovieCard}
+          onMovieCardClick={this.handleMovieCardClick}
+        />
       );
     }
 

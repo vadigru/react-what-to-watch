@@ -14,3 +14,7 @@ export const getTextedRating = (rating) => {
       return `Awesome`;
   }
 };
+
+export const extend = (a, b) => {
+  return Object.assign({}, a, b);
+};

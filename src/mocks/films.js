@@ -340,5 +340,5 @@ export default [
         rating: 8.3
       },
     ]
-  },
+  }
 ];

@@ -8,8 +8,8 @@ Enzyme.configure({
 });
 
 const mock = {
-  activeTab: `Overview`,
-  tabNames: [`Overview`, `Details`, `Reviews`],
+  activeTab: `Drama`,
+  tabNames: [`Drama`, `Adventure`, `Crime`],
 };
 
 const preventEvent = {
@@ -17,19 +17,18 @@ const preventEvent = {
 };
 
 it(`Should tab be clicked`, () => {
-  const handleTabClick = jest.fn();
+  const onTabClick = jest.fn();
 
   const tabs = shallow(
-      <Tabs
-        tabNames={mock.tabNames}
-        activeTab={mock.activeTab}
-        onTabClick={handleTabClick}
-      />
+      <Tabs {...mock} onTabClick={onTabClick}/>
   );
 
-  const tabItems = tabs.find(`.movie-nav__item`).at(2);
+  const tabNames = tabs.find(`.catalog__genres-link`);
 
-  tabItems.simulate(`click`, preventEvent);
-  expect(handleTabClick).toHaveBeenCalledTimes(mock.tabNames.length);
-  expect(handleTabClick).toHaveBeenCalledWith(mock.tabNames[2]);
+  tabNames.forEach((tab) => tab.simulate(`click`, preventEvent));
+  expect(onTabClick).toHaveBeenCalledTimes(tabNames.length);
+  expect(onTabClick).toHaveBeenCalledWith(mock.tabNames[0]);
+  expect(onTabClick).toHaveBeenCalledWith(mock.tabNames[1]);
+  expect(onTabClick).toHaveBeenCalledWith(mock.tabNames[2]);
 });
+

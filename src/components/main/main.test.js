@@ -1,6 +1,11 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import Main from "./main.jsx";
+import {ALL_GENRES} from "../../const.js";
+
+const mockStore = configureStore([]);
 
 const FilmData = {
   TITLE: `Joker`,
@@ -34,15 +39,22 @@ const films = [
 ];
 
 it(`Should render Main component`, () => {
+  const store = mockStore({
+    genre: ALL_GENRES,
+    films
+  });
+
   const tree = renderer
     .create(
-        <Main
-          title={FilmData.TITLE}
-          genre={FilmData.GENRE}
-          year={FilmData.YEAR}
-          movies={films}
-          onMovieCardClick={() => () => {}}
-        />)
+        <Provider store={store}>
+          <Main
+            title={FilmData.TITLE}
+            genre={FilmData.GENRE}
+            year={FilmData.YEAR}
+            movies={films}
+            onMovieCardClick={() => () => {}}
+          />
+        </Provider>)
   .toJSON();
 
   expect(tree).toMatchSnapshot();
