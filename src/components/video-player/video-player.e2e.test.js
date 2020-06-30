@@ -26,6 +26,7 @@ it(`Should change VideoPlayer state on click`, () => {
         autoPlay={false}
       />
   );
+
   expect(videoPlayer.state(`isPlaying`)).toBe(false);
   videoPlayer.simulate(`click`);
   expect(videoPlayer.state(`isPlaying`)).toBe(true);
