@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer.js";
 import {ALL_GENRES, MAX_GENRES_AMOUNT} from "../../const.js";
-import MoviesList from "../movies-list/movies-list.jsx";
 import movieType from "../../prop-types/types.js";
 import Tabs from "../tabs/tabs.jsx";
 
@@ -22,14 +21,8 @@ class GenresList extends React.PureComponent {
     return [ALL_GENRES].concat(Array.from(new Set(movies.map((movie) => movie.genre))));
   }
 
-  getMoviesByGenre(genre, movies) {
-    return genre === ALL_GENRES
-      ? movies
-      : movies.filter((movie) => movie.genre === genre);
-  }
-
   render() {
-    const {movies, genre, changeGenre, onMovieCardClick} = this.props;
+    const {movies, genre, changeGenre} = this.props;
 
     return (
       <React.Fragment>
@@ -40,10 +33,6 @@ class GenresList extends React.PureComponent {
             onTabClick={changeGenre}
           />
         </ul>
-        <MoviesList
-          movies={this.getMoviesByGenre(genre, movies)}
-          onMovieCardClick={onMovieCardClick}
-        />
       </React.Fragment>
     );
   }
@@ -64,7 +53,6 @@ GenresList.propTypes = {
   movies: PropTypes.arrayOf(movieType).isRequired,
   genre: PropTypes.string.isRequired,
   changeGenre: PropTypes.func.isRequired,
-  onMovieCardClick: PropTypes.func.isRequired
 };
 
 export {GenresList};

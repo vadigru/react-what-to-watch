@@ -1,64 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should render GenresList component 1`] = `
-Array [
-  <ul
-    className="catalog__genres-list"
+<ul
+  className="catalog__genres-list"
+>
+  <li
+    className="catalog__genres-item catalog__genres-item--active"
   >
-    <li
-      className="catalog__genres-item catalog__genres-item--active"
+    <a
+      className="catalog__genres-link"
+      href="#"
+      onClick={[Function]}
     >
-      <a
-        className="catalog__genres-link"
-        href="#"
-        onClick={[Function]}
-      >
-        All genres
-      </a>
-    </li>
-    <li
-      className="catalog__genres-item "
-    >
-      <a
-        className="catalog__genres-link"
-        href="#"
-        onClick={[Function]}
-      >
-        Movie Genre
-      </a>
-    </li>
-  </ul>,
-  <div
-    className="catalog__movies-list"
+      All genres
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item false"
   >
-    <article
-      className="small-movie-card catalog__movies-card"
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
+    <a
+      className="catalog__genres-link"
+      href="#"
+      onClick={[Function]}
     >
-      <div
-        className="small-movie-card__image"
-        onClick={[MockFunction]}
-      >
-        <img
-          alt="Movie title"
-          height="175"
-          src="https://url.com/poster.jpg"
-          width="280"
-        />
-      </div>
-      <h3
-        className="small-movie-card__title"
-        onClick={[Function]}
-      >
-        <a
-          className="small-movie-card__link"
-          href="movie-page.html"
-        >
-          Movie title
-        </a>
-      </h3>
-    </article>
-  </div>,
-]
+      Movie Genre
+    </a>
+  </li>
+</ul>
 `;

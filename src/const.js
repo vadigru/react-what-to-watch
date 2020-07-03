@@ -10,6 +10,11 @@ export const Tab = {
   REVIEWS: `Reviews`,
 };
 
+export const DefaultTab = {
+  CATALOG: `All genres`,
+  MOVIE: `Overview`
+};
+
 export const RatingLevel = {
   ZERO: 0,
   BAD: 3,

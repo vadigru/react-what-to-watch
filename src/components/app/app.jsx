@@ -20,7 +20,7 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {title, genre, year, movies} = this.props;
+    const {promoTitle, promoGenre, promoYear, movies} = this.props;
     const {activeMovieCard} = this.state;
 
     if (activeMovieCard !== null) {
@@ -35,9 +35,9 @@ class App extends PureComponent {
 
     return (
       <Main
-        title = {title}
-        genre = {genre}
-        year = {year}
+        promoTitle = {promoTitle}
+        promoGenre = {promoGenre}
+        promoYear = {promoYear}
         movies = {movies}
         onMovieCardClick={this.handleMovieCardClick}
       />
@@ -63,9 +63,9 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  title: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  year: PropTypes.number.isRequired,
+  promoTitle: PropTypes.string.isRequired,
+  promoGenre: PropTypes.string.isRequired,
+  promoYear: PropTypes.number.isRequired,
   movies: PropTypes.arrayOf(movieType).isRequired
 };
 

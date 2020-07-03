@@ -58,9 +58,9 @@ it(`Should movie card be pressed`, () => {
   const main = mount(
       <Provider store={store}>
         <Main
-          title={FilmData.TITLE}
-          genre={FilmData.GENRE}
-          year={FilmData.YEAR}
+          promoTitle={FilmData.TITLE}
+          promoGenre={FilmData.GENRE}
+          promoYear={FilmData.YEAR}
           movies={films}
           onMovieCardClick={() => handleMovieCardClick}
         />

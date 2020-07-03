@@ -165,7 +165,7 @@ Array [
           </a>
         </li>
         <li
-          className="catalog__genres-item "
+          className="catalog__genres-item false"
         >
           <a
             className="catalog__genres-link"

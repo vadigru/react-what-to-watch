@@ -48,9 +48,9 @@ it(`Should render App component`, () => {
     .create(
         <Provider store={store}>
           <App
-            title = {FilmData.TITLE}
-            genre = {FilmData.GENRE}
-            year = {FilmData.YEAR}
+            promoTitle = {FilmData.TITLE}
+            promoGenre = {FilmData.GENRE}
+            promoYear = {FilmData.YEAR}
             movies= {films}
           />
         </Provider>
