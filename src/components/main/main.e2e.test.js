@@ -1,7 +1,12 @@
 import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 import Main from "./main.jsx";
+import {ALL_GENRES} from "../../const.js";
+
+const mockStore = configureStore([]);
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -43,17 +48,23 @@ const preventEvent = {
 };
 
 it(`Should movie card be pressed`, () => {
+  const store = mockStore({
+    genre: ALL_GENRES,
+    films
+  });
 
   const handleMovieCardClick = jest.fn(() => () => {});
 
   const main = mount(
-      <Main
-        title={FilmData.TITLE}
-        genre={FilmData.GENRE}
-        year={FilmData.YEAR}
-        movies={films}
-        onMovieCardClick={() => handleMovieCardClick}
-      />
+      <Provider store={store}>
+        <Main
+          promoTitle={FilmData.TITLE}
+          promoGenre={FilmData.GENRE}
+          promoYear={FilmData.YEAR}
+          movies={films}
+          onMovieCardClick={() => handleMovieCardClick}
+        />
+      </Provider>
   );
 
   const movieImage = main.find(`div.small-movie-card__image`);

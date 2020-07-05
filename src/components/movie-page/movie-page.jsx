@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import MovieDetails from "../movie-details/movie-details.jsx";
+import MovieOverview from "../movie-overview/movie-overview.jsx";
+import MovieReviews from "../movie-reviews/movie-reviews.jsx";
+import MoviesSimilar from "../movies-similar/movies-similar.jsx";
 import movieType from "../../prop-types/types.js";
 import Tabs from "../tabs/tabs.jsx";
-import MoviesSimilar from "../movies-similar/movies-similar.jsx";
 import {Tab} from "../../const.js";
-import MovieOverview from "../movie-overview/movie-overview.jsx";
-import MovieDetails from "../movie-details/movie-details.jsx";
-import MovieReviews from "../movie-reviews/movie-reviews.jsx";
 
 class MoviePage extends React.PureComponent {
   constructor(props) {
@@ -20,12 +20,9 @@ class MoviePage extends React.PureComponent {
   }
 
   handleTabClick(tabName) {
-    return (evt) => {
-      evt.preventDefault();
-      this.setState({
-        activeTab: tabName
-      });
-    };
+    this.setState({
+      activeTab: tabName
+    });
   }
 
   renderActiveTAb() {

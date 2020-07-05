@@ -2,31 +2,25 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import Main from "./main.jsx";
+import GenresList from "./genres-list.jsx";
 import {ALL_GENRES} from "../../const.js";
 
 const mockStore = configureStore([]);
 
-const FilmData = {
-  TITLE: `Joker`,
-  GENRE: `Drama`,
-  YEAR: 2019
-};
-
 const films = [
   {
-    title: `Movie Title`,
+    title: `Movie title`,
     posterUrl: `https://url.com/poster.jpg`,
     backgroundUrl: `https://url.com/poster/1.jpg`,
     previewUrl: `https://url.com/preview/video.mp4`,
     genre: `Movie Genre`,
     release: 2020,
     director: `Director Name`,
-    starring: [`Actor One`, `Actor Two`, `Actor Three`],
+    starring: [`Actor 1`, `Actor 2`, `Actor 3`],
     time: `1h 00m`,
     rating: 10,
     votes: 1000,
-    description: `Movie Description`,
+    description: `Movie description`,
     reviews: [
       {
         date: `June 25, 2020`,
@@ -38,23 +32,23 @@ const films = [
   }
 ];
 
-it(`Should render Main component`, () => {
+it(`Should render GenresList component`, () => {
   const store = mockStore({
     genre: ALL_GENRES,
     films
   });
 
+  const onMovieCardClick = jest.fn();
+
   const tree = renderer
     .create(
         <Provider store={store}>
-          <Main
-            promoTitle={FilmData.TITLE}
-            promoGenre={FilmData.GENRE}
-            promoYear={FilmData.YEAR}
+          <GenresList
             movies={films}
-            onMovieCardClick={() => () => {}}
+            onMovieCardClick={() => onMovieCardClick}
           />
-        </Provider>)
+        </Provider>
+    )
   .toJSON();
 
   expect(tree).toMatchSnapshot();

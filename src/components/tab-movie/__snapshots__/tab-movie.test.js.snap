@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render TabMovie component 1`] = `
+<li
+  className="movie-nav__item false"
+>
+  <a
+    className="movie-nav__link"
+    href="#"
+    onClick={[Function]}
+  >
+    tabName
+  </a>
+</li>
+`;
