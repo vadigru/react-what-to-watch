@@ -25,15 +25,11 @@ class GenresList extends React.PureComponent {
     const {movies, genre, changeGenre} = this.props;
 
     return (
-      <React.Fragment>
-        <ul className="catalog__genres-list">
-          <Tabs
-            tabNames={this.getMaxGenresCount(this.getGenresList(movies))}
-            activeTab={genre}
-            onTabClick={changeGenre}
-          />
-        </ul>
-      </React.Fragment>
+      <Tabs
+        tabNames={this.getMaxGenresCount(this.getGenresList(movies))}
+        activeTab={genre}
+        onTabClick={changeGenre}
+      />
     );
   }
 }

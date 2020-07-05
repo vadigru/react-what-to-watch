@@ -1,33 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TabCatalog from "../tab-genres/tab-genres.jsx";
+import TabGenres from "../tab-genres/tab-genres.jsx";
 import TabMovie from "../tab-movie/tab-movie.jsx";
 import {DefaultTab} from "../../const.js";
 
 const Tabs = (props) => {
-  const {tabNames, onTabClick} = props;
+  const {tabNames, activeTab, onTabClick} = props;
 
-  const getComponentByTabName = (tabName, index) => {
+  const getComponentByTabName = () => {
     switch (true) {
-      case tabNames.includes(DefaultTab.CATALOG):
-        return <TabCatalog key={tabName + index} tabName={tabName} {...props}/>;
-      case tabNames.includes(DefaultTab.MOVIE):
-        return <TabMovie key={tabName + index} tabName={tabName} {...props}/>;
+      case tabNames.includes(DefaultTab.CATALOG || activeTab):
+        return <TabGenres tabName={activeTab} {...props}/>;
+      case tabNames.includes(DefaultTab.MOVIE || activeTab):
+        return <TabMovie tabName={activeTab} {...props}/>;
       default:
         return ``;
     }
   };
   return (
-    <React.Fragment>
-      {tabNames.map((tabName, index) => (
-        getComponentByTabName(tabName, index, onTabClick)
-      ))}
-    </React.Fragment>
+    getComponentByTabName(onTabClick)
   );
 };
 
 Tabs.propTypes = {
   tabNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  activeTab: PropTypes.string.isRequired,
   onTabClick: PropTypes.func.isRequired
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import TabItem from "../tab-item/tab-item.jsx";
 
-const TabCatalog = (props) => {
+const TabGenres = (props) => {
   const className = `catalog__genres-${props.className || ``}`;
   const restProps = Object.assign({}, props);
   delete restProps.className;
@@ -12,8 +12,8 @@ const TabCatalog = (props) => {
   );
 };
 
-TabCatalog.propTypes = {
+TabGenres.propTypes = {
   className: PropTypes.string || ``.isRequired
 };
 
-export default TabCatalog;
+export default TabGenres;

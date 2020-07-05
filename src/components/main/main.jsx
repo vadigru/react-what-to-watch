@@ -70,7 +70,9 @@ const Main = (props) => {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList onMovieCardClick={onMovieCardClick}/>
+          <GenresList
+            onMovieCardClick={onMovieCardClick}
+          />
 
           <MoviesList
             movies={getMoviesByGenre(genre, movies)}
