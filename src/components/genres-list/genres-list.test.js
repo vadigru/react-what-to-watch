@@ -3,7 +3,7 @@ import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import GenresList from "./genres-list.jsx";
-import {ALL_GENRES} from "../../const.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 
 const mockStore = configureStore([]);
 
@@ -35,17 +35,21 @@ const films = [
 it(`Should render GenresList component`, () => {
   const store = mockStore({
     genre: ALL_GENRES,
-    films
+    films,
+    showedMovies: MOVIES_DEFAULT_AMOUNT
   });
 
   const onMovieCardClick = jest.fn();
+  const showDefaultMovies = jest.fn();
 
   const tree = renderer
     .create(
         <Provider store={store}>
           <GenresList
             movies={films}
-            onMovieCardClick={() => onMovieCardClick}
+            activeTab={ALL_GENRES}
+            onTabClick={onMovieCardClick}
+            onGenreTabClick={showDefaultMovies}
           />
         </Provider>
     )

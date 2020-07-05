@@ -1,10 +1,9 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import TabCatalog from "../tab-movie/tab-movie.jsx";
-
-const className = ``;
+import TabMovie from "../tab-movie/tab-movie.jsx";
 
 const mockProps = {
+  tabNames: [`Overview`, `Details`, `Reviews`],
   tabName: `tabName`,
   activeTab: `activeTab`,
   onTabClick: () => {}
@@ -13,8 +12,7 @@ const mockProps = {
 it(`Should render TabMovie component`, () => {
   const tree = renderer
     .create(
-        <TabCatalog
-          className={className}
+        <TabMovie
           {...mockProps}
         />)
   .toJSON();

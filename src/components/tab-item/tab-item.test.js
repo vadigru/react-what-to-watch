@@ -5,6 +5,7 @@ import TabItem from "./tab-item.jsx";
 const className = `catalog__genres-`;
 
 const mockProps = {
+  tabNames: [`Overview`, `Details`, `Reviews`],
   tabName: `tabName`,
   activeTab: `activeTab`,
   onTabClick: () => {}

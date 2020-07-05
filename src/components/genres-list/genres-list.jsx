@@ -22,13 +22,15 @@ class GenresList extends React.PureComponent {
   }
 
   render() {
-    const {movies, genre, changeGenre} = this.props;
+    const {movies, genre, changeGenre, showDefaultMovies} = this.props;
 
     return (
+
       <Tabs
         tabNames={this.getMaxGenresCount(this.getGenresList(movies))}
         activeTab={genre}
         onTabClick={changeGenre}
+        onGenreTabClick={showDefaultMovies}
       />
     );
   }
@@ -36,12 +38,15 @@ class GenresList extends React.PureComponent {
 
 const mapStateToProps = (state) => ({
   genre: state.genre,
-  movies: state.films
+  movies: state.films,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeGenre(genre) {
     dispatch(ActionCreator.changeGenre(genre));
+  },
+  showDefaultMovies() {
+    dispatch(ActionCreator.showDefaultMovies());
   }
 });
 
@@ -49,6 +54,7 @@ GenresList.propTypes = {
   movies: PropTypes.arrayOf(movieType).isRequired,
   genre: PropTypes.string.isRequired,
   changeGenre: PropTypes.func.isRequired,
+  showDefaultMovies: PropTypes.func.isRequired
 };
 
 export {GenresList};

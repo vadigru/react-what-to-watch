@@ -1,15 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should render TabItem component 1`] = `
-<li
-  className="catalog__genres-item false"
+<ul
+  className="catalog__genres-list"
 >
-  <a
-    className="catalog__genres-link"
-    href="#"
-    onClick={[Function]}
+  <li
+    className="catalog__genres-item false"
   >
-    tabName
-  </a>
-</li>
+    <a
+      className="catalog__genres-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Overview
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item false"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Details
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item false"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+      onClick={[Function]}
+    >
+      Reviews
+    </a>
+  </li>
+</ul>
 `;

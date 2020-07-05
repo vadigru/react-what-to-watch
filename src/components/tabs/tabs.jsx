@@ -9,14 +9,15 @@ const Tabs = (props) => {
 
   const getComponentByTabName = () => {
     switch (true) {
-      case tabNames.includes(DefaultTab.CATALOG || activeTab):
-        return <TabGenres tabName={activeTab} {...props}/>;
+      case tabNames.includes(DefaultTab.GENRE || activeTab):
+        return <TabGenres {...props}/>;
       case tabNames.includes(DefaultTab.MOVIE || activeTab):
-        return <TabMovie tabName={activeTab} {...props}/>;
+        return <TabMovie {...props}/>;
       default:
         return ``;
     }
   };
+
   return (
     getComponentByTabName(onTabClick)
   );
@@ -25,7 +26,7 @@ const Tabs = (props) => {
 Tabs.propTypes = {
   tabNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   activeTab: PropTypes.string.isRequired,
-  onTabClick: PropTypes.func.isRequired
+  onTabClick: PropTypes.func.isRequired,
 };
 
 export default Tabs;

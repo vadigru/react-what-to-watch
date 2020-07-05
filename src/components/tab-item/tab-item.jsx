@@ -2,7 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const TabItem = (props) => {
-  const {tabNames, className, activeTab, onTabClick} = props;
+  const {tabNames, className, activeTab, onTabClick, onGenreTabClick} = props;
+
+  const chooseHandler = (tab) => {
+    if (className === `catalog__genres-`) {
+      onTabClick(tab);
+      onGenreTabClick();
+    } else {
+      onTabClick(tab);
+    }
+  };
 
   return (
     <ul className={`${className}list`}>
@@ -14,6 +23,7 @@ const TabItem = (props) => {
             onClick={(evt) => {
               evt.preventDefault();
               onTabClick(tabName);
+              chooseHandler(tabName);
             }}
           >
             {tabName}
@@ -27,9 +37,9 @@ const TabItem = (props) => {
 TabItem.propTypes = {
   tabNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   className: PropTypes.string.isRequired,
-  tabName: PropTypes.string.isRequired,
   activeTab: PropTypes.string.isRequired,
-  onTabClick: PropTypes.func.isRequired
+  onTabClick: PropTypes.func.isRequired,
+  onGenreTabClick: PropTypes.func || null.isRequired
 };
 
 export default TabItem;

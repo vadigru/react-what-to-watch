@@ -5,7 +5,7 @@ import MoviesList from "../movies-list/movies-list.jsx";
 
 const getSimilarMovies = (movies, movie) => {
   return movies.filter((similarMovie) =>
-    similarMovie.genre === movie.genre && similarMovie.title !== movie.title);
+    similarMovie.genre === movie.genre && similarMovie.title !== movie.title).slice(0, 4);
 };
 
 const MoviesSimilar = (props) => {
@@ -22,4 +22,4 @@ MoviesSimilar.propTypes = {
   onMovieCardClick: PropTypes.func.isRequired
 };
 
-export default MoviesSimilar;
+export default React.memo(MoviesSimilar);

@@ -1,4 +1,4 @@
-import {RatingLevel, ALL_GENRES} from "../const.js";
+import {ALL_GENRES, RatingLevel} from "../const.js";
 
 export const getTextedRating = (rating) => {
   switch (true) {
@@ -19,8 +19,8 @@ export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
-export const getMoviesByGenre = (genre, movies) => {
+export const getMoviesByGenre = (genre, movies, showedMovies) => {
   return genre === ALL_GENRES
-    ? movies
-    : movies.filter((movie) => movie.genre === genre);
+    ? movies.slice(0, showedMovies)
+    : movies.filter((movie) => movie.genre === genre).slice(0, showedMovies);
 };

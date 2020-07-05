@@ -39,6 +39,18 @@ export default [
         comment: `It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.`,
         rating: 1.5
       },
+      {
+        date: `December 24, 2016`,
+        user: `Kate Muir`,
+        comment: `Discerning travellers will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
+        rating: 1.1
+      },
+      {
+        date: `November 18, 2015`,
+        user: `Bill Goodykoontz`,
+        comment: `This film are too precious for some, but for those of us willing to lose ourselves in them, they're a delight. there is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
+        rating: 1.2
+      },
     ]
   },
   {
@@ -340,5 +352,50 @@ export default [
         rating: 8.3
       },
     ]
-  }
+  },
+  {
+    title: `True Romance`,
+    posterUrl: `https://m.media-amazon.com/images/M/MV5BMDViNjFjOWMtZGZhMi00NmIyLThmYzktODA4MzJhZDZhMDc5XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg`,
+    backgroundUrl: `https://images-na.ssl-images-amazon.com/images/G/01/digital/video/hero/Movies/1993/B005FHXB0O_TrueRomance_UXWB1._V391273700_SX1080_.jpg`,
+    previewUrl: `https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm`,
+    genre: `Crime`,
+    release: 1993,
+    director: `Tony Scott`,
+    starring: [
+      `Christian Slater`,
+      `Patricia Arquette`,
+      `Dennis Hopper`,
+      `Val Kilmer`,
+      `Gary Oldman`,
+      `Brad Pitt`,
+      `Christopher Walken`,
+      `Samuel L. Jackson`,
+      `Michael Rapaport`,
+      `	James Gandolfini`
+    ],
+    time: `1h 59min`,
+    rating: 8.0,
+    votes: 1679,
+    description: `In Detroit, a lonely pop culture geek marries a call girl, steals cocaine from her pimp, and tries to sell it in Hollywood. Meanwhile, the owners of the cocaine, the Mob, track them down in an attempt to reclaim it.In Detroit, a lonely pop culture geek marries a call girl, steals cocaine from her pimp, and tries to sell it in Hollywood. Meanwhile, the owners of the cocaine, the Mob, track them down in an attempt to reclaim it.`,
+    reviews: [
+      {
+        date: `December 24, 2016`,
+        user: `Kate Muir`,
+        comment: `Discerning travellers will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
+        rating: 8.1
+      },
+      {
+        date: `November 18, 2015`,
+        user: `Bill Goodykoontz`,
+        comment: `This film are too precious for some, but for those of us willing to lose ourselves in them, they're a delight. there is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
+        rating: 8.2
+      },
+      {
+        date: `December 20, 2016`,
+        user: `Paula Fleri-Soler`,
+        comment: `It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.`,
+        rating: 8.3
+      },
+    ]
+  },
 ];

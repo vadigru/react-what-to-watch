@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import GenresList from "../genres-list/genres-list.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
+import ShowMoreButton from "../show-more-button/show-more-button.jsx";
 import movieType from "../../prop-types/types.js";
 import {getMoviesByGenre} from "../../utils/common.js";
+import {ActionCreator} from "../../reducer.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 
 const Main = (props) => {
-  const {movies, genre, promoTitle, promoGenre, promoYear, onMovieCardClick} = props;
+  const {movies, showedMovies, showMoreMovies, filteredMovies, genre, promoTitle, promoGenre, promoYear, onMovieCardClick} = props;
 
   return (
     <React.Fragment>
@@ -75,12 +78,14 @@ const Main = (props) => {
           />
 
           <MoviesList
-            movies={getMoviesByGenre(genre, movies)}
+            movies={filteredMovies}
             onMovieCardClick={onMovieCardClick}
           />
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+
+          {filteredMovies.length > MOVIES_DEFAULT_AMOUNT && genre !== ALL_GENRES ||
+            showedMovies < movies.length && genre === ALL_GENRES
+            ? <ShowMoreButton showMoreMovies={showMoreMovies}/>
+            : null}
         </section>
 
         <footer className="page-footer">
@@ -103,7 +108,15 @@ const Main = (props) => {
 
 const mapStateToProps = (state) => ({
   genre: state.genre,
-  movies: state.films
+  movies: state.films,
+  showedMovies: state.showedMovies,
+  filteredMovies: getMoviesByGenre(state.genre, state.films, state.showedMovies)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  showMoreMovies() {
+    dispatch(ActionCreator.showMoreMovies());
+  }
 });
 
 Main.propTypes = {
@@ -111,9 +124,12 @@ Main.propTypes = {
   promoGenre: PropTypes.string.isRequired,
   promoYear: PropTypes.number.isRequired,
   movies: PropTypes.arrayOf(movieType).isRequired,
+  showedMovies: PropTypes.number.isRequired,
+  showMoreMovies: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
+  filteredMovies: PropTypes.arrayOf(movieType).isRequired
 };
 
 export {Main};
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -1,20 +1,18 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import TabCatalog from "./tab-genres.jsx";
-
-const className = ``;
+import TabGenres from "./tab-genres.jsx";
 
 const mockProps = {
+  tabNames: [`Overview`, `Details`, `Reviews`],
   tabName: `tabName`,
   activeTab: `activeTab`,
   onTabClick: () => {}
 };
 
-it(`Should render TabCatalog component`, () => {
+it(`Should render TabGenres component`, () => {
   const tree = renderer
     .create(
-        <TabCatalog
-          className={className}
+        <TabGenres
           {...mockProps}
         />)
   .toJSON();

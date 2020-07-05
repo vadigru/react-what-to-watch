@@ -1,15 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should render TabMovie component 1`] = `
-<li
-  className="movie-nav__item false"
+<ul
+  className="movie-nav__list"
 >
-  <a
-    className="movie-nav__link"
-    href="#"
-    onClick={[Function]}
+  <li
+    className="movie-nav__item false"
   >
-    tabName
-  </a>
-</li>
+    <a
+      className="movie-nav__link"
+      href="#"
+      onClick={[Function]}
+    >
+      Overview
+    </a>
+  </li>
+  <li
+    className="movie-nav__item false"
+  >
+    <a
+      className="movie-nav__link"
+      href="#"
+      onClick={[Function]}
+    >
+      Details
+    </a>
+  </li>
+  <li
+    className="movie-nav__item false"
+  >
+    <a
+      className="movie-nav__link"
+      href="#"
+      onClick={[Function]}
+    >
+      Reviews
+    </a>
+  </li>
+</ul>
 `;

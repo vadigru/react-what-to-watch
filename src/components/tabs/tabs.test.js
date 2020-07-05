@@ -14,6 +14,7 @@ it(`Should render Tabs component`, () => {
           tabNames={mock.tabNames}
           activeTab={mock.activeTab}
           onTabClick={() => {}}
+          onGenreTabClick={() => {}}
         />)
   .toJSON();
 

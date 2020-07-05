@@ -49,9 +49,11 @@ const preventEvent = {
 it(`Should tab be clicked`, () => {
   const store = mockStore({
     genre: ALL_GENRES,
-    films
+    films,
   });
+
   const changeGenre = jest.fn();
+  const showDefaultMovies = jest.fn();
 
   const tabs = mount(
       <Provider store={store}>
@@ -59,6 +61,7 @@ it(`Should tab be clicked`, () => {
           movies={films}
           activeTab={ALL_GENRES}
           onTabClick={changeGenre(mock.activeTab)}
+          onGenreTabClick={showDefaultMovies}
         />
       </Provider>
   );
