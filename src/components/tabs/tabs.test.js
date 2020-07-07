@@ -1,22 +1,21 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import TabItem from "./tab-item.jsx";
+import Tabs from "./tabs.jsx";
 
-const className = `catalog__genres-`;
+const tabNames = [`Overview`, `Details`, `Reviews`];
 
-const mockProps = {
-  tabNames: [`Overview`, `Details`, `Reviews`],
-  tabName: `tabName`,
-  activeTab: `activeTab`,
-  onTabClick: () => {}
-};
+it(`Should render Tabs component`, () => {
+  const changeGenre = jest.fn();
+  const showDefaultMovies = jest.fn();
 
-it(`Should render TabItem component`, () => {
   const tree = renderer
     .create(
-        <TabItem
-          className={className}
-          {...mockProps}
+        <Tabs
+          className={`catalog__genres-`}
+          tabNames={tabNames}
+          activeTab={`Overview`}
+          onTabClick={changeGenre}
+          onGenreTabClick={showDefaultMovies}
         />)
   .toJSON();
 

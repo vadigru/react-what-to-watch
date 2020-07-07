@@ -6,6 +6,7 @@ import configureStore from "redux-mock-store";
 import Main from "./main.jsx";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 import ShowMoreButton from "../show-more-button/show-more-button.jsx";
+
 const mockStore = configureStore([]);
 
 Enzyme.configure({
@@ -86,3 +87,5 @@ it(`Should call handler on button click`, () => {
 
   expect(handleShowMoreButtonClick.mock.calls.length).toBe(1);
 });
+
+

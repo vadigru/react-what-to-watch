@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TabItem = (props) => {
+const Tabs = (props) => {
   const {tabNames, className, activeTab, onTabClick, onGenreTabClick} = props;
 
   const chooseHandler = (tab) => {
@@ -34,7 +34,7 @@ const TabItem = (props) => {
   );
 };
 
-TabItem.propTypes = {
+Tabs.propTypes = {
   tabNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   className: PropTypes.string.isRequired,
   activeTab: PropTypes.string.isRequired,
@@ -42,4 +42,4 @@ TabItem.propTypes = {
   onGenreTabClick: PropTypes.func || null.isRequired
 };
 
-export default TabItem;
+export default Tabs;

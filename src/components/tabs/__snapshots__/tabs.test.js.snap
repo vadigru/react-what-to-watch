@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should render TabItem component 1`] = `
+exports[`Should render Tabs component 1`] = `
 <ul
   className="catalog__genres-list"
 >
   <li
-    className="catalog__genres-item false"
+    className="catalog__genres-item catalog__genres-item--active"
   >
     <a
       className="catalog__genres-link"
