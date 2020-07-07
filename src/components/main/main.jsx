@@ -1,16 +1,30 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import GenresList from "../genres-list/genres-list.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
 import ShowMoreButton from "../show-more-button/show-more-button.jsx";
+import Tabs from "../tabs/tabs.jsx";
 import movieType from "../../prop-types/types.js";
-import {getMoviesByGenre} from "../../utils/common.js";
 import {ActionCreator} from "../../reducer.js";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import {getMoviesByGenre, getMaxGenresCount, getGenresList} from "../../utils/common.js";
 
 const Main = (props) => {
-  const {movies, showedMovies, showMoreMovies, filteredMovies, genre, promoTitle, promoGenre, promoYear, onMovieCardClick} = props;
+  const {
+    movies,
+    showedMovies,
+    showMoreMovies,
+    filteredMovies,
+    genre,
+    promoTitle,
+    promoGenre,
+    promoYear,
+    onMovieCardClick,
+    changeGenre,
+    showDefaultMovies
+  } = props;
+
+  const genresList = getMaxGenresCount(getGenresList(movies));
 
   return (
     <React.Fragment>
@@ -73,8 +87,12 @@ const Main = (props) => {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList
-            onMovieCardClick={onMovieCardClick}
+          <Tabs
+            className={`catalog__genres-`}
+            tabNames={genresList}
+            activeTab={genre}
+            onTabClick={changeGenre}
+            onGenreTabClick={showDefaultMovies}
           />
 
           <MoviesList
@@ -114,8 +132,14 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  changeGenre(genre) {
+    dispatch(ActionCreator.changeGenre(genre));
+  },
   showMoreMovies() {
     dispatch(ActionCreator.showMoreMovies());
+  },
+  showDefaultMovies() {
+    dispatch(ActionCreator.showDefaultMovies());
   }
 });
 
@@ -126,7 +150,9 @@ Main.propTypes = {
   movies: PropTypes.arrayOf(movieType).isRequired,
   showedMovies: PropTypes.number.isRequired,
   showMoreMovies: PropTypes.func.isRequired,
+  showDefaultMovies: PropTypes.func.isRequired,
   genre: PropTypes.string.isRequired,
+  changeGenre: PropTypes.func.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
   filteredMovies: PropTypes.arrayOf(movieType).isRequired
 };
