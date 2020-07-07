@@ -8,7 +8,7 @@ it(`Should render ShowMoreButton component`, () => {
   const tree = renderer
     .create(
         <ShowMoreButton
-          showMoreMovies={showMoreMovies}
+          onShowMoreButtonClick={showMoreMovies}
         />
     )
   .toJSON();

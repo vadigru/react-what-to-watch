@@ -25,8 +25,8 @@ class GenresList extends React.PureComponent {
     const {movies, genre, changeGenre, showDefaultMovies} = this.props;
 
     return (
-
       <Tabs
+        className={`catalog__genres-`}
         tabNames={this.getMaxGenresCount(this.getGenresList(movies))}
         activeTab={genre}
         onTabClick={changeGenre}

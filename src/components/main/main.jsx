@@ -84,7 +84,7 @@ const Main = (props) => {
 
           {filteredMovies.length > MOVIES_DEFAULT_AMOUNT && genre !== ALL_GENRES ||
             showedMovies < movies.length && genre === ALL_GENRES
-            ? <ShowMoreButton showMoreMovies={showMoreMovies}/>
+            ? <ShowMoreButton onShowMoreButtonClick={showMoreMovies}/>
             : null}
         </section>
 

@@ -1,20 +1,22 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Tabs from "../tabs/tabs.jsx";
+import TabItem from "./tab-item.jsx";
 
-const mock = {
-  activeTab: `Overview`,
+const className = `catalog__genres-`;
+
+const mockProps = {
   tabNames: [`Overview`, `Details`, `Reviews`],
+  tabName: `tabName`,
+  activeTab: `activeTab`,
+  onTabClick: () => {}
 };
 
-it(`Should render Tabs component`, () => {
+it(`Should render TabItem component`, () => {
   const tree = renderer
     .create(
-        <Tabs
-          tabNames={mock.tabNames}
-          activeTab={mock.activeTab}
-          onTabClick={() => {}}
-          onGenreTabClick={() => {}}
+        <TabItem
+          className={className}
+          {...mockProps}
         />)
   .toJSON();
 

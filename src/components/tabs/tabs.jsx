@@ -1,32 +1,45 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TabGenres from "../tab-genres/tab-genres.jsx";
-import TabMovie from "../tab-movie/tab-movie.jsx";
-import {DefaultTab} from "../../const.js";
 
-const Tabs = (props) => {
-  const {tabNames, activeTab, onTabClick} = props;
+const TabItem = (props) => {
+  const {tabNames, className, activeTab, onTabClick, onGenreTabClick} = props;
 
-  const getComponentByTabName = () => {
-    switch (true) {
-      case tabNames.includes(DefaultTab.GENRE || activeTab):
-        return <TabGenres {...props}/>;
-      case tabNames.includes(DefaultTab.MOVIE || activeTab):
-        return <TabMovie {...props}/>;
-      default:
-        return ``;
+  const chooseHandler = (tab) => {
+    if (className === `catalog__genres-`) {
+      onTabClick(tab);
+      onGenreTabClick();
+    } else {
+      onTabClick(tab);
     }
   };
 
   return (
-    getComponentByTabName(onTabClick)
+    <ul className={`${className}list`}>
+      {tabNames.map((tabName, index) => (
+        <li key={tabName + index} className={`${className}item ${activeTab === tabName && `${className}item--active`}`}>
+          <a
+            href="#"
+            className={`${className}link`}
+            onClick={(evt) => {
+              evt.preventDefault();
+              onTabClick(tabName);
+              chooseHandler(tabName);
+            }}
+          >
+            {tabName}
+          </a>
+        </li>
+      ))}
+    </ul>
   );
 };
 
-Tabs.propTypes = {
+TabItem.propTypes = {
   tabNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  className: PropTypes.string.isRequired,
   activeTab: PropTypes.string.isRequired,
   onTabClick: PropTypes.func.isRequired,
+  onGenreTabClick: PropTypes.func || null.isRequired
 };
 
-export default Tabs;
+export default TabItem;

@@ -79,7 +79,7 @@ it(`Should call handler on button click`, () => {
   const handleShowMoreButtonClick = jest.fn();
 
   const showMoreButton = mount(
-      <ShowMoreButton showMoreMovies={handleShowMoreButtonClick}/>
+      <ShowMoreButton onShowMoreButtonClick={handleShowMoreButtonClick}/>
   );
 
   showMoreButton.find(`button.catalog__button`).simulate(`click`);
