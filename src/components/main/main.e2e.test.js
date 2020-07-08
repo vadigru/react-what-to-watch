@@ -4,7 +4,8 @@ import Adapter from "enzyme-adapter-react-16";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import Main from "./main.jsx";
-import {ALL_GENRES} from "../../const.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import ShowMoreButton from "../show-more-button/show-more-button.jsx";
 
 const mockStore = configureStore([]);
 
@@ -50,7 +51,8 @@ const preventEvent = {
 it(`Should movie card be pressed`, () => {
   const store = mockStore({
     genre: ALL_GENRES,
-    films
+    films,
+    showedMovies: MOVIES_DEFAULT_AMOUNT
   });
 
   const handleMovieCardClick = jest.fn(() => () => {});
@@ -73,3 +75,17 @@ it(`Should movie card be pressed`, () => {
   movieTitle.props().onClick(preventEvent);
   expect(handleMovieCardClick).toHaveBeenCalledTimes(2);
 });
+
+it(`Should call handler on button click`, () => {
+  const handleShowMoreButtonClick = jest.fn();
+
+  const showMoreButton = mount(
+      <ShowMoreButton onShowMoreButtonClick={handleShowMoreButtonClick}/>
+  );
+
+  showMoreButton.find(`button.catalog__button`).simulate(`click`);
+
+  expect(handleShowMoreButtonClick.mock.calls.length).toBe(1);
+});
+
+

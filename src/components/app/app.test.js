@@ -3,7 +3,7 @@ import renderer from "react-test-renderer";
 import App from "./app.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import {ALL_GENRES} from "../../const.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 
 const mockStore = configureStore([]);
 
@@ -41,7 +41,8 @@ const films = [
 it(`Should render App component`, () => {
   const store = mockStore({
     genre: ALL_GENRES,
-    films
+    films,
+    showedMovies: MOVIES_DEFAULT_AMOUNT
   });
 
   const tree = renderer

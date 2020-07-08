@@ -38,6 +38,10 @@ exports[`Should render MovieDetails component 1`] = `
         8.9
       </div>
     </div>
+  </div>
+  <div
+    className="movie-card__reviews-col"
+  >
     <div
       className="review"
     >

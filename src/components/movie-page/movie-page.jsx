@@ -104,7 +104,12 @@ class MoviePage extends React.PureComponent {
               <div className="movie-card__desc">
                 <nav className="movie-nav movie-card__nav">
                   <ul className="movie-nav__list">
-                    <Tabs tabNames={tabNames} activeTab={this.state.activeTab} onTabClick={this.handleTabClick}/>
+                    <Tabs
+                      className={`movie-nav__`}
+                      tabNames={tabNames}
+                      activeTab={this.state.activeTab}
+                      onTabClick={this.handleTabClick}
+                    />
                   </ul>
                 </nav>
                 {this.renderActiveTAb()}

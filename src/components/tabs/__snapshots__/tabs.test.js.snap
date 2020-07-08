@@ -1,39 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Should render Tabs component 1`] = `
-Array [
+<ul
+  className="catalog__genres-list"
+>
   <li
-    className="movie-nav__item movie-nav__item--active"
+    className="catalog__genres-item catalog__genres-item--active"
   >
     <a
-      className="movie-nav__link"
+      className="catalog__genres-link"
       href="#"
       onClick={[Function]}
     >
       Overview
     </a>
-  </li>,
+  </li>
   <li
-    className="movie-nav__item false"
+    className="catalog__genres-item false"
   >
     <a
-      className="movie-nav__link"
+      className="catalog__genres-link"
       href="#"
       onClick={[Function]}
     >
       Details
     </a>
-  </li>,
+  </li>
   <li
-    className="movie-nav__item false"
+    className="catalog__genres-item false"
   >
     <a
-      className="movie-nav__link"
+      className="catalog__genres-link"
       href="#"
       onClick={[Function]}
     >
       Reviews
     </a>
-  </li>,
-]
+  </li>
+</ul>
 `;

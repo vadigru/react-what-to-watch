@@ -1,11 +1,11 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 import movieType from "../../prop-types/types.js";
 
-class App extends PureComponent {
+class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

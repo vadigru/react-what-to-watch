@@ -1,9 +1,9 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import MovieCard from "../movie-card/movie-card.jsx";
 import movieType from "../../prop-types/types.js";
 
-class MoviesList extends PureComponent {
+class MoviesList extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -31,6 +31,7 @@ class MoviesList extends PureComponent {
 
   render() {
     const {movies, onMovieCardClick} = this.props;
+
     return (
       <div className="catalog__movies-list">
         {movies.map((movie, index) => (

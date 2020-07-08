@@ -1,10 +1,11 @@
 import {reducer, ActionType, ActionCreator} from "./reducer.js";
-import {ALL_GENRES} from "./const.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "./const.js";
 import films from "./mocks/films.js";
 
 const initialState = {
   genre: ALL_GENRES,
-  films
+  films,
+  showedMovies: MOVIES_DEFAULT_AMOUNT
 };
 
 it(`Reducer without additional parameters should return initial state`, () => {

@@ -1,7 +1,7 @@
+export const MOVIES_DEFAULT_AMOUNT = 8;
+export const MOVIES_STEP_AMOUNT = 8;
 export const MAX_GENRES_AMOUNT = 9;
-
 export const ALL_GENRES = `All genres`;
-
 export const START_DELAY = 1000;
 
 export const Tab = {
@@ -11,7 +11,7 @@ export const Tab = {
 };
 
 export const DefaultTab = {
-  CATALOG: `All genres`,
+  GENRE: `All genres`,
   MOVIE: `Overview`
 };
 
