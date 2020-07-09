@@ -4,8 +4,10 @@ import {createStore} from "redux";
 import {Provider} from "react-redux";
 import {reducer} from "./reducer.js";
 import App from "./components/app/app.jsx";
+import withActiveCard from "./hocs/with-active-card/with-active-card.jsx";
 import films from "./mocks/films.js";
 
+const AppWrapped = withActiveCard(App);
 const FilmData = {
   TITLE: `The Grand Budapest Hotel`,
   GENRE: `Drama`,
@@ -21,7 +23,7 @@ const store = createStore(reducer,
 const init = () => {
   ReactDom.render(
       <Provider store={store}>
-        <App
+        <AppWrapped
           promoTitle={FilmData.TITLE}
           promoGenre={FilmData.GENRE}
           promoYear={FilmData.YEAR}

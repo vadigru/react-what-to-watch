@@ -1,6 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MovieCard from "./movie-card.jsx";
+import withActiveTabs from "./with-active-tab.jsx";
+
+const mockComponent = () => <div />;
+
+const MockComponentWrapped = withActiveTabs(mockComponent);
 
 const movie = {
   title: `Movie Title`,
@@ -25,17 +29,14 @@ const movie = {
   ]
 };
 
-it(`Should render MovieCard component`, () => {
-  const tree = renderer
-    .create(
-        <MovieCard
-          movie={movie}
-          onMovieCardClick={() => () => {}}
-          onMouseEnter={() => {}}
-          onMouseLeave={() => {}}
-          isPlaying={true}
-        />)
-  .toJSON();
+it(`Should render Tabs component`, ()=>{
+  const tree = renderer.create(
+      <MockComponentWrapped
+        movie={movie}
+        activeTab={`Overview`}
+        onTabClick={() => {}}
+      />
+  ).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

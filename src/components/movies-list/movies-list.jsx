@@ -1,52 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MovieCard from "../movie-card/movie-card.jsx";
+import withVideo from "../../hocs/with-video/with-video.jsx";
 import movieType from "../../prop-types/types.js";
 
-class MoviesList extends React.PureComponent {
-  constructor(props) {
-    super(props);
+const MovieCardWrapped = withVideo(MovieCard);
 
-    this.state = {
-      activeMovieCard: null,
-    };
+const MoviesList = (props) => {
+  const {movies, onMovieCardClick} = props;
 
-    this.handleMovieCardMouseHover = this.handleMovieCardMouseHover.bind(this);
-    this.handleMovieCardMouseOut = this.handleMovieCardMouseOut.bind(this);
-  }
-
-  handleMovieCardMouseHover(movie) {
-    return () => {
-      this.setState(() => (
-        {activeMovieCard: movie}
-      ));
-    };
-  }
-
-  handleMovieCardMouseOut() {
-    this.setState(() => ({
-      activeMovieCard: null,
-    }));
-  }
-
-  render() {
-    const {movies, onMovieCardClick} = this.props;
-
-    return (
-      <div className="catalog__movies-list">
-        {movies.map((movie, index) => (
-          <MovieCard
-            key={movie.title + index}
-            movie={movie}
-            onMovieCardClick={onMovieCardClick(movie)}
-            onMovieCardMouseHover={this.handleMovieCardMouseHover}
-            onMovieCardMouseOut={this.handleMovieCardMouseOut}
-          />
-        ))}
-      </div>
-    );
-  }
-}
+  return (
+    <div className="catalog__movies-list">
+      {movies.map((movie, index) => (
+        <MovieCardWrapped
+          key={movie.title + index}
+          movie={movie}
+          onMovieCardClick={onMovieCardClick(movie)}
+        />
+      ))}
+    </div>
+  );
+};
 
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(movieType).isRequired,
