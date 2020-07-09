@@ -59,7 +59,7 @@ App.propTypes = {
   promoGenre: PropTypes.string.isRequired,
   promoYear: PropTypes.number.isRequired,
   movies: PropTypes.arrayOf(movieType).isRequired,
-  activeMovieCard: movieType.isRequired,
+  activeMovieCard: movieType || null.isRequired,
   onMovieCardClick: PropTypes.func.isRequired
 };
 
