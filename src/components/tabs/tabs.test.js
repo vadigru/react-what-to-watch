@@ -13,7 +13,7 @@ it(`Should render Tabs component`, () => {
         <Tabs
           className={`catalog__genres-`}
           tabNames={tabNames}
-          activeTab={`Overview`}
+          activeTab={tabNames[0]}
           onTabClick={changeGenre}
           onGenreTabClick={showDefaultMovies}
         />)

@@ -25,7 +25,6 @@ const Main = (props) => {
   } = props;
 
   const genresList = getMaxGenresCount(getGenresList(movies));
-
   return (
     <React.Fragment>
       <section className="movie-card">

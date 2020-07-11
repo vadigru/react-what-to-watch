@@ -79,6 +79,8 @@ it(`Should render MoviePage component`, () => {
           movies={movies}
           movie={movie}
           onMovieCardClick={() => {}}
+          activeTab={`Overview`}
+          onTabClick={() => {}}
         />)
   .toJSON();
 

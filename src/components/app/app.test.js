@@ -38,6 +38,29 @@ const films = [
   }
 ];
 
+const movie = {
+  title: `Movie title`,
+  posterUrl: `https://url.com/poster.jpg`,
+  backgroundUrl: `https://url.com/poster/1.jpg`,
+  previewUrl: `https://url.com/preview/video.mp4`,
+  genre: `Movie Genre`,
+  release: 2020,
+  director: `Director Name`,
+  starring: [`Actor 1`, `Actor 2`, `Actor 3`],
+  time: `1h 00m`,
+  rating: 10,
+  votes: 1000,
+  description: `Movie description`,
+  reviews: [
+    {
+      date: `June 25, 2020`,
+      user: `John Doe`,
+      comment: `Comment text.`,
+      rating: 8.9
+    },
+  ]
+};
+
 it(`Should render App component`, () => {
   const store = mockStore({
     genre: ALL_GENRES,
@@ -53,6 +76,8 @@ it(`Should render App component`, () => {
             promoGenre = {FilmData.GENRE}
             promoYear = {FilmData.YEAR}
             movies= {films}
+            activeMovieCard={movie}
+            onMovieCardClick={() => {}}
           />
         </Provider>
     )
