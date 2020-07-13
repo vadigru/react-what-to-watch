@@ -6,10 +6,18 @@ const withActiveCard = (Component) => {
       super(props);
 
       this.state = {
-        activeMovieCard: null
+        activeMovieCard: null,
+        isBigPlayerActive: false
       };
 
       this._handleMovieCardClick = this._handleMovieCardClick.bind(this);
+      this._handleBigPlayerOnOff = this._handleBigPlayerOnOff.bind(this);
+    }
+
+    _handleBigPlayerOnOff() {
+      this.setState({
+        isBigPlayerActive: !this.state.isBigPlayerActive
+      });
     }
 
     _handleMovieCardClick(movie) {
@@ -26,6 +34,8 @@ const withActiveCard = (Component) => {
           {...this.props}
           activeMovieCard={activeMovieCard}
           onMovieCardClick={this._handleMovieCardClick}
+          onBigPlayerOnOff={this._handleBigPlayerOnOff}
+          isBigPlayerActive={this.state.isBigPlayerActive}
         />
       );
     }

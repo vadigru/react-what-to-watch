@@ -1,4 +1,4 @@
-import {getTextedRating, getMoviesByGenre} from "./common.js";
+import {getTextedRating, getMoviesByGenre, formatTime} from "./common.js";
 
 const movie = {
   title: `Movie Title`,
@@ -88,4 +88,9 @@ it(`Should test switch statment`, () => {
 
 it(`Should return specific genre`, () => {
   expect(getMoviesByGenre(`Movie Genre`, films)).toStrictEqual([movie]);
+});
+
+it(`Should return formatted time`, () => {
+  expect(formatTime(60)).toBe(`00:01:00`);
+  expect(formatTime(3600)).toBe(`01:00:00`);
 });

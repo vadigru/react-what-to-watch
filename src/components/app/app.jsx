@@ -12,16 +12,24 @@ class App extends React.PureComponent {
     super(props);
   }
 
-  _renderApp() {
-    const {promoTitle, promoGenre, promoYear, movies, activeMovieCard, onMovieCardClick} = this.props;
+  _renderMoviePage() {
+    const {movies, activeMovieCard, onMovieCardClick, isBigPlayerActive, onBigPlayerOnOff} = this.props;
+    return (
+      <MoviePageWrapped
+        movies={movies}
+        movie={activeMovieCard || this.props.movies[0]}
+        onMovieCardClick={onMovieCardClick}
+        isBigPlayerActive={isBigPlayerActive}
+        onBigPlayerOnOff={onBigPlayerOnOff}
+      />
+    );
+  }
 
+  _renderApp() {
+    const {promoTitle, promoGenre, promoYear, movies, activeMovieCard, onMovieCardClick, isBigPlayerActive, onBigPlayerOnOff} = this.props;
     if (activeMovieCard !== null) {
       return (
-        <MoviePageWrapped
-          movies={movies}
-          movie={activeMovieCard}
-          onMovieCardClick={onMovieCardClick}
-        />
+        this._renderMoviePage()
       );
     }
 
@@ -32,6 +40,8 @@ class App extends React.PureComponent {
         promoYear = {promoYear}
         movies = {movies}
         onMovieCardClick={onMovieCardClick}
+        isBigPlayerActive={isBigPlayerActive}
+        onBigPlayerOnOff={onBigPlayerOnOff}
       />
     );
   }
@@ -44,9 +54,7 @@ class App extends React.PureComponent {
             {this._renderApp()}
           </Route>
           <Route exact path="/dev-movie-page">
-            <MoviePage
-              movie={this.props.movies[0]}
-            />
+            {this._renderMoviePage()}
           </Route>
         </Switch>
       </BrowserRouter>
@@ -60,7 +68,9 @@ App.propTypes = {
   promoYear: PropTypes.number.isRequired,
   movies: PropTypes.arrayOf(movieType).isRequired,
   activeMovieCard: movieType || null.isRequired,
-  onMovieCardClick: PropTypes.func.isRequired
+  onMovieCardClick: PropTypes.func.isRequired,
+  isBigPlayerActive: PropTypes.bool.isRequired,
+  onBigPlayerOnOff: PropTypes.func.isRequired
 };
 
 export default App;

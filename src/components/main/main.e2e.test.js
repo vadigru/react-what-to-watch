@@ -64,6 +64,8 @@ it(`Should movie card be pressed`, () => {
           promoYear={FilmData.YEAR}
           movies={films}
           onMovieCardClick={() => handleMovieCardClick}
+          isBigPlayerActive={false}
+          onBigPlayerOnOff={() => {}}
         />
       </Provider>
   );

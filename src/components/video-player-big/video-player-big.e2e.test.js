@@ -1,0 +1,60 @@
+import React from "react";
+import {configure, mount} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import VideoPlayerBig from './video-player-big.jsx';
+
+configure({
+  adapter: new Adapter()
+});
+
+const movie = {
+  title: `Movie Title`,
+  posterUrl: `https://url.com/poster.jpg`,
+  backgroundUrl: `https://url.com/poster/1.jpg`,
+  previewUrl: `https://url.com/preview/video.mp4`,
+  genre: `Movie Genre`,
+  release: 2020,
+  director: `Director Name`,
+  starring: [`Actor One`, `Actor Two`, `Actor Three`],
+  time: `1h 00m`,
+  rating: 10,
+  votes: 1000,
+  description: `Movie Description`,
+  reviews: [
+    {
+      date: `June 25, 2020`,
+      user: `John Doe`,
+      comment: `Comment text.`,
+      rating: 8.9
+    },
+  ]
+};
+it(`Click by Play, Exit and FullScreen button calls callback`, () => {
+  const hadleBigPlayerPlay = jest.fn();
+  const handleFullscreenButtonClick = jest.fn();
+  const handleExitButtonClick = jest.fn();
+
+  const ref = React.createRef();
+  const wrapper = mount(<VideoPlayerBig
+    isPlaying={false}
+    src={movie.previewUrl}
+    autoPlay={false}
+    movie={movie}
+    onPlayButtonClick={hadleBigPlayerPlay}
+    onFullscreenButtonClick={handleFullscreenButtonClick}
+    getPlaybackProgress={() => {}}
+    getRemainingTime={() => {}}
+    videoRef={ref}
+    onExitButtonClick={handleExitButtonClick}
+    onLoadedMetadata={() => {}}
+    onTimeUpdate={() => {}}
+  />);
+
+  wrapper.find(`.player__play`).simulate(`click`);
+  wrapper.find(`.player__full-screen`).simulate(`click`);
+  wrapper.find(`.player__exit`).simulate(`click`);
+
+  expect(hadleBigPlayerPlay).toHaveBeenCalledTimes(1);
+  expect(handleFullscreenButtonClick).toHaveBeenCalledTimes(1);
+  expect(handleExitButtonClick).toHaveBeenCalledTimes(1);
+});
