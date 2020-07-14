@@ -34,3 +34,20 @@ export const getMaxGenresCount = (genresList) => {
 export const getGenresList = (movies) => {
   return [ALL_GENRES].concat(Array.from(new Set(movies.map((movie) => movie.genre))));
 };
+
+export const formatTime = (value) => {
+  const hours = Math.floor(value / (60 * 60)) < 1 ? 0 : Math.floor(value / (60 * 60));
+
+  const divisorForMinutes = value % (60 * 60);
+  const minutes = Math.floor(divisorForMinutes / 60) < 1 ? 0 : Math.floor(divisorForMinutes / 60);
+
+  const divisorForSeconds = divisorForMinutes % 60;
+  const seconds = Math.ceil(divisorForSeconds) < 1 ? 0 : Math.ceil(divisorForSeconds);
+
+  const addZero = (time) => {
+    return time < 10 ? `0${time}` : `${time}`;
+  };
+
+  const outputTime = `${addZero(hours)}:${addZero(minutes)}:${addZero(seconds)}`;
+  return outputTime;
+};

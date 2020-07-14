@@ -54,6 +54,8 @@ it(`Should render Main component`, () => {
             promoYear={FilmData.YEAR}
             movies={films}
             onMovieCardClick={() => () => {}}
+            isBigPlayerActive={false}
+            onBigPlayerOnOff={() => {}}
           />
         </Provider>)
   .toJSON();

@@ -1,11 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app.jsx";
-import {Provider} from "react-redux";
-import configureStore from "redux-mock-store";
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
-
-const mockStore = configureStore([]);
+import withActiveCard from "./with-active-card.jsx";
 
 const FilmData = {
   TITLE: `Joker`,
@@ -13,7 +8,7 @@ const FilmData = {
   YEAR: 2019
 };
 
-const films = [
+const movies = [
   {
     title: `Movie title`,
     posterUrl: `https://url.com/poster.jpg`,
@@ -61,29 +56,32 @@ const movie = {
   ]
 };
 
-it(`Should render App component`, () => {
-  const store = mockStore({
-    genre: ALL_GENRES,
-    films,
-    showedMovies: MOVIES_DEFAULT_AMOUNT
-  });
+const mockComponent = () => <div />;
 
-  const tree = renderer
-    .create(
-        <Provider store={store}>
-          <App
-            promoTitle = {FilmData.TITLE}
-            promoGenre = {FilmData.GENRE}
-            promoYear = {FilmData.YEAR}
-            movies= {films}
-            activeMovieCard={movie}
-            onMovieCardClick={() => {}}
-            isBigPlayerActive={false}
-            onBigPlayerOnOff={() => {}}
-          />
-        </Provider>
-    )
-    .toJSON();
+const MockComponentWrapped = withActiveCard(mockComponent);
+
+it(`Should render MoviePage component`, ()=>{
+  const tree = renderer.create(
+      <MockComponentWrapped
+        movies={movies}
+        movie={movie}
+        onMovieCardClick={()=>{}}
+      />
+  ).toJSON();
+
+  expect(tree).toMatchSnapshot();
+});
+
+it(`Should render Main component`, ()=>{
+  const tree = renderer.create(
+      <MockComponentWrapped
+        promoTitle = {FilmData.TITLE}
+        promoGenre = {FilmData.GENRE}
+        promoYear = {FilmData.YEAR}
+        movies = {movies}
+        onMovieCardClick={() => {}}
+      />
+  ).toJSON();
 
   expect(tree).toMatchSnapshot();
 });

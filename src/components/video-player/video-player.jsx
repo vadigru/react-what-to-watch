@@ -1,17 +1,11 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-class VideoPlayer extends PureComponent {
+class VideoPlayer extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.videoRef = React.createRef();
-
-    this.state = {
-      isPlaying: props.isPlaying
-    };
-
-    this.handleVideoPlay = this.handleVideoPlay.bind(this);
   }
 
   componentDidMount() {
@@ -32,18 +26,6 @@ class VideoPlayer extends PureComponent {
       video.src = ``;
       video.autoPlay = null;
       video.muted = null;
-    }
-  }
-
-  handleVideoPlay() {
-    const video = this.videoRef.current;
-
-    if (video.paused) {
-      video.play();
-      this.setState({isPlaying: true});
-    } else {
-      video.pause();
-      this.setState({isPlaying: false});
     }
   }
 

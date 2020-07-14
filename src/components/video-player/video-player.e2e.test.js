@@ -27,9 +27,7 @@ it(`Should change VideoPlayer state on click`, () => {
       />
   );
 
-  expect(videoPlayer.state(`isPlaying`)).toBe(false);
-  videoPlayer.simulate(`click`);
-  expect(videoPlayer.state(`isPlaying`)).toBe(true);
-  expect(spy).toHaveBeenCalled();
+  expect(videoPlayer.prop(`isPlaying`)).toBe(false);
+  expect(spy).toHaveBeenCalledTimes(0);
   spy.mockRestore();
 });

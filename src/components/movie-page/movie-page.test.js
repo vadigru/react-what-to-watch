@@ -81,6 +81,8 @@ it(`Should render MoviePage component`, () => {
           onMovieCardClick={() => {}}
           activeTab={`Overview`}
           onTabClick={() => {}}
+          isBigPlayerActive={false}
+          onBigPlayerOnOff={() => {}}
         />)
   .toJSON();
 

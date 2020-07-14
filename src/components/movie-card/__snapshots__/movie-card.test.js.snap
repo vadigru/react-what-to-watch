@@ -13,7 +13,6 @@ exports[`Should render MovieCard component 1`] = `
     <video
       autoPlay={true}
       height="175"
-      onClick={[Function]}
       src="https://url.com/preview/video.mp4"
       width="100%"
     />
