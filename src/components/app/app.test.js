@@ -4,14 +4,9 @@ import App from "./app.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import Namespace from "../../reducer/namespace.js";
 
 const mockStore = configureStore([]);
-
-const FilmData = {
-  TITLE: `Joker`,
-  GENRE: `Drama`,
-  YEAR: 2019
-};
 
 const films = [
   {
@@ -63,19 +58,20 @@ const movie = {
 
 it(`Should render App component`, () => {
   const store = mockStore({
-    genre: ALL_GENRES,
-    films,
-    showedMovies: MOVIES_DEFAULT_AMOUNT
+    [Namespace.DATA]: {
+      films,
+      promoFilm: films[0]
+    },
+    [Namespace.STATE]: {
+      genre: ALL_GENRES,
+      showedMovies: MOVIES_DEFAULT_AMOUNT
+    }
   });
 
   const tree = renderer
     .create(
         <Provider store={store}>
           <App
-            promoTitle = {FilmData.TITLE}
-            promoGenre = {FilmData.GENRE}
-            promoYear = {FilmData.YEAR}
-            movies= {films}
             activeMovieCard={movie}
             onMovieCardClick={() => {}}
             isBigPlayerActive={false}

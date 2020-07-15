@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import movieType from "../../prop-types/types.js";
+import {movieType} from "../../prop-types/types.js";
 import VideoPlayer from "../video-player/video-player.jsx";
 
 const MovieCard = (props) => {

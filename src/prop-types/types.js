@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 
-const movieType = PropTypes.shape({
+export const movieType = PropTypes.shape({
   title: PropTypes.string.isRequired,
   posterUrl: PropTypes.string.isRequired,
   backgroundUrl: PropTypes.string.isRequired,
+  // backgroundColor: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
+  // previewImage: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   release: PropTypes.number.isRequired,
   director: PropTypes.string.isRequired,
@@ -13,12 +15,7 @@ const movieType = PropTypes.shape({
   rating: PropTypes.number.isRequired,
   votes: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    date: PropTypes.string.isRequired,
-    user: PropTypes.string.isRequired,
-    comment: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired
-  })).isRequired
+  // id: PropTypes.number.isRequired,
+  // isFavorite: PropTypes.bool.isRequired,
+  // videoUrl: PropTypes.string.isRequired,
 });
-
-export default movieType;

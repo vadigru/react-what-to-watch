@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {formatTime} from "../../utils/common.js";
-import movieType from "../../prop-types/types.js";
+import {movieType} from "../../prop-types/types.js";
 
 const withPlayer = (Component) => {
   class WithPlayer extends React.PureComponent {

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import movieType from "../../prop-types/types.js";
+import {movieType} from "../../prop-types/types.js";
 
 const VideoPlayerBig = (props) => {
   const {
@@ -17,13 +17,14 @@ const VideoPlayerBig = (props) => {
     onTimeUpdate
   } = props;
 
+  const {videoUrl, backgroundUrl} = movie;
   return (
     <div className="player">
       <video
         ref={videoRef}
-        src={movie.previewUrl}
+        src={videoUrl}
         className="player__video"
-        poster={movie.backgroundUrl}
+        poster={backgroundUrl}
         width="100%"
         autoPlay={autoPlay}
         onClick={onPlayButtonClick}
@@ -107,7 +108,7 @@ VideoPlayerBig.propTypes = {
   ]).isRequired,
   onExitButtonClick: PropTypes.func.isRequired,
   onLoadedMetadata: PropTypes.func.isRequired,
-  onTimeUpdate: PropTypes.func.isRequired
+  onTimeUpdate: PropTypes.func.isRequired,
 };
 
 export default VideoPlayerBig;

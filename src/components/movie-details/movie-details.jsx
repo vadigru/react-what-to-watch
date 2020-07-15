@@ -1,5 +1,5 @@
 import React from "react";
-import movieType from "../../prop-types/types.js";
+import {movieType} from "../../prop-types/types.js";
 
 const MovieDetails = (props) => {
   const {movie} = props;

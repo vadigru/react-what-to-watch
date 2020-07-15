@@ -4,11 +4,13 @@ import MovieDetails from "../movie-details/movie-details.jsx";
 import MovieOverview from "../movie-overview/movie-overview.jsx";
 import MovieReviews from "../movie-reviews/movie-reviews.jsx";
 import MoviesSimilar from "../movies-similar/movies-similar.jsx";
-import movieType from "../../prop-types/types.js";
+import {movieType} from "../../prop-types/types.js";
 import Tabs from "../tabs/tabs.jsx";
 import {Tab} from "../../const.js";
 import withPlayer from "../../hocs/with-player/with-player.jsx";
 import VideoPlayerBig from "../video-player-big/video-player-big.jsx";
+import {getMovies} from "../../reducer/data/selectors.js";
+import {connect} from "react-redux";
 
 const VideoPlayerBigWrapped = withPlayer(VideoPlayerBig);
 
@@ -147,4 +149,9 @@ MoviePage.propTypes = {
   isBigPlayerActive: PropTypes.bool.isRequired,
 };
 
-export default MoviePage;
+
+const mapStateToProps = (state) => ({
+  movies: getMovies(state)
+});
+
+export default connect(mapStateToProps)(MoviePage);

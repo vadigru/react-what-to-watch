@@ -1,10 +1,8 @@
-import {reducer, ActionType, ActionCreator} from "./reducer.js";
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "./const.js";
-import films from "./mocks/films.js";
+import {reducer, ActionType, ActionCreator} from "../state/state.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT, SHOW_DEFAULT_MOVIES} from "../../const.js";
 
 const initialState = {
   genre: ALL_GENRES,
-  films,
   showedMovies: MOVIES_DEFAULT_AMOUNT
 };
 
@@ -28,10 +26,32 @@ it(`Reducer should change genre`, () => {
   });
 });
 
+it(`Reducer should increase and reset movies counter`, () => {
+  expect(reducer({showedMovies: MOVIES_DEFAULT_AMOUNT}, {
+    type: ActionType.SHOW_MORE_MOVIES,
+  })).toEqual({
+    showedMovies: 16
+  });
+
+  expect(reducer({showedMovies: SHOW_DEFAULT_MOVIES}, {
+    type: ActionType.SHOW_DEFAULT_MOVIES,
+  })).toEqual({
+    showedMovies: MOVIES_DEFAULT_AMOUNT
+  });
+});
+
 it(`Action creator should return correct action`, () => {
   expect(ActionCreator.changeGenre(`Adventure`)).toEqual({
     type: ActionType.CHANGE_GENRE,
     payload: `Adventure`
+  });
+  expect(ActionCreator.showMoreMovies()).toEqual({
+    type: ActionType.SHOW_MORE_MOVIES,
+    payload: null,
+  });
+  expect(ActionCreator.showDefaultMovies()).toEqual({
+    type: ActionType.SHOW_DEFAULT_MOVIES,
+    payload: null,
   });
 });
 
