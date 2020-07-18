@@ -1,8 +1,14 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import MoviePage from "./movie-page.jsx";
+import configureStore from "redux-mock-store";
+import {Provider} from "react-redux";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import Namespace from "../../reducer/namespace.js";
 
-const movies = [
+const mockStore = configureStore([]);
+
+const films = [
   {
     title: `Movie Title`,
     posterUrl: `https://url.com/poster.jpg`,
@@ -72,18 +78,33 @@ const movie = {
   ]
 };
 
+
 it(`Should render MoviePage component`, () => {
+  const store = mockStore({
+    [Namespace.DATA]: {
+      films,
+      promoFilm: films[0]
+    },
+    [Namespace.STATE]: {
+      genre: ALL_GENRES,
+      showedMovies: MOVIES_DEFAULT_AMOUNT
+    }
+  });
+
   const tree = renderer
     .create(
-        <MoviePage
-          movies={movies}
-          movie={movie}
-          onMovieCardClick={() => {}}
-          activeTab={`Overview`}
-          onTabClick={() => {}}
-          isBigPlayerActive={false}
-          onBigPlayerOnOff={() => {}}
-        />)
+        <Provider store={store}>
+          <MoviePage
+            movies={films}
+            movie={movie}
+            onMovieCardClick={() => {}}
+            activeTab={`Overview`}
+            onTabClick={() => {}}
+            isBigPlayerActive={false}
+            onBigPlayerOnOff={() => {}}
+          />
+        </Provider>
+    )
   .toJSON();
 
   expect(tree).toMatchSnapshot();

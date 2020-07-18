@@ -19,12 +19,6 @@ export const extend = (a, b) => {
   return Object.assign({}, a, b);
 };
 
-export const getMoviesByGenre = (genre, movies, showedMovies) => {
-  return genre === ALL_GENRES
-    ? movies.slice(0, showedMovies)
-    : movies.filter((movie) => movie.genre === genre).slice(0, showedMovies);
-};
-
 export const getMaxGenresCount = (genresList) => {
   return genresList.length > MAX_GENRES_AMOUNT
     ? genresList.slice(0, MAX_GENRES_AMOUNT + 1)
@@ -51,3 +45,33 @@ export const formatTime = (value) => {
   const outputTime = `${addZero(hours)}:${addZero(minutes)}:${addZero(seconds)}`;
   return outputTime;
 };
+
+export const formatMovieTime = (timeInMinutes) => {
+  const hours = Math.floor(timeInMinutes / 60);
+  const minutes = timeInMinutes % 60;
+  return `${hours}h ${(`0` + minutes).slice(-2)}m`;
+};
+
+export const rebuildMovieData = (movie) => {
+  return {
+    title: movie.name,
+    posterUrl: movie.poster_image,
+    backgroundUrl: movie.background_image,
+    backgroundColor: movie.background_color,
+    previewUrl: movie.preview_video_link,
+    previewImage: movie.preview_image,
+    genre: movie.genre,
+    release: movie.released,
+    director: movie.director,
+    starring: movie.starring,
+    time: formatMovieTime(movie.run_time),
+    rating: movie.rating,
+    votes: movie.scores_count,
+    description: movie.description,
+    id: movie.id,
+    isFavorite: movie.is_favorite,
+    videoUrl: movie.video_link,
+  };
+};
+
+export const rebuildMoviesData = (movies) => movies.map(rebuildMovieData);

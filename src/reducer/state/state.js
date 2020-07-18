@@ -2,13 +2,11 @@ import {
   ALL_GENRES,
   MOVIES_DEFAULT_AMOUNT,
   MOVIES_STEP_AMOUNT
-} from "./const.js";
-import {extend} from "./utils/common.js";
-import films from "./mocks/films.js";
+} from "../../const.js";
+import {extend} from "../../utils/common.js";
 
 const initialState = {
   genre: ALL_GENRES,
-  films,
   showedMovies: MOVIES_DEFAULT_AMOUNT,
 };
 

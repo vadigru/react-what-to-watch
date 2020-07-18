@@ -10,8 +10,8 @@ exports[`Should render VideoPlayer component 1`] = `
     onClick={[Function]}
     onLoadedMetadata={[Function]}
     onTimeUpdate={[Function]}
-    poster="https://url.com/poster/1.jpg"
-    src="https://url.com/preview/video.mp4"
+    poster="https://url.com"
+    src="https://url.com"
     width="100%"
   />
   <button
