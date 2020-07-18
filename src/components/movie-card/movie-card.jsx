@@ -6,7 +6,7 @@ import VideoPlayer from "../video-player/video-player.jsx";
 const MovieCard = (props) => {
   const {isPlaying, onMouseEnter, onMouseLeave} = props;
   const {movie, onMovieCardClick} = props;
-  const {title, posterUrl, previewUrl} = movie;
+  const {title, previewUrl, previewImage} = movie;
 
   return (
     <article
@@ -20,7 +20,7 @@ const MovieCard = (props) => {
       >
         {!isPlaying && (
           <img
-            src={posterUrl}
+            src={previewImage}
             alt={title}
             width="280"
             height="175"

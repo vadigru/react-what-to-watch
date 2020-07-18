@@ -1,16 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {getReviews} from "../../reducer/data/selectors.js";
 
 const renderReviews = (reviews) => {
   return (
     <React.Fragment>
-      {reviews.map((review, index) => (
-        <div key={review + index} className="review">
+      {reviews.map((review) => (
+        <div key={review.id} className="review">
           <blockquote className="review__quote">
             <p className="review__text">{review.comment}</p>
 
             <footer className="review__details">
-              <cite className="review__author">{review.name}</cite>
+              <cite className="review__author">{review.user.name}</cite>
               <time className="review__date" dateTime="2016-12-24">{review.date}</time>
             </footer>
           </blockquote>
@@ -45,11 +47,20 @@ const MovieReviews = (props) => {
 
 MovieReviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.shape({
-    date: PropTypes.string.isRequired,
-    user: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    user: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    rating: PropTypes.number.isRequired,
     comment: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired
+    date: PropTypes.string.isRequired,
   })).isRequired
 };
 
-export default MovieReviews;
+const mapStateToProps = (state) => ({
+  reviews: getReviews(state),
+});
+
+export {MovieReviews};
+export default connect(mapStateToProps)(MovieReviews);

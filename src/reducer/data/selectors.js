@@ -10,6 +10,10 @@ export const getPromo = (state) => {
   return state[Namespace.DATA].promo;
 };
 
+export const getReviews = (state) => {
+  return state[Namespace.DATA].reviews;
+};
+
 export const filterMoviesByGenre = (state) => {
   const movies = state[Namespace.DATA].films;
   const genre = state[Namespace.STATE].genre;

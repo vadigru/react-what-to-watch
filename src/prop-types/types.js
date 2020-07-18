@@ -6,7 +6,7 @@ export const movieType = PropTypes.shape({
   backgroundUrl: PropTypes.string.isRequired,
   // backgroundColor: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
-  // previewImage: PropTypes.string.isRequired,
+  previewImage: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   release: PropTypes.number.isRequired,
   director: PropTypes.string.isRequired,
@@ -15,7 +15,7 @@ export const movieType = PropTypes.shape({
   rating: PropTypes.number.isRequired,
   votes: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
-  // id: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
   // isFavorite: PropTypes.bool.isRequired,
-  // videoUrl: PropTypes.string.isRequired,
+  videoUrl: PropTypes.string.isRequired,
 });

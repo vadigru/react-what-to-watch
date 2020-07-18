@@ -1,72 +1,129 @@
 import React from "react";
 import renderer from "react-test-renderer";
+import configureStore from "redux-mock-store";
+import {Provider} from "react-redux";
 import withActiveCard from "./with-active-card.jsx";
 
-const FilmData = {
-  TITLE: `Joker`,
-  GENRE: `Drama`,
-  YEAR: 2019
-};
+const mockStore = configureStore([]);
 
-const movies = [
+const films = [
   {
-    title: `Movie title`,
-    posterUrl: `https://url.com/poster.jpg`,
-    backgroundUrl: `https://url.com/poster/1.jpg`,
-    previewUrl: `https://url.com/preview/video.mp4`,
-    genre: `Movie Genre`,
+    title: `Movie Name`,
+    posterUrl: `https://url.com`,
+    backgroundUrl: `https://url.com`,
+    backgroundColor: `some color`,
+    previewUrl: `https://url.com`,
+    previewImage: `https://url.com`,
+    genre: `genre`,
     release: 2020,
-    director: `Director Name`,
-    starring: [`Actor 1`, `Actor 2`, `Actor 3`],
-    time: `1h 00m`,
+    director: `Famous Director`,
+    starring: [`Actor One`, `Actor Two`, `Actor Three`],
+    time: `1h 30m`,
     rating: 10,
-    votes: 1000,
-    description: `Movie description`,
-    reviews: [
-      {
-        date: `June 25, 2020`,
-        user: `John Doe`,
-        comment: `Comment text.`,
-        rating: 8.9
-      },
-    ]
-  }
+    votes: 1000000,
+    description: `Some Description`,
+    id: 1,
+    isFavorite: true,
+    videoUrl: `https://url.com`,
+  },
+  {
+    title: `Movie Name`,
+    posterUrl: `https://url.com`,
+    backgroundUrl: `https://url.com`,
+    backgroundColor: `some color`,
+    previewUrl: `https://url.com`,
+    previewImage: `https://url.com`,
+    genre: `genre 1`,
+    release: 2020,
+    director: `Famous Director`,
+    starring: [`Actor One`, `Actor Two`, `Actor Three`],
+    time: `1h 30m`,
+    rating: 10,
+    votes: 1000000,
+    description: `Some Description`,
+    id: 1,
+    isFavorite: true,
+    videoUrl: `https://url.com`,
+  },
+  {
+    title: `Movie Name`,
+    posterUrl: `https://url.com`,
+    backgroundUrl: `https://url.com`,
+    backgroundColor: `some color`,
+    previewUrl: `https://url.com`,
+    previewImage: `https://url.com`,
+    genre: `genre 2`,
+    release: 2020,
+    director: `Famous Director`,
+    starring: [`Actor One`, `Actor Two`, `Actor Three`],
+    time: `1h 30m`,
+    rating: 10,
+    votes: 1000000,
+    description: `Some Description`,
+    id: 1,
+    isFavorite: true,
+    videoUrl: `https://url.com`,
+  },
+  {
+    title: `Movie Name`,
+    posterUrl: `https://url.com`,
+    backgroundUrl: `https://url.com`,
+    backgroundColor: `some color`,
+    previewUrl: `https://url.com`,
+    previewImage: `https://url.com`,
+    genre: `genre 3`,
+    release: 2020,
+    director: `Famous Director`,
+    starring: [`Actor One`, `Actor Two`, `Actor Three`],
+    time: `1h 30m`,
+    rating: 10,
+    votes: 1000000,
+    description: `Some Description`,
+    id: 1,
+    isFavorite: true,
+    videoUrl: `https://url.com`,
+  },
 ];
 
 const movie = {
-  title: `Movie title`,
-  posterUrl: `https://url.com/poster.jpg`,
-  backgroundUrl: `https://url.com/poster/1.jpg`,
-  previewUrl: `https://url.com/preview/video.mp4`,
-  genre: `Movie Genre`,
+  title: `Movie Name`,
+  posterUrl: `https://url.com`,
+  backgroundUrl: `https://url.com`,
+  backgroundColor: `some color`,
+  previewUrl: `https://url.com`,
+  previewImage: `https://url.com`,
+  genre: `genre`,
   release: 2020,
-  director: `Director Name`,
-  starring: [`Actor 1`, `Actor 2`, `Actor 3`],
-  time: `1h 00m`,
+  director: `Famous Director`,
+  starring: [`Actor One`, `Actor Two`, `Actor Three`],
+  time: `1h 30m`,
   rating: 10,
-  votes: 1000,
-  description: `Movie description`,
-  reviews: [
-    {
-      date: `June 25, 2020`,
-      user: `John Doe`,
-      comment: `Comment text.`,
-      rating: 8.9
-    },
-  ]
+  votes: 1000000,
+  description: `Some Description`,
+  id: 1,
+  isFavorite: true,
+  videoUrl: `https://url.com`,
 };
 
 const mockComponent = () => <div />;
+const store = mockStore({
+  activeMovieCard: null,
+  isBigPlayerActive: false,
+  isSignIn: false
+});
 
 const MockComponentWrapped = withActiveCard(mockComponent);
 
 it(`Should render MoviePage component`, ()=>{
   const tree = renderer.create(
-      <MockComponentWrapped
-        movies={movies}
-        movie={movie}
-        onMovieCardClick={()=>{}}
-      />
+      <Provider store={store}>
+        <MockComponentWrapped
+          movies={films}
+          movie={movie}
+          onMovieCardClick={()=>{}}
+          getReviews={() => {}}
+        />
+      </Provider>
   ).toJSON();
 
   expect(tree).toMatchSnapshot();
@@ -74,13 +131,13 @@ it(`Should render MoviePage component`, ()=>{
 
 it(`Should render Main component`, ()=>{
   const tree = renderer.create(
-      <MockComponentWrapped
-        promoTitle = {FilmData.TITLE}
-        promoGenre = {FilmData.GENRE}
-        promoYear = {FilmData.YEAR}
-        movies = {movies}
-        onMovieCardClick={() => {}}
-      />
+      <Provider store={store}>
+        <MockComponentWrapped
+          movies = {films}
+          onMovieCardClick={() => {}}
+          getReviews={() => {}}
+        />
+      </Provider>
   ).toJSON();
 
   expect(tree).toMatchSnapshot();

@@ -19,12 +19,11 @@ const MoviePage = (props) => {
   const {title, posterUrl, backgroundUrl, genre, release} = movie;
 
   const renderActiveTab = () => {
-    const {reviews} = movie;
     switch (activeTab) {
       case Tab.DETAILS:
         return <MovieDetails movie={movie} />;
       case Tab.REVIEWS:
-        return <MovieReviews reviews={reviews} />;
+        return <MovieReviews movieId={movie.id} />;
       default:
         return <MovieOverview movie={movie} />;
     }
@@ -117,7 +116,11 @@ const MoviePage = (props) => {
         <div className="page-content">
           <section className="catalog catalog--like-this">
             <h2 className="catalog__title">More like this</h2>
-            <MoviesSimilar movies={movies} movie={movie} onMovieCardClick={onMovieCardClick} />
+            <MoviesSimilar
+              movies={movies}
+              movie={movie}
+              onMovieCardClick={onMovieCardClick}
+            />
           </section>
 
           <footer className="page-footer">
@@ -148,7 +151,6 @@ MoviePage.propTypes = {
   onBigPlayerOnOff: PropTypes.func.isRequired,
   isBigPlayerActive: PropTypes.bool.isRequired,
 };
-
 
 const mapStateToProps = (state) => ({
   movies: getMovies(state)

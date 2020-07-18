@@ -14,9 +14,9 @@ exports[`Should render MovieList component 1`] = `
       onClick={[Function]}
     >
       <img
-        alt="Movie Title"
+        alt="Movie Name"
         height="175"
-        src="https://url.com/poster.jpg"
+        src="https://url.com"
         width="280"
       />
     </div>
@@ -28,7 +28,91 @@ exports[`Should render MovieList component 1`] = `
         className="small-movie-card__link"
         href="movie-page.html"
       >
-        Movie Title
+        Movie Name
+      </a>
+    </h3>
+  </article>
+  <article
+    className="small-movie-card catalog__movies-card"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className="small-movie-card__image"
+      onClick={[Function]}
+    >
+      <img
+        alt="Movie Name"
+        height="175"
+        src="https://url.com"
+        width="280"
+      />
+    </div>
+    <h3
+      className="small-movie-card__title"
+      onClick={[Function]}
+    >
+      <a
+        className="small-movie-card__link"
+        href="movie-page.html"
+      >
+        Movie Name
+      </a>
+    </h3>
+  </article>
+  <article
+    className="small-movie-card catalog__movies-card"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className="small-movie-card__image"
+      onClick={[Function]}
+    >
+      <img
+        alt="Movie Name"
+        height="175"
+        src="https://url.com"
+        width="280"
+      />
+    </div>
+    <h3
+      className="small-movie-card__title"
+      onClick={[Function]}
+    >
+      <a
+        className="small-movie-card__link"
+        href="movie-page.html"
+      >
+        Movie Name
+      </a>
+    </h3>
+  </article>
+  <article
+    className="small-movie-card catalog__movies-card"
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+  >
+    <div
+      className="small-movie-card__image"
+      onClick={[Function]}
+    >
+      <img
+        alt="Movie Name"
+        height="175"
+        src="https://url.com"
+        width="280"
+      />
+    </div>
+    <h3
+      className="small-movie-card__title"
+      onClick={[Function]}
+    >
+      <a
+        className="small-movie-card__link"
+        href="movie-page.html"
+      >
+        Movie Name
       </a>
     </h3>
   </article>

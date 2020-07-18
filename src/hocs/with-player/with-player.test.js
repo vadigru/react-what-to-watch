@@ -3,32 +3,30 @@ import renderer from "react-test-renderer";
 import withPlayer from "./with-player.jsx";
 
 const movie = {
-  title: `Movie Title`,
-  posterUrl: `https://url.com/poster.jpg`,
-  backgroundUrl: `https://url.com/poster/1.jpg`,
-  previewUrl: `https://url.com/preview/video.mp4`,
-  genre: `Movie Genre`,
+  title: `Movie Name`,
+  posterUrl: `https://url.com`,
+  backgroundUrl: `https://url.com`,
+  backgroundColor: `some color`,
+  previewUrl: `https://url.com`,
+  previewImage: `https://url.com`,
+  genre: `genre`,
   release: 2020,
-  director: `Director Name`,
+  director: `Famous Director`,
   starring: [`Actor One`, `Actor Two`, `Actor Three`],
-  time: `1h 00m`,
+  time: `1h 30m`,
   rating: 10,
-  votes: 1000,
-  description: `Movie Description`,
-  reviews: [
-    {
-      date: `June 25, 2020`,
-      user: `John Doe`,
-      comment: `Comment text.`,
-      rating: 8.9
-    },
-  ]
+  votes: 1000000,
+  description: `Some Description`,
+  id: 1,
+  isFavorite: true,
+  videoUrl: `https://url.com`,
 };
 
 const MockComponent = () => <div>
   <video
     ref={ref}
     src={movie.previewUrl}
+    previewImage={movie.previewImage}
     className="player__video"
     poster={movie.backgroundUrl}
     width="100%"
@@ -50,6 +48,7 @@ it(`render withPlayer`, () => {
         <video
           ref={ref}
           src={movie.previewUrl}
+          previewImage={movie.previewImage}
           className="player__video"
           poster={movie.backgroundUrl}
           width="100%"

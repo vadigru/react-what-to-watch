@@ -5,6 +5,7 @@ import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 import {movieType} from "../../prop-types/types.js";
 import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
+import SignIn from "../sign-in/sign-in.jsx";
 
 const MoviePageWrapped = withActiveTab(MoviePage);
 class App extends React.PureComponent {
@@ -12,8 +13,18 @@ class App extends React.PureComponent {
     super(props);
   }
 
+  _renderSignInPage() {
+    const {onSubmitClick} = this.props;
+    return (
+      <SignIn
+        onSubmit={onSubmitClick}
+      />
+    );
+  }
+
   _renderMoviePage() {
     const {activeMovieCard, onMovieCardClick, isBigPlayerActive, onBigPlayerOnOff} = this.props;
+
     return (
       <MoviePageWrapped
         movie={activeMovieCard}
@@ -25,11 +36,16 @@ class App extends React.PureComponent {
   }
 
   _renderApp() {
-    const {activeMovieCard, onMovieCardClick, isBigPlayerActive, onBigPlayerOnOff} = this.props;
+    const {activeMovieCard, onMovieCardClick, isBigPlayerActive, onBigPlayerOnOff, onSignInClickHandler, isSignIn} = this.props;
+
     if (activeMovieCard !== null) {
       return (
         this._renderMoviePage()
       );
+    }
+
+    if (isSignIn) {
+      return this._renderSignInPage();
     }
 
     return (
@@ -37,6 +53,7 @@ class App extends React.PureComponent {
         onMovieCardClick={onMovieCardClick}
         isBigPlayerActive={isBigPlayerActive}
         onBigPlayerOnOff={onBigPlayerOnOff}
+        onSignInClickHandler={onSignInClickHandler}
       />
     );
   }
@@ -51,18 +68,24 @@ class App extends React.PureComponent {
           <Route exact path="/dev-movie-page">
             {this._renderMoviePage()}
           </Route>
+          <Route exact path="/dev-sign-in">
+            {this._renderSignInPage()}
+          </Route>
         </Switch>
       </BrowserRouter>
     );
   }
 }
 
-
 App.propTypes = {
   activeMovieCard: movieType || null.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
   isBigPlayerActive: PropTypes.bool.isRequired,
-  onBigPlayerOnOff: PropTypes.func.isRequired
+  onBigPlayerOnOff: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  onSignInClickHandler: PropTypes.func.isRequired,
+  isSignIn: PropTypes.bool.isRequired,
+  onSubmitClick: PropTypes.func.isRequired
 };
 
 export default App;

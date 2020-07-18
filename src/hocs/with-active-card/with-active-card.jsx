@@ -1,4 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
+import {Operation as UserOperation} from "../../reducer/user/user.js";
+import {connect} from "react-redux";
 
 const withActiveCard = (Component) => {
   class WithActiveCard extends React.PureComponent {
@@ -7,11 +10,14 @@ const withActiveCard = (Component) => {
 
       this.state = {
         activeMovieCard: null,
-        isBigPlayerActive: false
+        isBigPlayerActive: false,
+        isSignIn: false
       };
 
       this._handleMovieCardClick = this._handleMovieCardClick.bind(this);
       this._handleBigPlayerOnOff = this._handleBigPlayerOnOff.bind(this);
+      this._handleSignInClick = this._handleSignInClick.bind(this);
+      this._handleSubmitClick = this._handleSubmitClick.bind(this);
     }
 
     _handleBigPlayerOnOff() {
@@ -21,27 +27,58 @@ const withActiveCard = (Component) => {
     }
 
     _handleMovieCardClick(movie) {
-      return () => this.setState(
-          {activeMovieCard: movie}
-      );
+      return () => {
+        this.props.getReviews(movie.id);
+        this.setState({
+          activeMovieCard: movie
+        });
+      };
+    }
+
+    _handleSignInClick() {
+      this.setState({
+        isSignIn: true,
+      });
+    }
+
+    _handleSubmitClick(authData) {
+      const {login} = this.props;
+      this.setState({
+        isSignIn: false,
+      });
+      login(authData);
     }
 
     render() {
-      const {activeMovieCard} = this.state;
+      const {activeMovieCard, isBigPlayerActive, isSignIn} = this.state;
 
       return (
         <Component
           {...this.props}
+          isSignIn={isSignIn}
+          isBigPlayerActive={isBigPlayerActive}
           activeMovieCard={activeMovieCard}
           onMovieCardClick={this._handleMovieCardClick}
           onBigPlayerOnOff={this._handleBigPlayerOnOff}
-          isBigPlayerActive={this.state.isBigPlayerActive}
+          onSignInClickHandler={this._handleSignInClick}
+          onSubmitClick={this._handleSubmitClick}
         />
       );
     }
   }
 
-  return WithActiveCard;
+  WithActiveCard.propTypes = {
+    login: PropTypes.func.isRequired,
+    getReviews: PropTypes.func.isRequired
+  };
+
+  const mapDispatchToProps = (dispatch) => ({
+    login(authData) {
+      dispatch(UserOperation.login(authData));
+    }
+  });
+
+  return connect(null, mapDispatchToProps)(WithActiveCard);
 };
 
 export default withActiveCard;

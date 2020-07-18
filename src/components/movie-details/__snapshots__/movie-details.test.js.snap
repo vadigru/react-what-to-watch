@@ -18,7 +18,7 @@ exports[`Should render MovieDetails component 1`] = `
       <span
         className="movie-card__details-value"
       >
-        Director Name
+        Famous Director
       </span>
     </p>
     <p
@@ -58,7 +58,7 @@ exports[`Should render MovieDetails component 1`] = `
       <span
         className="movie-card__details-value"
       >
-        1h 00m
+        1h 30m
       </span>
     </p>
     <p
@@ -72,7 +72,7 @@ exports[`Should render MovieDetails component 1`] = `
       <span
         className="movie-card__details-value"
       >
-        Movie Genre
+        genre
       </span>
     </p>
     <p

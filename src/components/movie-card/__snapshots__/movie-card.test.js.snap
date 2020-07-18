@@ -13,7 +13,7 @@ exports[`Should render MovieCard component 1`] = `
     <video
       autoPlay={true}
       height="175"
-      src="https://url.com/preview/video.mp4"
+      src="https://url.com"
       width="100%"
     />
   </div>
@@ -25,7 +25,7 @@ exports[`Should render MovieCard component 1`] = `
       className="small-movie-card__link"
       href="movie-page.html"
     >
-      Movie Title
+      Movie Name
     </a>
   </h3>
 </article>
