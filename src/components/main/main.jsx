@@ -12,6 +12,8 @@ import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 import {getMaxGenresCount, getGenresList} from "../../utils/common.js";
 import {getGenre, getShowedMovies} from "../../reducer/state/selectors.js";
 import {getMovies, getPromo, getMoviesByGenre} from "../../reducer/data/selectors.js";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const VideoPlayerBigWrapped = withPlayer(VideoPlayerBig);
 
@@ -28,6 +30,8 @@ const Main = (props) => {
     showDefaultMovies,
     isBigPlayerActive,
     onBigPlayerOnOff,
+    authorizationStatus,
+    onSignInClickHandler
   } = props;
 
   const genresList = getMaxGenresCount(getGenresList(movies));
@@ -58,9 +62,13 @@ const Main = (props) => {
             </div>
 
             <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
+              {authorizationStatus === AuthorizationStatus.AUTH ? (
+                <div className="user-block__avatar">
+                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                </div>) : (<a onClick={onSignInClickHandler} href="#" className="user-block__link">
+                Sign in
+              </a>
+              )}
             </div>
           </header>
 
@@ -148,6 +156,7 @@ const mapStateToProps = (state) => ({
   movies: getMovies(state),
   showedMovies: getShowedMovies(state),
   filteredMovies: getMoviesByGenre(state),
+  authorizationStatus: getAuthorizationStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -168,6 +177,7 @@ Main.propTypes = {
     posterUrl: PropTypes.string,
     backgroundUrl: PropTypes.string,
     previewUrl: PropTypes.string,
+    // previewImage: PropTypes.string,
     genre: PropTypes.string,
     release: PropTypes.number,
     director: PropTypes.string,
@@ -187,6 +197,8 @@ Main.propTypes = {
   filteredMovies: PropTypes.arrayOf(movieType).isRequired,
   isBigPlayerActive: PropTypes.bool.isRequired,
   onBigPlayerOnOff: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  onSignInClickHandler: PropTypes.func.isRequired
 };
 
 export {Main};

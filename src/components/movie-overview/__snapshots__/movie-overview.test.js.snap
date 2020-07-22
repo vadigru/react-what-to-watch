@@ -21,7 +21,7 @@ Array [
       <span
         className="movie-rating__count"
       >
-        1000
+        1000000
          ratings
       </span>
     </p>
@@ -30,14 +30,14 @@ Array [
     className="movie-card__text"
   >
     <p>
-      Movie Description
+      Some Description
     </p>
     <p
       className="movie-card__director"
     >
       <strong>
         Director: 
-        Director Name
+        Famous Director
       </strong>
     </p>
     <p

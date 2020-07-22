@@ -12,7 +12,10 @@ const MoviesSimilar = (props) => {
   const {movies, movie, onMovieCardClick} = props;
 
   return (
-    <MoviesList movies={getSimilarMovies(movies, movie)} onMovieCardClick={onMovieCardClick}/>
+    <MoviesList
+      movies={getSimilarMovies(movies, movie)}
+      onMovieCardClick={onMovieCardClick}
+    />
   );
 };
 

@@ -7,12 +7,25 @@ import reducer from "./reducer/reducer.js";
 import App from "./components/app/app.jsx";
 import withActiveCard from "./hocs/with-active-card/with-active-card.jsx";
 import {createAPI} from "./api.js";
-import {Operation} from "./reducer/data/data.js";
+import {Operation as DataOperation} from "./reducer/data/data.js";
+import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
 import {composeWithDevTools} from "redux-devtools-extension";
 
 const AppWrapped = withActiveCard(App);
 
-const api = createAPI();
+const onUnauthorized = () => {
+  store.dispatch(
+      ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)
+  );
+};
+
+const getMovieReviews = (movieId) => {
+  store.dispatch(
+      DataOperation.getReviews(movieId)
+  );
+};
+
+const api = createAPI(onUnauthorized);
 
 const store = createStore(
     reducer,
@@ -21,13 +34,16 @@ const store = createStore(
     )
 );
 
-store.dispatch(Operation.getMovies());
-store.dispatch(Operation.getPromo());
+store.dispatch(DataOperation.getMovies());
+store.dispatch(DataOperation.getPromo());
+store.dispatch(UserOperation.checkAuth());
 
 const init = () => {
   ReactDom.render(
       <Provider store={store}>
-        <AppWrapped />
+        <AppWrapped
+          getReviews={getMovieReviews}
+        />
       </Provider>,
       document.querySelector(`#root`)
   );

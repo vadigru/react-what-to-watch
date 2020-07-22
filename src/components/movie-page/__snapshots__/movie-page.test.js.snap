@@ -12,8 +12,8 @@ Array [
         className="movie-card__bg"
       >
         <img
-          alt="Movie Title"
-          src="https://url.com/poster/1.jpg"
+          alt="Movie Name"
+          src="https://url.com"
         />
       </div>
       <h1
@@ -72,7 +72,7 @@ Array [
           <h2
             className="movie-card__title"
           >
-            Movie Title
+            Movie Name
           </h2>
           <p
             className="movie-card__meta"
@@ -80,7 +80,7 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Movie Genre
+              genre
             </span>
             <span
               className="movie-card__year"
@@ -146,9 +146,9 @@ Array [
           className="movie-card__poster movie-card__poster--big"
         >
           <img
-            alt="Movie Title"
+            alt="Movie Name"
             height="327"
-            src="https://url.com/poster.jpg"
+            src="https://url.com"
             width="218"
           />
         </div>
@@ -219,7 +219,7 @@ Array [
               <span
                 className="movie-rating__count"
               >
-                1000
+                1000000
                  ratings
               </span>
             </p>
@@ -228,14 +228,14 @@ Array [
             className="movie-card__text"
           >
             <p>
-              Movie Description
+              Some Description
             </p>
             <p
               className="movie-card__director"
             >
               <strong>
                 Director: 
-                Director Name
+                Famous Director
               </strong>
             </p>
             <p

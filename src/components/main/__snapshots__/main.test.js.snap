@@ -9,8 +9,8 @@ Array [
       className="movie-card__bg"
     >
       <img
-        alt="Movie Title"
-        src="https://url.com/poster/1.jpg"
+        alt="Movie Name"
+        src="https://url.com"
       />
     </div>
     <h1
@@ -47,16 +47,13 @@ Array [
       <div
         className="user-block"
       >
-        <div
-          className="user-block__avatar"
+        <a
+          className="user-block__link"
+          href="#"
+          onClick={[Function]}
         >
-          <img
-            alt="User avatar"
-            height="63"
-            src="img/avatar.jpg"
-            width="63"
-          />
-        </div>
+          Sign in
+        </a>
       </div>
     </header>
     <div
@@ -71,7 +68,7 @@ Array [
           <img
             alt="The Grand Budapest Hotel poster"
             height="327"
-            src="https://url.com/poster.jpg"
+            src="https://url.com"
             width="218"
           />
         </div>
@@ -81,7 +78,7 @@ Array [
           <h2
             className="movie-card__title"
           >
-            Movie Title
+            Movie Name
           </h2>
           <p
             className="movie-card__meta"
@@ -89,7 +86,7 @@ Array [
             <span
               className="movie-card__genre"
             >
-              Movie Genre
+              genre
             </span>
             <span
               className="movie-card__year"
@@ -173,7 +170,40 @@ Array [
             href="#"
             onClick={[Function]}
           >
-            Movie Genre
+            genre
+          </a>
+        </li>
+        <li
+          className="catalog__genres-item false"
+        >
+          <a
+            className="catalog__genres-link"
+            href="#"
+            onClick={[Function]}
+          >
+            genre 1
+          </a>
+        </li>
+        <li
+          className="catalog__genres-item false"
+        >
+          <a
+            className="catalog__genres-link"
+            href="#"
+            onClick={[Function]}
+          >
+            genre 2
+          </a>
+        </li>
+        <li
+          className="catalog__genres-item false"
+        >
+          <a
+            className="catalog__genres-link"
+            href="#"
+            onClick={[Function]}
+          >
+            genre 3
           </a>
         </li>
       </ul>
@@ -190,9 +220,9 @@ Array [
             onClick={[Function]}
           >
             <img
-              alt="Movie Title"
+              alt="Movie Name"
               height="175"
-              src="https://url.com/poster.jpg"
+              src="https://url.com"
               width="280"
             />
           </div>
@@ -204,7 +234,91 @@ Array [
               className="small-movie-card__link"
               href="movie-page.html"
             >
-              Movie Title
+              Movie Name
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <div
+            className="small-movie-card__image"
+            onClick={[Function]}
+          >
+            <img
+              alt="Movie Name"
+              height="175"
+              src="https://url.com"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+            onClick={[Function]}
+          >
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
+            >
+              Movie Name
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <div
+            className="small-movie-card__image"
+            onClick={[Function]}
+          >
+            <img
+              alt="Movie Name"
+              height="175"
+              src="https://url.com"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+            onClick={[Function]}
+          >
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
+            >
+              Movie Name
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+        >
+          <div
+            className="small-movie-card__image"
+            onClick={[Function]}
+          >
+            <img
+              alt="Movie Name"
+              height="175"
+              src="https://url.com"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+            onClick={[Function]}
+          >
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
+            >
+              Movie Name
             </a>
           </h3>
         </article>

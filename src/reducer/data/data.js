@@ -4,11 +4,13 @@ import {rebuildMovieData, rebuildMoviesData} from "../../utils/common.js";
 const initialState = {
   films: [],
   promo: {},
+  reviews: []
 };
 
 const ActionType = {
   GET_MOVIES: `GET_MOVIES`,
   GET_PROMO: `GET_PROMO`,
+  GET_REVIEWS: `GET_REVIEWS`
 };
 
 const ActionCreator = {
@@ -19,6 +21,10 @@ const ActionCreator = {
   getPromo: (movie) => ({
     type: ActionType.GET_PROMO,
     payload: movie,
+  }),
+  getReviews: (reviews) => ({
+    type: ActionType.GET_REVIEWS,
+    payload: reviews,
   }),
 };
 
@@ -34,6 +40,12 @@ const Operation = {
       .then((response) => {
         dispatch(ActionCreator.getPromo(rebuildMovieData(response.data)));
       });
+  },
+  getReviews: (movieId) => (dispatch, getState, api) => {
+    return api.get(`/comments/${movieId}`)
+      .then((response) => {
+        dispatch(ActionCreator.getReviews(response.data));
+      });
   }
 };
 
@@ -46,6 +58,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.GET_PROMO:
       return extend(state, {
         promo: action.payload,
+      });
+    case ActionType.GET_REVIEWS:
+      return extend(state, {
+        reviews: action.payload,
       });
   }
   return state;
