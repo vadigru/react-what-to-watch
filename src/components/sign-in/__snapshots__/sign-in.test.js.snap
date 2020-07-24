@@ -40,12 +40,12 @@ exports[`Should render SignIn component 1`] = `
   <div
     className="sign-in user-page__content"
   >
-    
     <form
       action="#"
       className="sign-in__form"
       onSubmit={[Function]}
     >
+      
       <div
         className="sign-in__fields"
       >
