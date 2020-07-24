@@ -5,6 +5,8 @@ import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 import Namespace from "../../reducer/namespace.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {MemoryRouter} from "react-router-dom";
 
 const mockStore = configureStore([]);
 
@@ -112,27 +114,43 @@ it(`Should render MoviePage component`, () => {
   const store = mockStore({
     [Namespace.DATA]: {
       films,
-      promo: films[0]
+      promo: movie,
+      reviews: [],
+      isFilmsLoading: false,
+      isPromoLoading: false,
+      isReviewsLoading: false,
+      isReviewPosting: false,
+      isReviewSendingError: false,
     },
     [Namespace.STATE]: {
       genre: ALL_GENRES,
-      showedMovies: MOVIES_DEFAULT_AMOUNT
-    }
+      showedMovies: MOVIES_DEFAULT_AMOUNT,
+      selectedMovieId: 0
+    },
+    [Namespace.USER]: {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      isValidAuthorization: true,
+      avatarUrl: ``,
+    },
   });
 
   const tree = renderer
     .create(
         <Provider store={store}>
-          <MoviePage
-            movies={films}
-            movie={movie}
-            previewImage={movie.previewImage}
-            onMovieCardClick={() => {}}
-            activeTab={`Overview`}
-            onTabClick={() => {}}
-            isBigPlayerActive={false}
-            onBigPlayerOnOff={() => {}}
-          />
+          <MemoryRouter>
+            <MoviePage
+              movies={films}
+              movie={movie}
+              previewImage={movie.previewImage}
+              onMovieCardClick={() => {}}
+              activeTab={`Overview`}
+              onTabClick={() => {}}
+              onSignInClick={() => {}}
+              isBigPlayerActive={false}
+              onBigPlayerOnOff={() => {}}
+              authorizationStatus={AuthorizationStatus.AUTH}
+            />
+          </MemoryRouter>
         </Provider>
     )
   .toJSON();

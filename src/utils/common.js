@@ -75,3 +75,11 @@ export const rebuildMovieData = (movie) => {
 };
 
 export const rebuildMoviesData = (movies) => movies.map(rebuildMovieData);
+
+export const formatReviewDate = (dateData, isForShow) => {
+  const date = new Date(dateData);
+  const dateFormat = new Intl.DateTimeFormat(`en-US`, {year: `numeric`, month: `${isForShow ? `long` : `2-digit`}`, day: `numeric`});
+  const [{value: month},, {value: day},, {value: year}] = dateFormat.formatToParts(date);
+  return isForShow ? `${month} ${day}, ${year}` : `${year}-${month}-${day}`;
+};
+

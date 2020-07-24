@@ -11,7 +11,7 @@ import {Operation as DataOperation} from "./reducer/data/data.js";
 import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
 import {composeWithDevTools} from "redux-devtools-extension";
 
-const AppWrapped = withActiveCard(App);
+const AppWithActiveCard = withActiveCard(App);
 
 const onUnauthorized = () => {
   store.dispatch(
@@ -41,7 +41,7 @@ store.dispatch(UserOperation.checkAuth());
 const init = () => {
   ReactDom.render(
       <Provider store={store}>
-        <AppWrapped
+        <AppWithActiveCard
           getReviews={getMovieReviews}
         />
       </Provider>,

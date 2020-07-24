@@ -116,14 +116,23 @@ it(`Should render Main component`, () => {
   const store = mockStore({
     [Namespace.DATA]: {
       films,
-      promo: movie
+      promo: movie,
+      reviews: [],
+      isFilmsLoading: false,
+      isPromoLoading: false,
+      isReviewsLoading: false,
+      isReviewPosting: false,
+      isReviewSendingError: false,
     },
     [Namespace.STATE]: {
       genre: ALL_GENRES,
-      showedMovies: MOVIES_DEFAULT_AMOUNT
+      showedMovies: MOVIES_DEFAULT_AMOUNT,
+      selectedMovieId: 0
     },
     [Namespace.USER]: {
-      authorizationStatus: AuthorizationStatus.NO_AUTH
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      isValidAuthorization: true,
+      avatarUrl: ``,
     },
   });
 
@@ -131,10 +140,13 @@ it(`Should render Main component`, () => {
     .create(
         <Provider store={store}>
           <Main
+            avatarUrl={``}
             onMovieCardClick={() => () => {}}
             isBigPlayerActive={false}
             onBigPlayerOnOff={() => {}}
-            onSignInClickHandler={() => {}}
+            onSignInClick={() => {}}
+            loadingFilmsStatus={true}
+            loadingPromoStatus={true}
           />
         </Provider>)
   .toJSON();

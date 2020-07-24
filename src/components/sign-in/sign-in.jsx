@@ -13,7 +13,6 @@ class SignIn extends React.PureComponent {
 
   handleSubmit(evt) {
     const {onSubmit} = this.props;
-
     evt.preventDefault();
 
     onSubmit({
@@ -23,6 +22,7 @@ class SignIn extends React.PureComponent {
   }
 
   render() {
+    const {isValid} = this.props;
     return (
       <div className="user-page">
         <header className="page-header user-page__head">
@@ -43,6 +43,10 @@ class SignIn extends React.PureComponent {
             className="sign-in__form"
             onSubmit={this.handleSubmit}
           >
+            {isValid ? `` :
+              <div className="sign-in__message">
+                <p>We can’t recognize this email <br/> and password combination. Please try again.</p>
+              </div>}
             <div className="sign-in__fields">
               <div className="sign-in__field">
                 <input
@@ -52,6 +56,7 @@ class SignIn extends React.PureComponent {
                   name="user-email"
                   id="user-email"
                   ref={this.loginRef}
+                  required
                 />
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
@@ -63,12 +68,16 @@ class SignIn extends React.PureComponent {
                   name="user-password"
                   id="user-password"
                   ref={this.passwordRef}
+                  required
                 />
                 <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
               </div>
             </div>
             <div className="sign-in__submit">
-              <button className="sign-in__btn" type="submit">Sign in</button>
+              <button
+                className="sign-in__btn"
+                type="submit"
+              >Sign in</button>
             </div>
           </form>
         </div>
@@ -92,7 +101,8 @@ class SignIn extends React.PureComponent {
 }
 
 SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  isValid: PropTypes.bool.isRequired
 };
 
 export default SignIn;

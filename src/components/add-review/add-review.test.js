@@ -1,10 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import configureStore from "redux-mock-store";
+import AddReview from "./add-review.jsx";
 import {Provider} from "react-redux";
-import withActiveCard from "./with-active-card.jsx";
-import Namespace from "../../reducer/namespace.js";
+import configureStore from "redux-mock-store";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import Namespace from "../../reducer/namespace.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const mockStore = configureStore([]);
@@ -88,49 +88,66 @@ const films = [
   },
 ];
 
-const mockComponent = () => <div />;
-const store = mockStore({
-  [Namespace.DATA]: {
-    films,
-    promo: films[0]
-  },
-  [Namespace.STATE]: {
-    genre: ALL_GENRES,
-    showedMovies: MOVIES_DEFAULT_AMOUNT
-  },
-  [Namespace.USER]: {
-    authorizationStatus: AuthorizationStatus.AUTH
-  }
-});
+const movie = {
+  title: `Movie Name`,
+  posterUrl: `https://url.com`,
+  backgroundUrl: `https://url.com`,
+  backgroundColor: `some color`,
+  previewUrl: `https://url.com`,
+  previewImage: `https://url.com`,
+  genre: `genre`,
+  release: 2020,
+  director: `Famous Director`,
+  starring: [`Actor One`, `Actor Two`, `Actor Three`],
+  time: `1h 30m`,
+  rating: 10,
+  votes: 1000000,
+  description: `Some Description`,
+  id: 1,
+  isFavorite: true,
+  videoUrl: `https://url.com`,
+};
 
+it(`Should render UserBlock component`, () => {
+  const store = mockStore({
+    [Namespace.DATA]: {
+      films: [],
+      promo: {},
+      reviews: [],
+      isFilmsLoading: false,
+      isPromoLoading: false,
+      isReviewsLoading: false,
+      isReviewPosting: false,
+      isReviewSendingError: false,
+    },
+    [Namespace.STATE]: {
+      genre: ALL_GENRES,
+      showedMovies: MOVIES_DEFAULT_AMOUNT,
+      selectedMovieId: 0
+    },
+    [Namespace.USER]: {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      isValidAuthorization: true,
+      avatarUrl: ``,
+    },
+  });
 
-const MockComponentWrapped = withActiveCard(mockComponent);
+  const onSignInClick = jest.fn();
 
-it(`Should render MoviePage component`, ()=>{
-  const tree = renderer.create(
-      <Provider store={store}>
-        <MockComponentWrapped
-          // movies={films}
-          // movie={movie}
-          onMovieCardClick={()=>{}}
-          getReviews={() => {}}
-        />
-      </Provider>
-  ).toJSON();
-
-  expect(tree).toMatchSnapshot();
-});
-
-it(`Should render Main component`, ()=>{
-  const tree = renderer.create(
-      <Provider store={store}>
-        <MockComponentWrapped
-          // movies = {films}
-          onMovieCardClick={() => {}}
-          getReviews={() => {}}
-        />
-      </Provider>
-  ).toJSON();
+  const tree = renderer
+    .create(
+        <Provider store={store}>
+          <AddReview
+            selectedMovie={movie}
+            promo={movie}
+            isReviewPosting={false}
+            isReviewSendingError={false}
+            avatarUrl={``}
+            onSignInClick={onSignInClick}
+          />
+        </Provider>
+    )
+  .toJSON();
 
   expect(tree).toMatchSnapshot();
 });

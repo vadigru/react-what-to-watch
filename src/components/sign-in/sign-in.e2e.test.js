@@ -21,6 +21,7 @@ it(`Should submit a form`, () => {
 
   const signIn = mount(
       <SignIn
+        isValid={true}
         onSubmit={handleSubmit}
       />
   );

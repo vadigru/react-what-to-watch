@@ -40,6 +40,7 @@ exports[`Should render SignIn component 1`] = `
   <div
     className="sign-in user-page__content"
   >
+    
     <form
       action="#"
       className="sign-in__form"
@@ -56,6 +57,7 @@ exports[`Should render SignIn component 1`] = `
             id="user-email"
             name="user-email"
             placeholder="Email address"
+            required={true}
             type="email"
           />
           <label
@@ -73,6 +75,7 @@ exports[`Should render SignIn component 1`] = `
             id="user-password"
             name="user-password"
             placeholder="Password"
+            required={true}
             type="password"
           />
           <label

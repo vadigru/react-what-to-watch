@@ -4,7 +4,7 @@ export const movieType = PropTypes.shape({
   title: PropTypes.string.isRequired,
   posterUrl: PropTypes.string.isRequired,
   backgroundUrl: PropTypes.string.isRequired,
-  // backgroundColor: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
   previewUrl: PropTypes.string.isRequired,
   previewImage: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,

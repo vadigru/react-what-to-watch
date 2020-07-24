@@ -6,14 +6,15 @@ import ShowMoreButton from "../show-more-button/show-more-button.jsx";
 import Tabs from "../tabs/tabs.jsx";
 import VideoPlayerBig from "../video-player-big/video-player-big.jsx";
 import withPlayer from "../../hocs/with-player/with-player.jsx";
+import UserBlock from "../user-block/user-block.jsx";
 import {movieType} from "../../prop-types/types.js";
 import {ActionCreator} from "../../reducer/state/state.js";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 import {getMaxGenresCount, getGenresList} from "../../utils/common.js";
 import {getGenre, getShowedMovies} from "../../reducer/state/selectors.js";
 import {getMovies, getPromo, getMoviesByGenre} from "../../reducer/data/selectors.js";
-import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {getAvatar} from "../../reducer/user/selectors.js";
+import {getLoadingFilmsStatus, getLoadingPromoStatus} from "../../reducer/data/selectors.js";
 
 const VideoPlayerBigWrapped = withPlayer(VideoPlayerBig);
 
@@ -25,13 +26,15 @@ const Main = (props) => {
     filteredMovies,
     genre,
     promo,
+    avatarUrl,
     onMovieCardClick,
     changeGenre,
     showDefaultMovies,
     isBigPlayerActive,
     onBigPlayerOnOff,
-    authorizationStatus,
-    onSignInClickHandler
+    onSignInClick,
+    loadingFilmsStatus,
+    loadingPromoStatus,
   } = props;
 
   const genresList = getMaxGenresCount(getGenresList(movies));
@@ -61,69 +64,68 @@ const Main = (props) => {
               </a>
             </div>
 
-            <div className="user-block">
-              {authorizationStatus === AuthorizationStatus.AUTH ? (
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>) : (<a onClick={onSignInClickHandler} href="#" className="user-block__link">
-                Sign in
-              </a>
-              )}
-            </div>
+            <UserBlock avatarUrl={avatarUrl} onSignInClick={onSignInClick} />
+
           </header>
 
-          <div className="movie-card__wrap">
-            <div className="movie-card__info">
-              <div className="movie-card__poster">
-                <img src={promo.posterUrl} alt="The Grand Budapest Hotel poster" width="218" height="327" />
-              </div>
+          {loadingPromoStatus ?
+            <div style={{textAlign: `center`}}>UNABLE TO FIND PROMO MOVIE DUE TO THE SERVER ERROR</div> :
+            <div className="movie-card__wrap">
+              <div className="movie-card__info">
+                <div className="movie-card__poster">
+                  <img src={promo.posterUrl} alt={promo.title} width="218" height="327" />
+                </div>
 
-              <div className="movie-card__desc">
-                <h2 className="movie-card__title">{promo.title}</h2>
-                <p className="movie-card__meta">
-                  <span className="movie-card__genre">{promo.genre}</span>
-                  <span className="movie-card__year">{promo.release}</span>
-                </p>
+                <div className="movie-card__desc">
+                  <h2 className="movie-card__title">{promo.title}</h2>
+                  <p className="movie-card__meta">
+                    <span className="movie-card__genre">{promo.genre}</span>
+                    <span className="movie-card__year">{promo.release}</span>
+                  </p>
 
-                <div className="movie-card__buttons">
-                  <button
-                    className="btn btn--play movie-card__button"
-                    type="button"
-                    onClick={onBigPlayerOnOff}>
-                    <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s">
-                      </use>
-                    </svg>
-                    <span>Play</span>
-                  </button>
-                  <button className="btn btn--list movie-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                    <span>My list</span>
-                  </button>
+                  <div className="movie-card__buttons">
+                    <button
+                      className="btn btn--play movie-card__button"
+                      type="button"
+                      onClick={onBigPlayerOnOff}>
+                      <svg viewBox="0 0 19 19" width="19" height="19">
+                        <use xlinkHref="#play-s">
+                        </use>
+                      </svg>
+                      <span>Play</span>
+                    </button>
+                    <button className="btn btn--list movie-card__button" type="button">
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#add"></use>
+                      </svg>
+                      <span>My list</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </div>}
         </section>
 
         <div className="page-content">
           <section className="catalog">
             <h2 className="catalog__title visually-hidden">Catalog</h2>
+            {loadingFilmsStatus ?
+              <div style={{textAlign: `center`}}>UNABLE TO FIND ANY MOVIES DUE TO THE SERVER ERROR</div> :
+              <React.Fragment>
+                <Tabs
+                  className={`catalog__genres-`}
+                  tabNames={genresList}
+                  activeTab={genre}
+                  onTabClick={changeGenre}
+                  onGenreTabClick={showDefaultMovies}
+                />
 
-            <Tabs
-              className={`catalog__genres-`}
-              tabNames={genresList}
-              activeTab={genre}
-              onTabClick={changeGenre}
-              onGenreTabClick={showDefaultMovies}
-            />
-
-            <MoviesList
-              movies={filteredMovies}
-              onMovieCardClick={onMovieCardClick}
-            />
+                <MoviesList
+                  movies={filteredMovies}
+                  onMovieCardClick={onMovieCardClick}
+                />
+              </React.Fragment>
+            }
 
             {filteredMovies.length > MOVIES_DEFAULT_AMOUNT && genre !== ALL_GENRES ||
               showedMovies < movies.length && genre === ALL_GENRES
@@ -156,7 +158,9 @@ const mapStateToProps = (state) => ({
   movies: getMovies(state),
   showedMovies: getShowedMovies(state),
   filteredMovies: getMoviesByGenre(state),
-  authorizationStatus: getAuthorizationStatus(state)
+  avatarUrl: getAvatar(state),
+  loadingFilmsStatus: getLoadingFilmsStatus(state),
+  loadingPromoStatus: getLoadingPromoStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -177,7 +181,7 @@ Main.propTypes = {
     posterUrl: PropTypes.string,
     backgroundUrl: PropTypes.string,
     previewUrl: PropTypes.string,
-    // previewImage: PropTypes.string,
+    previewImage: PropTypes.string,
     genre: PropTypes.string,
     release: PropTypes.number,
     director: PropTypes.string,
@@ -187,6 +191,7 @@ Main.propTypes = {
     votes: PropTypes.number,
     description: PropTypes.string,
   }),
+  avatarUrl: PropTypes.string.isRequired,
   movies: PropTypes.arrayOf(movieType).isRequired,
   showedMovies: PropTypes.number.isRequired,
   showMoreMovies: PropTypes.func.isRequired,
@@ -197,8 +202,9 @@ Main.propTypes = {
   filteredMovies: PropTypes.arrayOf(movieType).isRequired,
   isBigPlayerActive: PropTypes.bool.isRequired,
   onBigPlayerOnOff: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  onSignInClickHandler: PropTypes.func.isRequired
+  onSignInClick: PropTypes.func.isRequired,
+  loadingFilmsStatus: PropTypes.bool.isRequired,
+  loadingPromoStatus: PropTypes.bool.isRequired
 };
 
 export {Main};

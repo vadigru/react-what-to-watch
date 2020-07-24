@@ -3,7 +3,7 @@ import axios from "axios";
 const TIMEOUT = 5000;
 
 const Error = {
-  UNAUTHORIZED: 401
+  UNAUTHORIZED: 401,
 };
 
 export const createAPI = (onUnauthorized) => {
@@ -17,18 +17,18 @@ export const createAPI = (onUnauthorized) => {
     return response;
   };
 
-  const onFail = (err) => {
+  const onError = (err) => {
     const {response} = err;
-
-    if (response.status === Error.UNAUTHORIZED) {
-      onUnauthorized();
-      throw err;
+    switch (response.status) {
+      case Error.UNAUTHORIZED:
+        onUnauthorized(response);
+        throw err;
     }
 
     throw err;
   };
 
-  api.interceptors.response.use(onSuccess, onFail);
+  api.interceptors.response.use(onSuccess, onError);
 
   return api;
 };

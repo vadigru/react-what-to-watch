@@ -5,6 +5,7 @@ import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 import Namespace from "../../reducer/namespace.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const mockStore = configureStore([]);
 
@@ -111,12 +112,24 @@ it(`Should render App component`, () => {
   const store = mockStore({
     [Namespace.DATA]: {
       films,
-      promo: films[0]
+      promo: movie,
+      reviews: [],
+      isFilmsLoading: false,
+      isPromoLoading: false,
+      isReviewsLoading: false,
+      isReviewPosting: false,
+      isReviewSendingError: false,
     },
     [Namespace.STATE]: {
       genre: ALL_GENRES,
-      showedMovies: MOVIES_DEFAULT_AMOUNT
-    }
+      showedMovies: MOVIES_DEFAULT_AMOUNT,
+      selectedMovieId: 0
+    },
+    [Namespace.USER]: {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      isValidAuthorization: true,
+      avatarUrl: ``,
+    },
   });
 
   const tree = renderer
@@ -125,12 +138,14 @@ it(`Should render App component`, () => {
           <App
             login={() => {}}
             isSignIn={false}
+            isValid={true}
             activeMovieCard={movie}
             onMovieCardClick={() => {}}
             isBigPlayerActive={false}
-            onSignInClickHandler={() => {}}
+            onSignInClick={() => {}}
             onSubmitClick={() => {}}
             onBigPlayerOnOff={() => {}}
+            authorizationStatus={AuthorizationStatus.AUTH}
           />
         </Provider>
     )
