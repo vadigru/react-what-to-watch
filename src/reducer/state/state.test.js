@@ -3,6 +3,7 @@ import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT, SHOW_DEFAULT_MOVIES} from "../../cons
 
 const initialState = {
   genre: ALL_GENRES,
+  selectedMovieId: 0,
   showedMovies: MOVIES_DEFAULT_AMOUNT
 };
 

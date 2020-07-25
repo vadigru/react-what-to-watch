@@ -4,6 +4,7 @@ import MovieDetails from "../movie-details/movie-details.jsx";
 import MovieOverview from "../movie-overview/movie-overview.jsx";
 import MovieReviews from "../movie-reviews/movie-reviews.jsx";
 import MoviesSimilar from "../movies-similar/movies-similar.jsx";
+import UserBlock from "../user-block/user-block.jsx";
 import {movieType} from "../../prop-types/types.js";
 import Tabs from "../tabs/tabs.jsx";
 import {Tab} from "../../const.js";
@@ -11,12 +12,31 @@ import withPlayer from "../../hocs/with-player/with-player.jsx";
 import VideoPlayerBig from "../video-player-big/video-player-big.jsx";
 import {getMovies} from "../../reducer/data/selectors.js";
 import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+import {getAuthorizationStatus, getAvatar} from "../../reducer/user/selectors.js";
+import {AuthorizationStatus} from "../../reducer/user/user";
 
 const VideoPlayerBigWrapped = withPlayer(VideoPlayerBig);
 
 const MoviePage = (props) => {
-  const {movies, movie, onMovieCardClick, activeTab, onTabClick, onBigPlayerOnOff, isBigPlayerActive} = props;
-  const {title, posterUrl, backgroundUrl, genre, release} = movie;
+  const {movies,
+    movie,
+    onMovieCardClick,
+    activeTab,
+    onTabClick,
+    onBigPlayerOnOff,
+    isBigPlayerActive,
+    authorizationStatus,
+    avatarUrl,
+    onSignInClick
+  } = props;
+
+  const {title,
+    posterUrl,
+    backgroundUrl,
+    genre,
+    release,
+    backgroundColor} = movie;
 
   const renderActiveTab = () => {
     switch (activeTab) {
@@ -39,7 +59,10 @@ const MoviePage = (props) => {
       />
     ) : (
       <React.Fragment>
-        <section className="movie-card movie-card--full">
+        <section
+          className="movie-card movie-card--full"
+          style={{backgroundColor: `${backgroundColor}`}}
+        >
           <div className="movie-card__hero">
             <div className="movie-card__bg">
               <img src={backgroundUrl} alt={title} />
@@ -56,11 +79,8 @@ const MoviePage = (props) => {
                 </a>
               </div>
 
-              <div className="user-block">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-                </div>
-              </div>
+              <UserBlock avatarUrl={avatarUrl} onSignInClick={onSignInClick}/>
+
             </header>
 
             <div className="movie-card__wrap">
@@ -85,7 +105,11 @@ const MoviePage = (props) => {
                     </svg>
                     <span>My list</span>
                   </button>
-                  <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                  {authorizationStatus === AuthorizationStatus.AUTH && (
+                    <Link to="/dev-review" className="btn movie-card__button">
+                      Add review
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -150,10 +174,15 @@ MoviePage.propTypes = {
   onTabClick: PropTypes.func.isRequired,
   onBigPlayerOnOff: PropTypes.func.isRequired,
   isBigPlayerActive: PropTypes.bool.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  avatarUrl: PropTypes.string.isRequired,
+  onSignInClick: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  movies: getMovies(state)
+  movies: getMovies(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  avatarUrl: getAvatar(state),
 });
 
 export default connect(mapStateToProps)(MoviePage);

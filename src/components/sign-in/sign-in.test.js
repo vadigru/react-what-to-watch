@@ -8,6 +8,7 @@ it(`Should render SignIn component`, () => {
   const tree = renderer
     .create(
         <SignIn
+          isValid={true}
           onSubmit={() => {}}
           onClick={onSignInClickHandler}
         />

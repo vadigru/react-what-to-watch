@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {getReviews} from "../../reducer/data/selectors.js";
+import {getLoadingReviewsStatus} from "../../reducer/data/selectors.js";
+import {formatReviewDate} from "../../utils/common.js";
 
 const renderReviews = (reviews) => {
   return (
@@ -13,7 +15,7 @@ const renderReviews = (reviews) => {
 
             <footer className="review__details">
               <cite className="review__author">{review.user.name}</cite>
-              <time className="review__date" dateTime="2016-12-24">{review.date}</time>
+              <time className="review__date" dateTime={formatReviewDate(review.date, false)}>{formatReviewDate(review.date, true)}</time>
             </footer>
           </blockquote>
 
@@ -25,22 +27,23 @@ const renderReviews = (reviews) => {
 };
 
 const MovieReviews = (props) => {
-  const {reviews} = props;
-
+  const {reviews, loadingReviews} = props;
   const reviewsHalf = Math.ceil(reviews.length / 2);
   const reviewsFirstHalf = reviews.slice(0, reviewsHalf);
   const reviewsSecondHalf = reviews.slice(reviewsHalf);
 
   return (
     <React.Fragment>
-      <div className="movie-card__reviews movie-card__row">
-        <div className="movie-card__reviews-col">
-          {renderReviews(reviewsFirstHalf)}
-        </div>
-        <div className="movie-card__reviews-col">
-          {renderReviews(reviewsSecondHalf)}
-        </div>
-      </div>
+      {loadingReviews ?
+        <div style={{marginTop: `100px`, color: `#212121`}}>FAILED TO LOAD COMMENTS</div> :
+        <div className="movie-card__reviews movie-card__row">
+          <div className="movie-card__reviews-col">
+            {renderReviews(reviewsFirstHalf)}
+          </div>
+          <div className="movie-card__reviews-col">
+            {renderReviews(reviewsSecondHalf)}
+          </div>
+        </div>}
     </React.Fragment>
   );
 };
@@ -55,11 +58,13 @@ MovieReviews.propTypes = {
     rating: PropTypes.number.isRequired,
     comment: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
-  })).isRequired
+  })).isRequired,
+  loadingReviews: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
   reviews: getReviews(state),
+  loadingReviews: getLoadingReviewsStatus(state)
 });
 
 export {MovieReviews};

@@ -45,6 +45,7 @@ exports[`Should render SignIn component 1`] = `
       className="sign-in__form"
       onSubmit={[Function]}
     >
+      
       <div
         className="sign-in__fields"
       >
@@ -56,6 +57,7 @@ exports[`Should render SignIn component 1`] = `
             id="user-email"
             name="user-email"
             placeholder="Email address"
+            required={true}
             type="email"
           />
           <label
@@ -73,6 +75,7 @@ exports[`Should render SignIn component 1`] = `
             id="user-password"
             name="user-password"
             placeholder="Password"
+            required={true}
             type="password"
           />
           <label

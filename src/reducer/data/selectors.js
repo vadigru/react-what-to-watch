@@ -14,6 +14,26 @@ export const getReviews = (state) => {
   return state[Namespace.DATA].reviews;
 };
 
+export const getLoadingFilmsStatus = (state) => {
+  return state[Namespace.DATA].isFilmsLoading;
+};
+
+export const getLoadingPromoStatus = (state) => {
+  return state[Namespace.DATA].isPromoLoading;
+};
+
+export const getLoadingReviewsStatus = (state) => {
+  return state[Namespace.DATA].isReviewsLoading;
+};
+
+export const getReviewPosting = (state) => {
+  return state[Namespace.DATA].isReviewPosting;
+};
+
+export const getReviewSendingError = (state) => {
+  return state[Namespace.DATA].isReviewSendingError;
+};
+
 export const filterMoviesByGenre = (state) => {
   const movies = state[Namespace.DATA].films;
   const genre = state[Namespace.STATE].genre;
@@ -28,4 +48,3 @@ export const getMoviesByGenre = createSelector(
     (state) => state,
     filterMoviesByGenre
 );
-
