@@ -129,6 +129,7 @@ it(`Should render App component`, () => {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
       isValidAuthorization: true,
       avatarUrl: ``,
+      isSignIn: false
     },
   });
 

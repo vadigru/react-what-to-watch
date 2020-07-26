@@ -9,37 +9,31 @@ import SignIn from "../sign-in/sign-in.jsx";
 import AddReview from "../add-review/add-review.jsx";
 import {connect} from "react-redux";
 import {getMovies, getPromo} from "../../reducer/data/selectors.js";
-import {getInvalidAuthorizationStatus} from "../../reducer/user/selectors.js";
-import {Operation as UserOperation} from "../../reducer/user/user.js";
-
+import {getInvalidAuthorizationStatus, getSignInFlag} from "../../reducer/user/selectors.js";
+import {Operation as UserOperation, ActionCreator} from "../../reducer/user/user.js";
+import withForm from "../../hocs/with-form/with-form.jsx";
 
 const MoviePageWrapped = withActiveTab(MoviePage);
+const AddReviewWithForm = withForm(AddReview);
 class App extends React.PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      isSignIn: false,
-    };
 
     this._handleSignInClick = this._handleSignInClick.bind(this);
   }
 
   _handleSignInClick() {
-    this.setState({
-      isSignIn: true,
-    });
+    const {changeSignInFlag} = this.props;
+    changeSignInFlag(true);
   }
 
   _renderSignInPage() {
-    const {login, isValidAuthorization} = this.props;
+    const {login, isValidAuthorization, changeSignInFlag} = this.props;
     return (
       <SignIn
         onSubmit={(authData) => {
           login(authData).then(() => {
-            this.setState({
-              isSignIn: false,
-            });
+            changeSignInFlag(false);
           });
         }}
         isValid={isValidAuthorization}
@@ -50,7 +44,7 @@ class App extends React.PureComponent {
   _renderReviewPage() {
     const {promo, selectedMovie} = this.props;
     return (
-      <AddReview
+      <AddReviewWithForm
         onSignInClick={this._handleSignInClick}
         selectedMovie={selectedMovie}
         promo={promo}
@@ -59,9 +53,15 @@ class App extends React.PureComponent {
   }
 
   _renderMoviePage() {
-    const {activeMovieCard, onMovieCardClick, isBigPlayerActive, onBigPlayerOnOff} = this.props;
+    const {
+      activeMovieCard,
+      onMovieCardClick,
+      isBigPlayerActive,
+      onBigPlayerOnOff,
+      isSignIn
+    } = this.props;
 
-    if (this.state.isSignIn) {
+    if (isSignIn) {
       return this._renderSignInPage();
     }
 
@@ -82,6 +82,7 @@ class App extends React.PureComponent {
       onMovieCardClick,
       isBigPlayerActive,
       onBigPlayerOnOff,
+      isSignIn
     } = this.props;
 
     if (activeMovieCard !== null) {
@@ -90,7 +91,7 @@ class App extends React.PureComponent {
       );
     }
 
-    if (this.state.isSignIn) {
+    if (isSignIn) {
       return this._renderSignInPage();
     }
 
@@ -129,13 +130,18 @@ class App extends React.PureComponent {
 const mapStateToProps = (state) => ({
   promo: getPromo(state),
   movies: getMovies(state),
-  isValidAuthorization: getInvalidAuthorizationStatus(state)
+  isValidAuthorization: getInvalidAuthorizationStatus(state),
+  isSignIn: getSignInFlag(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   login(authData) {
     return dispatch(UserOperation.login(authData));
   },
+  changeSignInFlag(val) {
+    dispatch(ActionCreator.changeSignInFlag(val));
+  }
+
 });
 
 App.propTypes = {
@@ -160,7 +166,10 @@ App.propTypes = {
   isBigPlayerActive: PropTypes.bool.isRequired,
   onBigPlayerOnOff: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
-  isValidAuthorization: PropTypes.bool.isRequired
+  isValidAuthorization: PropTypes.bool.isRequired,
+  isSignIn: PropTypes.bool.isRequired,
+  changeSignInFlag: PropTypes.func.isRequired
+
 };
 
 export {App};

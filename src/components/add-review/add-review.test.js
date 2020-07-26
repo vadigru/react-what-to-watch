@@ -53,8 +53,6 @@ it(`Should render UserBlock component`, () => {
     },
   });
 
-  const onSignInClick = jest.fn();
-
   const tree = renderer
     .create(
         <Provider store={store}>
@@ -64,7 +62,11 @@ it(`Should render UserBlock component`, () => {
             isReviewPosting={false}
             isReviewSendingError={false}
             avatarUrl={``}
-            onSignInClick={onSignInClick}
+            onSignInClick={() => {}}
+            onCommentPost={() => {}}
+            onTextareaChange={() => {}}
+            isCommentAdded={false}
+            isFormInvalid={false}
           />
         </Provider>
     )

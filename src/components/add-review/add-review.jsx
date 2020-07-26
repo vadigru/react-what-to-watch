@@ -18,27 +18,18 @@ class AddReview extends React.PureComponent {
     this.submitFormRef = React.createRef();
     this.commentRef = React.createRef();
     this.sendReviewButtonRef = React.createRef();
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.toggleFormDisability = this.toggleFormDisability.bind(this);
-
-    this.state = {
-      commentAdded: false,
-      isFormInvalid: true
-    };
   }
 
-  toggleFormDisability() {
+  _toggleFormDisability() {
     this.commentRef.current.disabled = !this.commentRef.current.disabled;
     this.sendReviewButtonRef.current.disabled = !this.sendReviewButtonRef
       .current.disabled;
   }
 
-  handleSubmit(evt, movie) {
-    const {onSubmit} = this.props;
+  _handleSubmit(evt, movie) {
+    const {onSubmit, onCommentPost} = this.props;
     evt.preventDefault();
-    this.toggleFormDisability();
+    this._toggleFormDisability();
 
     onSubmit(
         {
@@ -47,38 +38,35 @@ class AddReview extends React.PureComponent {
           comment: this.commentRef.current.value
         },
         () => {
-          this.toggleFormDisability();
-          this.setState({commentAdded: true});
+          this._toggleFormDisability();
+          onCommentPost(true);
         },
         () => {
-          this.toggleFormDisability();
+          this._toggleFormDisability();
         }
     );
   }
 
-  handleChange(evt) {
-    this.setState({
-      isFormInvalid:
-        evt.target.value.length < MIN_REVIEW_LENGTH ||
-        evt.target.value.length > MAX_REVIEW_LENGTH
-    });
-  }
-
   render() {
+
     const {
       selectedMovie,
       promo,
       isReviewPosting,
       isReviewSendingError,
       avatarUrl,
-      onSignInClick
+      onSignInClick,
+      onTextareaChange,
+      isCommentAdded,
+      isFormInvalid
     } = this.props;
+
     const starSelectDisable = isReviewPosting ? `disable` : ``;
     const movie = selectedMovie || promo;
 
     return (
       <React.Fragment>
-        {(this.state.commentAdded) && <Redirect to="/" />}
+        {(isCommentAdded) && <Redirect to="/" />}
         <section className="movie-card movie-card--full">
           <div className="movie-card__header">
             <div className="movie-card__bg">
@@ -128,7 +116,7 @@ class AddReview extends React.PureComponent {
               action="#"
               className="add-review__form"
               ref={this.submitFormRef}
-              onSubmit={(evt) => this.handleSubmit(evt, movie)}
+              onSubmit={(evt) => this._handleSubmit(evt, movie)}
             >
               <div className="rating">
                 <div className="rating__stars">
@@ -158,22 +146,22 @@ class AddReview extends React.PureComponent {
                   ref={this.commentRef}
                   minLength={MIN_REVIEW_LENGTH}
                   maxLength={MAX_REVIEW_LENGTH}
-                  onChange={this.handleChange}
+                  onChange={(evt) => onTextareaChange(evt.target.value.length < MIN_REVIEW_LENGTH || evt.target.value.length > MAX_REVIEW_LENGTH)}
                 />
                 <div className="add-review__submit">
                   <button
                     className="add-review__btn"
                     type="submit"
                     ref={this.sendReviewButtonRef}
-                    disabled={this.state.isFormInvalid}
-                    style={{cursor: `${this.state.isFormInvalid ? `default` : `pointer`}`}}
+                    disabled={isFormInvalid}
+                    style={{cursor: `${isFormInvalid ? `default` : `pointer`}`}}
                   >Post</button>
                 </div>
 
               </div>
             </form>
             {isReviewSendingError ?
-              <div style={{color: `#212121`}}>We cannot send your post right now due to the server problem. Please try again soon.</div> : ``}
+              <div style={{color: `#212121`}}>We cannot post your commnet right now due to the server problem. Please try again soon.</div> : ``}
           </div>
 
         </section>
@@ -217,7 +205,11 @@ AddReview.propTypes = {
   isReviewPosting: PropTypes.bool.isRequired,
   isReviewSendingError: PropTypes.bool.isRequired,
   avatarUrl: PropTypes.string.isRequired,
-  onSignInClick: PropTypes.func.isRequired
+  onSignInClick: PropTypes.func.isRequired,
+  onCommentPost: PropTypes.func.isRequired,
+  onTextareaChange: PropTypes.func.isRequired,
+  isCommentAdded: PropTypes.bool.isRequired,
+  isFormInvalid: PropTypes.bool.isRequired,
 };
 
 export {AddReview};

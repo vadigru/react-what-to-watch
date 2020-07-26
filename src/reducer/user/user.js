@@ -11,12 +11,14 @@ const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isValidAuthorization: true,
   avatarUrl: ``,
+  isSignIn: false
 };
 
 const ActionType = {
   REQUIRE_AUTHORIZATION: `REQUIRE_AUTHORIZATION`,
   IS_INVALID_AUTHORIZATION: `IS_INVALID_AUTHORIZATION`,
-  SET_AVATAR_URL: `SET_AVATAR_URL`
+  SET_AVATAR_URL: `SET_AVATAR_URL`,
+  IS_SIGNE_IN: `IS_SIGNE_IN`
 };
 
 const ActionCreator = {
@@ -31,6 +33,10 @@ const ActionCreator = {
   setAvatarUrl: (avatarUrl) => ({
     type: ActionType.SET_AVATAR_URL,
     payload: avatarUrl
+  }),
+  changeSignInFlag: (signInFlag) => ({
+    type: ActionType.IS_SIGNE_IN,
+    payload: signInFlag
   })
 };
 
@@ -47,6 +53,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_AVATAR_URL:
       return extend(state, {
         avatarUrl: `${SERVER_URL}${action.payload}`
+      });
+    case ActionType.IS_SIGNE_IN:
+      return extend(state, {
+        isSignIn: action.payload
       });
   }
 
@@ -76,6 +86,7 @@ const Operation = {
       const {avatar_url: avatar} = response.data;
       dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
       dispatch(ActionCreator.setAvatarUrl(avatar));
+
     })
     .catch((err)=>{
       dispatch(ActionCreator.requireValidAuthorization(false));

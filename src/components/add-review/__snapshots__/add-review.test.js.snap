@@ -80,7 +80,7 @@ exports[`Should render UserBlock component 1`] = `
         <a
           className="user-block__link"
           href="#"
-          onClick={[MockFunction]}
+          onClick={[Function]}
         >
           Sign in
         </a>
@@ -201,10 +201,10 @@ exports[`Should render UserBlock component 1`] = `
         >
           <button
             className="add-review__btn"
-            disabled={true}
+            disabled={false}
             style={
               Object {
-                "cursor": "default",
+                "cursor": "pointer",
               }
             }
             type="submit"
