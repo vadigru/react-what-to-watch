@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import {movieType} from "../../prop-types/types.js";
 
 const VideoPlayerBig = (props) => {

@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+
 import {ActionCreator} from "../../reducer/state/state.js";
-import {getSelectedMovie} from "../../reducer/state/selectors.js";
+
+import {AppRoute} from "../../const.js";
+import history from "../../history.js";
 
 const withActiveCard = (Component) => {
   class WithActiveCard extends React.PureComponent {
@@ -10,7 +13,6 @@ const withActiveCard = (Component) => {
       super(props);
 
       this.state = {
-        activeMovieCard: null,
         isBigPlayerActive: false,
       };
 
@@ -24,25 +26,22 @@ const withActiveCard = (Component) => {
       });
     }
 
-    _handleMovieCardClick(movie) {
+    _handleMovieCardClick(id) {
+      const {getReviews, changeSelectedMovieId} = this.props;
       return () => {
-        this.props.getReviews(movie);
-        this.props.changeSelectedMovieId(movie.id);
-        this.setState({
-          activeMovieCard: movie
-        });
+        getReviews(id);
+        changeSelectedMovieId(id);
+        history.push(`${AppRoute.MOVIE_PAGE}/${id}`);
       };
     }
 
     render() {
-      const {activeMovieCard, isBigPlayerActive, isSignIn} = this.state;
+      const {isBigPlayerActive} = this.state;
 
       return (
         <Component
           {...this.props}
-          isSignIn={isSignIn}
           isBigPlayerActive={isBigPlayerActive}
-          activeMovieCard={activeMovieCard}
           onMovieCardClick={this._handleMovieCardClick}
           onBigPlayerOnOff={this._handleBigPlayerOnOff}
         />
@@ -55,17 +54,13 @@ const withActiveCard = (Component) => {
     changeSelectedMovieId: PropTypes.func.isRequired,
   };
 
-  const mapStateToProps = (state) => ({
-    selectedMovie: getSelectedMovie(state)
-  });
-
   const mapDispatchToProps = (dispatch) => ({
     changeSelectedMovieId(id) {
       dispatch(ActionCreator.changeSelectedMovieId(id));
     }
   });
 
-  return connect(mapStateToProps, mapDispatchToProps)(WithActiveCard);
+  return connect(null, mapDispatchToProps)(WithActiveCard);
 };
 
 export default withActiveCard;

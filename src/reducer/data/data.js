@@ -65,29 +65,31 @@ const ActionCreator = {
 
 const Operation = {
   getMovies: () => (dispatch, getState, api) => {
+    dispatch(ActionCreator.loadingFilms(true));
     return api.get(`/films`)
       .then((response) => {
         dispatch(ActionCreator.getMovies(rebuildMoviesData(response.data)));
         dispatch(ActionCreator.loadingFilms(false));
       })
       .catch((err) => {
-        dispatch(ActionCreator.loadingFilms(true));
+        dispatch(ActionCreator.loadingFilms(false));
         throw err;
       });
   },
   getPromo: () => (dispatch, getState, api) => {
+    dispatch(ActionCreator.loadingPromo(true));
     return api.get(`/films/promo`)
       .then((response) => {
         dispatch(ActionCreator.getPromo(rebuildMovieData(response.data)));
         dispatch(ActionCreator.loadingPromo(false));
       })
       .catch((err) => {
-        dispatch(ActionCreator.loadingPromo(true));
+        dispatch(ActionCreator.loadingPromo(false));
         throw err;
       });
   },
-  getReviews: (movie) => (dispatch, getState, api) => {
-    return api.get(`/comments/${movie.id}`)
+  getReviews: (id) => (dispatch, getState, api) => {
+    return api.get(`/comments/${id}`)
       .then((response) => {
         dispatch(ActionCreator.getReviews(response.data));
         dispatch(ActionCreator.loadingReviews(false));

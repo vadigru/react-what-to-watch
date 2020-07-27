@@ -1,14 +1,14 @@
+import {extend} from "../../utils/common.js";
 import {
   ALL_GENRES,
   MOVIES_DEFAULT_AMOUNT,
   MOVIES_STEP_AMOUNT
 } from "../../const.js";
-import {extend} from "../../utils/common.js";
 
 const initialState = {
   genre: ALL_GENRES,
   showedMovies: MOVIES_DEFAULT_AMOUNT,
-  selectedMovieId: 0
+  selectedMovieId: 1
 };
 
 const ActionType = {
@@ -23,7 +23,7 @@ const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: genre,
   }),
-  changeSelectedMovieId: (id = 0) => ({
+  changeSelectedMovieId: (id = 1) => ({
     type: ActionType. CHANGE_SELECTED_MOVIE_ID,
     payload: id,
   }),

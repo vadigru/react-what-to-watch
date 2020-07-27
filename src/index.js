@@ -3,13 +3,16 @@ import ReactDom from "react-dom";
 import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
-import reducer from "./reducer/reducer.js";
+import {composeWithDevTools} from "redux-devtools-extension";
+
 import App from "./components/app/app.jsx";
 import withActiveCard from "./hocs/with-active-card/with-active-card.jsx";
-import {createAPI} from "./api.js";
+
 import {Operation as DataOperation} from "./reducer/data/data.js";
 import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
-import {composeWithDevTools} from "redux-devtools-extension";
+import reducer from "./reducer/reducer.js";
+
+import {createAPI} from "./api.js";
 
 const AppWithActiveCard = withActiveCard(App);
 

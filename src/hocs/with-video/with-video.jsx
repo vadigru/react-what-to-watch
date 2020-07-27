@@ -1,4 +1,5 @@
 import React from "react";
+
 import {START_DELAY} from "../../const.js";
 
 const withVideo = (Component) => {

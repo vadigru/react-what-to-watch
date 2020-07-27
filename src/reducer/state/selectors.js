@@ -8,6 +8,10 @@ export const getShowedMovies = (state) => {
   return state[Namespace.STATE].showedMovies;
 };
 
+export const getSelectedMovieId = (state) => {
+  return state[Namespace.STATE].selectedMovieId;
+};
+
 const findSelectedMovie = (state) => {
   const movies = state[Namespace.DATA].films;
   const id = state[Namespace.STATE].selectedMovieId;

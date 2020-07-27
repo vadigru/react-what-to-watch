@@ -1,152 +1,117 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Switch, Route, BrowserRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import {Switch, Route, Router} from "react-router-dom";
+
+import AddReview from "../add-review/add-review.jsx";
+import Loading from "../../loader.jsx";
 import Main from "../main/main.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
-import {movieType} from "../../prop-types/types.js";
-import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
-import AddReview from "../add-review/add-review.jsx";
-import {connect} from "react-redux";
-import {getMovies, getPromo} from "../../reducer/data/selectors.js";
-import {getInvalidAuthorizationStatus, getSignInFlag} from "../../reducer/user/selectors.js";
-import {Operation as UserOperation, ActionCreator} from "../../reducer/user/user.js";
+import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
 import withForm from "../../hocs/with-form/with-form.jsx";
 
-const MoviePageWrapped = withActiveTab(MoviePage);
+import {getLoadingFilmsStatus, getLoadingPromoStatus} from "../../reducer/data/selectors.js";
+import {Operation as UserOperation} from "../../reducer/user/user.js";
+import {getInvalidAuthorizationStatus} from "../../reducer/user/selectors.js";
+
+import {movieType} from "../../prop-types/types.js";
+import {AppRoute} from "../../const.js";
+import history from "../../history.js";
+
+const MoviePageWithActiveTab = withActiveTab(MoviePage);
 const AddReviewWithForm = withForm(AddReview);
-class App extends React.PureComponent {
-  constructor(props) {
-    super(props);
 
-    this._handleSignInClick = this._handleSignInClick.bind(this);
+const App = (props) => {
+  const {
+    movies,
+    login,
+    isValidAuthorization,
+    onMovieCardClick,
+    isBigPlayerActive,
+    onBigPlayerOnOff,
+    isFilmsLoading,
+    isPromoLoading
+  } = props;
+
+  if (isFilmsLoading || isPromoLoading) {
+    return <Loading />;
   }
 
-  _handleSignInClick() {
-    const {changeSignInFlag} = this.props;
-    changeSignInFlag(true);
-  }
+  return (
+    <Router history={history}>
+      <Switch>
+        <Route exact path={AppRoute.ROOT} render={(routeProps) => {
+          return (
+            <Main
+              {...routeProps}
+              onMovieCardClick={onMovieCardClick}
+              isBigPlayerActive={isBigPlayerActive}
+              onBigPlayerOnOff={onBigPlayerOnOff}
+            />
+          );
+        }}>
+        </Route>
+        <Route exact path={`${AppRoute.MOVIE_PAGE}/:id`}
+          render = {(routeProps) => {
+            return (
+              <MoviePageWithActiveTab
+                {...routeProps}
+                id={Number(routeProps.match.params.id)}
+                movies={movies}
+                onMovieCardClick={onMovieCardClick}
+                isBigPlayerActive={isBigPlayerActive}
+                onBigPlayerOnOff={onBigPlayerOnOff}
+              />
+            );
+          }}
+        />
 
-  _renderSignInPage() {
-    const {login, isValidAuthorization, changeSignInFlag} = this.props;
-    return (
-      <SignIn
-        onSubmit={(authData) => {
-          login(authData).then(() => {
-            changeSignInFlag(false);
-          });
+        <Route exact path={AppRoute.SIGN_IN} render={(routeProps) => {
+          return (
+            <SignIn
+              {...routeProps}
+              onSubmit={(authData) => {
+                login(authData).then(() => {
+                  history.goBack();
+                });
+              }}
+              isValid={isValidAuthorization}
+            />
+          );
         }}
-        isValid={isValidAuthorization}
-      />
-    );
-  }
-
-  _renderReviewPage() {
-    const {promo, selectedMovie} = this.props;
-    return (
-      <AddReviewWithForm
-        onSignInClick={this._handleSignInClick}
-        selectedMovie={selectedMovie}
-        promo={promo}
-      />
-    );
-  }
-
-  _renderMoviePage() {
-    const {
-      activeMovieCard,
-      onMovieCardClick,
-      isBigPlayerActive,
-      onBigPlayerOnOff,
-      isSignIn
-    } = this.props;
-
-    if (isSignIn) {
-      return this._renderSignInPage();
-    }
-
-    return (
-      <MoviePageWrapped
-        movie={activeMovieCard}
-        onMovieCardClick={onMovieCardClick}
-        isBigPlayerActive={isBigPlayerActive}
-        onBigPlayerOnOff={onBigPlayerOnOff}
-        onSignInClick={this._handleSignInClick}
-      />
-    );
-  }
-
-  _renderApp() {
-    const {
-      activeMovieCard,
-      onMovieCardClick,
-      isBigPlayerActive,
-      onBigPlayerOnOff,
-      isSignIn
-    } = this.props;
-
-    if (activeMovieCard !== null) {
-      return (
-        this._renderMoviePage()
-      );
-    }
-
-    if (isSignIn) {
-      return this._renderSignInPage();
-    }
-
-    return (
-      <Main
-        onMovieCardClick={onMovieCardClick}
-        isBigPlayerActive={isBigPlayerActive}
-        onBigPlayerOnOff={onBigPlayerOnOff}
-        onSignInClick={this._handleSignInClick}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            {this._renderApp()}
-          </Route>
-          <Route exact path="/dev-movie-page">
-            {this._renderMoviePage()}
-          </Route>
-          <Route exact path="/dev-sign-in">
-            {this._renderSignInPage()}
-          </Route>
-          <Route exact path="/dev-review">
-            {this._renderReviewPage()}
-          </Route>
-        </Switch>
-      </BrowserRouter>
-    );
-  }
-}
+        />
+        <Route exact path={`${AppRoute.MOVIE_PAGE}/:id${AppRoute.ADD_REVIEW}`} render={(routeProps) => {
+          return (
+            <AddReviewWithForm
+              {...routeProps}
+              id={Number(routeProps.match.params.id)}
+              movies={movies}
+            />
+          );
+        }}>
+        </Route>
+      </Switch>
+    </Router>
+  );
+};
 
 const mapStateToProps = (state) => ({
-  promo: getPromo(state),
-  movies: getMovies(state),
+  promo: state.DATA.promo,
+  movies: state.DATA.films,
   isValidAuthorization: getInvalidAuthorizationStatus(state),
-  isSignIn: getSignInFlag(state)
+  isFilmsLoading: getLoadingFilmsStatus(state),
+  isPromoLoading: getLoadingPromoStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
   login(authData) {
     return dispatch(UserOperation.login(authData));
-  },
-  changeSignInFlag(val) {
-    dispatch(ActionCreator.changeSignInFlag(val));
   }
-
 });
 
 App.propTypes = {
-  activeMovieCard: movieType || null,
-  selectedMovie: movieType || undefined,
+  movies: PropTypes.arrayOf(movieType).isRequired,
   promo: PropTypes.shape({
     title: PropTypes.string,
     posterUrl: PropTypes.string,
@@ -167,9 +132,8 @@ App.propTypes = {
   onBigPlayerOnOff: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   isValidAuthorization: PropTypes.bool.isRequired,
-  isSignIn: PropTypes.bool.isRequired,
-  changeSignInFlag: PropTypes.func.isRequired
-
+  isFilmsLoading: PropTypes.bool.isRequired,
+  isPromoLoading: PropTypes.bool.isRequired,
 };
 
 export {App};
