@@ -25,9 +25,9 @@ export const RatingLevel = {
 
 export const AppRoute = {
   ROOT: `/`,
-  MOVIE_PAGE: `/films`,
   SIGN_IN: `/login`,
-  ADD_REVIEW: `/add-review`,
-  MY_LIST: `/favorites`,
+  MY_LIST: `/mylist`,
+  MOVIE_PAGE: `/films`,
+  ADD_REVIEW: `/review`,
   PLAYER: `/player`
 };

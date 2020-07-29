@@ -8,7 +8,6 @@ import Header from "../header/header.jsx";
 import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
 import {getReviewPosting, getReviewSendingError} from "./../../reducer/data/selectors.js";
 import {ActionCreator as StateActionCreator} from "../../reducer/state/state.js";
-import {getSelectedMovie} from "../../reducer/state/selectors.js";
 
 import {movieType} from "../../prop-types/types.js";
 import {AppRoute} from "../../const.js";
@@ -27,9 +26,8 @@ class AddReview extends React.PureComponent {
   }
 
   componentDidMount() {
-    const {id, getReviews, changeSelectedMovieId} = this.props;
+    const {id, changeSelectedMovieId} = this.props;
     changeSelectedMovieId(id);
-    getReviews(id);
   }
 
   _handleSubmit(evt, movie) {
@@ -161,7 +159,6 @@ class AddReview extends React.PureComponent {
 const mapStateToProps = (state) => ({
   isReviewPosting: getReviewPosting(state),
   isReviewSendingError: getReviewSendingError(state),
-  movie: getSelectedMovie(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -172,34 +169,14 @@ const mapDispatchToProps = (dispatch) => ({
   changeSelectedMovieId(id) {
     dispatch(StateActionCreator.changeSelectedMovieId(id));
   },
-  getReviews(id) {
-    dispatch(DataOperation.getReviews(id));
-  }
 });
 
 AddReview.propTypes = {
   id: PropTypes.number.isRequired,
   movie: movieType.isRequired,
-  promo: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    posterUrl: PropTypes.string,
-    backgroundUrl: PropTypes.string,
-    previewUrl: PropTypes.string,
-    previewImage: PropTypes.string,
-    genre: PropTypes.string,
-    release: PropTypes.number,
-    director: PropTypes.string,
-    starring: PropTypes.arrayOf(PropTypes.string),
-    time: PropTypes.string,
-    rating: PropTypes.number,
-    votes: PropTypes.number,
-    description: PropTypes.string,
-  }),
   onSubmit: PropTypes.func.isRequired,
   isReviewPosting: PropTypes.bool.isRequired,
   isReviewSendingError: PropTypes.bool.isRequired,
-  getReviews: PropTypes.func.isRequired,
   changeSelectedMovieId: PropTypes.func.isRequired,
   rating: PropTypes.number.isRequired,
   comment: PropTypes.number.isRequired,

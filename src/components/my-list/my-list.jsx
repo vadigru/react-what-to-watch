@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import Header from "../../components/header/header.jsx";
+import Footer from "../../components/footer/footer.jsx";
 import MoviesList from "../../components/movies-list/movies-list.jsx";
 // import withActiveMovieCard from "../../hocs/with-active-card/with-active-card.jsx";
 import {getFavoriteMovies} from "../../reducer/data/selectors.js";
+
 
 import {movieType} from "../../prop-types/types.js";
 
@@ -31,19 +33,8 @@ const MyList = (props) => {
 
       </section>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+      <Footer />
 
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
     </div>
   );
 };

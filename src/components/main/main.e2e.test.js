@@ -1,12 +1,17 @@
 import React from "react";
+import {Provider} from "react-redux";
+import {Router} from "react-router-dom";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import Main from "./main.jsx";
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+
 import ShowMoreButton from "../show-more-button/show-more-button.jsx";
+import Main from "./main.jsx";
+
 import Namespace from "../../reducer/namespace.js";
+
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
@@ -150,14 +155,14 @@ it(`Should movie card be pressed`, () => {
 
   const main = mount(
       <Provider store={store}>
-        <Main
-          avatarUrl={``}
-          onMovieCardClick={() => handleMovieCardClick}
-          isBigPlayerActive={false}
-          onBigPlayerOnOff={() => {}}
-          onSignInClick={() => {}}
-          loadingPromoStatus={true}
-        />
+        <Router history={history}>
+          <Main
+            avatarUrl={``}
+            onMovieCardClick={() => handleMovieCardClick}
+            // isBigPlayerActive={false}
+            loadingPromoStatus={true}
+          />
+        </Router>
       </Provider>
   );
 

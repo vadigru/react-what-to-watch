@@ -1,12 +1,15 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MoviePage from "./movie-page.jsx";
-import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
-import Namespace from "../../reducer/namespace.js";
+import {Router} from "react-router-dom";
+import configureStore from "redux-mock-store";
+
+import MoviePage from "./movie-page.jsx";
+
 import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {MemoryRouter} from "react-router-dom";
+import Namespace from "../../reducer/namespace.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
@@ -125,7 +128,7 @@ it(`Should render MoviePage component`, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 0
+      selectedMovieId: 8
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -137,20 +140,19 @@ it(`Should render MoviePage component`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <MemoryRouter>
+          <Router history={history}>
             <MoviePage
-              movies={films}
+              id={8}
               movie={movie}
-              previewImage={movie.previewImage}
+              movies={films}
               onMovieCardClick={() => {}}
               activeTab={`Overview`}
               onTabClick={() => {}}
-              onSignInClick={() => {}}
-              isBigPlayerActive={false}
-              onBigPlayerOnOff={() => {}}
               authorizationStatus={AuthorizationStatus.AUTH}
+              addMovieToFavorite={() => {}}
+              removeMovieFromFavorite={() => {}}
             />
-          </MemoryRouter>
+          </Router>
         </Provider>
     )
   .toJSON();

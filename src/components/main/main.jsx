@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import Header from "../header/header.jsx";
+import Footer from "../../components/footer/footer.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
 import ShowMoreButton from "../show-more-button/show-more-button.jsx";
 import Tabs from "../tabs/tabs.jsx";
@@ -18,7 +19,7 @@ import {
 import {ActionCreator} from "../../reducer/state/state.js";
 import {getGenre, getShowedMovies} from "../../reducer/state/selectors.js";
 
-import {movieType} from "../../prop-types/types.js";
+import {movieType, promoType} from "../../prop-types/types.js";
 import {getMaxGenresCount, getGenresList} from "../../utils/common.js";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT, AppRoute} from "../../const.js";
 import history from "../../history.js";
@@ -139,19 +140,8 @@ const Main = (props) => {
             : null}
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+        <Footer />
 
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
       </div>
     </React.Fragment>
   );
@@ -186,23 +176,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Main.propTypes = {
-  promo: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    posterUrl: PropTypes.string,
-    backgroundUrl: PropTypes.string,
-    previewUrl: PropTypes.string,
-    previewImage: PropTypes.string,
-    genre: PropTypes.string,
-    release: PropTypes.number,
-    director: PropTypes.string,
-    starring: PropTypes.arrayOf(PropTypes.string),
-    time: PropTypes.string,
-    rating: PropTypes.number,
-    votes: PropTypes.number,
-    description: PropTypes.string,
-    isFavorite: PropTypes.bool
-  }),
+  promo: promoType.isRequired,
   movies: PropTypes.arrayOf(movieType).isRequired,
   showedMovies: PropTypes.number.isRequired,
   showMoreMovies: PropTypes.func.isRequired,

@@ -1,11 +1,14 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app.jsx";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+
+import App from "./app.jsx";
+
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 import Namespace from "../../reducer/namespace.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const mockStore = configureStore([]);
 
@@ -137,18 +140,21 @@ it(`Should render App component`, () => {
     .create(
         <Provider store={store}>
           <App
+            promo={movie}
+            movies={films}
+            movie={movie}
             login={() => {}}
-            isSignIn={false}
-            isValid={true}
-            activeMovieCard={movie}
-            onMovieCardClick={() => {}}
-            isBigPlayerActive={false}
-            onSignInClick={() => {}}
-            onSubmitClick={() => {}}
-            onBigPlayerOnOff={() => {}}
             authorizationStatus={AuthorizationStatus.AUTH}
+            isFilmsLoading={true}
+            isPromoLoading={true}
+            getReviews={() => {}}
           />
-        </Provider>
+        </Provider>,
+        {
+          createNodeMock: () => {
+            return document.createElement(`div`);
+          }
+        }
     )
     .toJSON();
 

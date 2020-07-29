@@ -21,7 +21,7 @@ import {getLoadingFilmsStatus, getLoadingPromoStatus} from "../../reducer/data/s
 import {Operation as UserOperation} from "../../reducer/user/user.js";
 import {getInvalidAuthorizationStatus} from "../../reducer/user/selectors.js";
 
-import {movieType} from "../../prop-types/types.js";
+import {movieType, promoType} from "../../prop-types/types.js";
 import {AppRoute} from "../../const.js";
 import history from "../../history.js";
 
@@ -84,7 +84,8 @@ class App extends React.PureComponent {
                 <MoviePageWithActiveTab
                   {...routeProps}
                   id={Number(routeProps.match.params.id)}
-                  movies={movies || promo}
+                  movie={movie || promo}
+                  movies={movies}
                   onMovieCardClick={this._handleMovieCardClick}
                 />
               );
@@ -99,7 +100,7 @@ class App extends React.PureComponent {
                 <AddReviewWithForm
                   {...routeProps}
                   id={Number(routeProps.match.params.id)}
-                  movies={movies}
+                  movie={movie}
                 />
               );
             }}>
@@ -172,22 +173,7 @@ const mapDispatchToProps = (dispatch) => ({
 App.propTypes = {
   movies: PropTypes.arrayOf(movieType).isRequired,
   movie: movieType,
-  promo: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    posterUrl: PropTypes.string,
-    backgroundUrl: PropTypes.string,
-    previewUrl: PropTypes.string,
-    previewImage: PropTypes.string,
-    genre: PropTypes.string,
-    release: PropTypes.number,
-    director: PropTypes.string,
-    starring: PropTypes.arrayOf(PropTypes.string),
-    time: PropTypes.string,
-    rating: PropTypes.number,
-    votes: PropTypes.number,
-    description: PropTypes.string,
-  }),
+  promo: promoType,
   login: PropTypes.func.isRequired,
   isValidAuthorization: PropTypes.bool.isRequired,
   isFilmsLoading: PropTypes.bool.isRequired,

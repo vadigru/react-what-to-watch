@@ -1,5 +1,5 @@
 import {extend} from "../../utils/common.js";
-import {rebuildMovieData, rebuildMoviesData} from "../../utils/common.js";
+import {rebuildMovieData, rebuildMoviesData} from "../../adapters/movie-adapter.js";
 import Namespace from "../namespace.js";
 
 const initialState = {

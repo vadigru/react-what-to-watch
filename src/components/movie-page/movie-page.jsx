@@ -4,17 +4,15 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
 import Header from "../header/header.jsx";
+import Footer from "../../components/footer/footer.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
 import MovieOverview from "../movie-overview/movie-overview.jsx";
 import MovieReviews from "../movie-reviews/movie-reviews.jsx";
 import MoviesSimilar from "../movies-similar/movies-similar.jsx";
-// import VideoPlayerBig from "../video-player-big/video-player-big.jsx";
-// import withPlayer from "../../hocs/with-player/with-player.jsx";
 import Tabs from "../tabs/tabs.jsx";
 
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {ActionCreator} from "../../reducer/state/state.js";
-import {getSelectedMovie} from "../../reducer/state/selectors.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 
@@ -39,9 +37,8 @@ class MoviePage extends React.PureComponent {
   }
 
   componentDidMount() {
-    const {id, getReviews, changeSelectedMovieId} = this.props;
+    const {id, changeSelectedMovieId} = this.props;
     changeSelectedMovieId(id);
-    getReviews(id);
   }
 
   render() {
@@ -168,19 +165,8 @@ class MoviePage extends React.PureComponent {
             />
           </section>
 
-          <footer className="page-footer">
-            <div className="logo">
-              <a href="main.html" className="logo__link logo__link--light">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
+          <Footer />
 
-            <div className="copyright">
-              <p>© 2019 What to watch Ltd.</p>
-            </div>
-          </footer>
         </div>
       </React.Fragment>
     );
@@ -196,22 +182,17 @@ MoviePage.propTypes = {
   onMovieCardClick: PropTypes.func.isRequired,
   onTabClick: PropTypes.func.isRequired,
   changeSelectedMovieId: PropTypes.func.isRequired,
-  getReviews: PropTypes.func.isRequired,
   addMovieToFavorite: PropTypes.func.isRequired,
   removeMovieFromFavorite: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
-  movie: getSelectedMovie(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeSelectedMovieId(id) {
     dispatch(ActionCreator.changeSelectedMovieId(id));
-  },
-  getReviews(id) {
-    dispatch(DataOperation.getReviews(id));
   },
   addMovieToFavorite(id) {
     dispatch(DataOperation.addMovieToFavorite(id));

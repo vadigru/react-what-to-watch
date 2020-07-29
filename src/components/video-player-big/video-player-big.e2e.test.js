@@ -1,7 +1,16 @@
 import React from "react";
+import {Provider} from "react-redux";
 import {configure, mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import configureStore from "redux-mock-store";
+
 import VideoPlayerBig from './video-player-big.jsx';
+
+import Namespace from "../../reducer/namespace.js";
+
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+
+const mockStore = configureStore([]);
 
 configure({
   adapter: new Adapter()
@@ -27,27 +36,61 @@ const movie = {
   videoUrl: `https://url.com`,
 };
 
+const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`
+};
+
+
 it(`Click by Play, Exit and FullScreen button calls callback`, () => {
+  const store = mockStore({
+    [Namespace.DATA]: {
+      films: [],
+      promo: movie,
+      reviews: [],
+      isFilmsLoading: false,
+      isPromoLoading: false,
+      isReviewsLoading: false,
+      isReviewPosting: false,
+      isReviewSendingError: false,
+    },
+    [Namespace.STATE]: {
+      genre: ALL_GENRES,
+      showedMovies: MOVIES_DEFAULT_AMOUNT,
+      selectedMovieId: 0
+    },
+    [Namespace.USER]: {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      isValidAuthorization: true,
+      avatarUrl: ``,
+    },
+  });
+
   const hadleBigPlayerPlay = jest.fn();
   const handleFullscreenButtonClick = jest.fn();
   const handleExitButtonClick = jest.fn();
 
   const ref = React.createRef();
-  const wrapper = mount(<VideoPlayerBig
-    isPlaying={false}
-    src={movie.videoUrl}
-    autoPlay={false}
-    movie={movie}
-    onPlayButtonClick={hadleBigPlayerPlay}
-    onFullscreenButtonClick={handleFullscreenButtonClick}
-    getPlaybackProgress={() => {}}
-    getRemainingTime={() => {}}
-    videoRef={ref}
-    onExitButtonClick={handleExitButtonClick}
-    onLoadedMetadata={() => {}}
-    onTimeUpdate={() => {}}
-    videoUrl={movie.videoUrl}
-  />);
+  const wrapper = mount(
+      <Provider store={store}>
+        <VideoPlayerBig
+          isPlaying={false}
+          src={movie.videoUrl}
+          autoPlay={false}
+          movie={movie}
+          onPlayButtonClick={hadleBigPlayerPlay}
+          onFullscreenButtonClick={handleFullscreenButtonClick}
+          getPlaybackProgress={() => {}}
+          getRemainingTime={() => {}}
+          videoRef={ref}
+          onExitButtonClick={handleExitButtonClick}
+          onLoadedMetadata={() => {}}
+          onTimeUpdate={() => {}}
+          videoUrl={movie.videoUrl}
+          id={2}
+        />
+      </Provider>
+  );
 
   wrapper.find(`.player__play`).simulate(`click`);
   wrapper.find(`.player__full-screen`).simulate(`click`);
