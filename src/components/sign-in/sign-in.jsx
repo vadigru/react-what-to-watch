@@ -29,7 +29,9 @@ class SignIn extends React.PureComponent {
     return (
       <div className="user-page">
 
-        <Header />
+        <Header className={`user-page__head`} isSignIn={true}>
+          <h1 className="page-title user-page__title">Sign in</h1>
+        </Header>
 
         <div className="sign-in user-page__content">
           <form

@@ -12,19 +12,19 @@ const withActiveCard = (Component) => {
     constructor(props) {
       super(props);
 
-      this.state = {
-        isBigPlayerActive: false,
-      };
+      // this.state = {
+      //   isBigPlayerActive: false,
+      // };
 
       this._handleMovieCardClick = this._handleMovieCardClick.bind(this);
-      this._handleBigPlayerOnOff = this._handleBigPlayerOnOff.bind(this);
+      // this._handleBigPlayerOnOff = this._handleBigPlayerOnOff.bind(this);
     }
 
-    _handleBigPlayerOnOff() {
-      this.setState({
-        isBigPlayerActive: !this.state.isBigPlayerActive
-      });
-    }
+    // _handleBigPlayerOnOff() {
+    //   this.setState({
+    //     isBigPlayerActive: !this.state.isBigPlayerActive
+    //   });
+    // }
 
     _handleMovieCardClick(id) {
       const {getReviews, changeSelectedMovieId} = this.props;
@@ -36,14 +36,14 @@ const withActiveCard = (Component) => {
     }
 
     render() {
-      const {isBigPlayerActive} = this.state;
+      // const {isBigPlayerActive} = this.state;
 
       return (
         <Component
           {...this.props}
-          isBigPlayerActive={isBigPlayerActive}
+          // isBigPlayerActive={isBigPlayerActive}
           onMovieCardClick={this._handleMovieCardClick}
-          onBigPlayerOnOff={this._handleBigPlayerOnOff}
+          // onBigPlayerOnOff={this._handleBigPlayerOnOff}
         />
       );
     }

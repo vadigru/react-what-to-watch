@@ -16,6 +16,6 @@ export const movieType = PropTypes.shape({
   votes: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  // isFavorite: PropTypes.bool.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
   videoUrl: PropTypes.string.isRequired,
 });

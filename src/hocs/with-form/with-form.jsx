@@ -6,35 +6,32 @@ const withForm = (Component) => {
       super(props);
 
       this.state = {
-        isCommentAdded: false,
-        isFormInvalid: true
+        rating: 0,
+        comment: 0
       };
 
-      this._handleChangeFormFlag = this._handleChangeFormFlag.bind(this);
-      this._handleCommentAddedFlag = this._handleCommentAddedFlag.bind(this);
+      this._handleFormDataChange = this._handleFormDataChange.bind(this);
     }
 
-    _handleChangeFormFlag(boolean) {
-      this.setState({
-        isFormInvalid: boolean
-      });
-    }
+    _handleFormDataChange(evt) {
+      const target = evt.target;
+      const rating = target.name === `rating` ? parseInt(target.value, 10) : this.state.rating;
+      const comment = target.name === `review-text` ? target.value.length : this.state.comment;
 
-    _handleCommentAddedFlag(boolean) {
       this.setState({
-        isCommentAdded: boolean
+        rating,
+        comment
       });
     }
 
     render() {
-      const {isCommentAdded, isFormInvalid} = this.state;
+      const {rating, comment} = this.state;
       return (
         <Component
           {...this.props}
-          isCommentAdded={isCommentAdded}
-          isFormInvalid={isFormInvalid}
-          onCommentPost={this._handleCommentAddedFlag}
-          onTextareaChange={this._handleChangeFormFlag}
+          rating={rating}
+          comment={comment}
+          onFormDataChange={this._handleFormDataChange}
         />
       );
     }

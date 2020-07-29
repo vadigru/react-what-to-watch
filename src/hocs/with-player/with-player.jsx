@@ -28,7 +28,7 @@ const withPlayer = (Component) => {
     componentDidMount() {
       const video = this.videoRef.current;
       if (video) {
-        video.muted = true;
+        video.muted = false;
       }
     }
 
@@ -77,7 +77,7 @@ const withPlayer = (Component) => {
     }
 
     render() {
-      const {onExitButtonClick} = this.props;
+      const {onExitButtonClick, id} = this.props;
       const {isPlaying} = this.state;
       return (
         <Component
@@ -91,12 +91,14 @@ const withPlayer = (Component) => {
           onExitButtonClick={onExitButtonClick}
           onLoadedMetadata={this._handleLoadedMetadata}
           onTimeUpdate={this._handleTimeUpdate}
+          id={id}
         />
       );
     }
   }
 
   WithPlayer.propTypes = {
+    id: PropTypes.number.isRequired,
     movie: movieType.isRequired,
     autoPlay: PropTypes.bool.isRequired,
     onExitButtonClick: PropTypes.func.isRequired,

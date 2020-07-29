@@ -6,15 +6,12 @@ import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 
 import App from "./components/app/app.jsx";
-import withActiveCard from "./hocs/with-active-card/with-active-card.jsx";
 
 import {Operation as DataOperation} from "./reducer/data/data.js";
 import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
 import reducer from "./reducer/reducer.js";
 
 import {createAPI} from "./api.js";
-
-const AppWithActiveCard = withActiveCard(App);
 
 const onUnauthorized = () => {
   store.dispatch(
@@ -44,7 +41,7 @@ store.dispatch(UserOperation.checkAuth());
 const init = () => {
   ReactDom.render(
       <Provider store={store}>
-        <AppWithActiveCard
+        <App
           getReviews={getMovieReviews}
         />
       </Provider>,
