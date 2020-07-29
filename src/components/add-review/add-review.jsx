@@ -32,16 +32,10 @@ class AddReview extends React.PureComponent {
     getReviews(id);
   }
 
-  _toggleFormDisability() {
-    this.commentRef.current.disabled = !this.commentRef.current.disabled;
-    this.sendReviewButtonRef.current.disabled = !this.sendReviewButtonRef
-      .current.disabled;
-  }
-
   _handleSubmit(evt, movie) {
     const {onSubmit} = this.props;
     evt.preventDefault();
-    // this._toggleFormDisability();
+
 
     onSubmit(
         {
@@ -50,17 +44,12 @@ class AddReview extends React.PureComponent {
           comment: this.commentRef.current.value
         },
         () => {
-          // this._toggleFormDisability();
           history.goBack();
-        },
-        // () => {
-        //   this._toggleFormDisability();
-        // }
+        }
     );
   }
 
   render() {
-
     const {
       id,
       movie,
@@ -210,10 +199,11 @@ AddReview.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   isReviewPosting: PropTypes.bool.isRequired,
   isReviewSendingError: PropTypes.bool.isRequired,
-  // onTextareaChange: PropTypes.func.isRequired,w
-  // isInvalid: PropTypes.bool.isRequired,
   getReviews: PropTypes.func.isRequired,
   changeSelectedMovieId: PropTypes.func.isRequired,
+  rating: PropTypes.number.isRequired,
+  comment: PropTypes.number.isRequired,
+  onFormDataChange: PropTypes.func.isRequired
 };
 
 export {AddReview};

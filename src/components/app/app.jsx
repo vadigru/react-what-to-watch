@@ -173,6 +173,7 @@ App.propTypes = {
   movies: PropTypes.arrayOf(movieType).isRequired,
   movie: movieType,
   promo: PropTypes.shape({
+    id: PropTypes.number,
     title: PropTypes.string,
     posterUrl: PropTypes.string,
     backgroundUrl: PropTypes.string,
