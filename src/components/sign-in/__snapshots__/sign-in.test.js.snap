@@ -11,8 +11,9 @@ exports[`Should render SignIn component 1`] = `
       className="logo"
     >
       <a
-        className="logo__link"
-        href="main.html"
+        className="logo__link "
+        href="/"
+        onClick={[Function]}
       >
         <span
           className="logo__letter logo__letter--1"
@@ -36,6 +37,11 @@ exports[`Should render SignIn component 1`] = `
     >
       Sign in
     </h1>
+    <div
+      className="user-block"
+    >
+      
+    </div>
   </header>
   <div
     className="sign-in user-page__content"
@@ -106,7 +112,8 @@ exports[`Should render SignIn component 1`] = `
     >
       <a
         className="logo__link logo__link--light"
-        href="main.html"
+        href="/"
+        onClick={[Function]}
       >
         <span
           className="logo__letter logo__letter--1"

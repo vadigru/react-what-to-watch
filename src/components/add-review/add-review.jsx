@@ -1,12 +1,17 @@
 import React from "react";
-import {connect} from "react-redux";
-import {movieType} from "../../prop-types/types.js";
 import PropTypes from "prop-types";
-import UserBlock from "../user-block/user-block.jsx";
-import {Operation, ActionCreator} from "../../reducer/data/data.js";
-import {Redirect} from "react-router-dom";
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+
+import Header from "../header/header.jsx";
+
+import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
 import {getReviewPosting, getReviewSendingError} from "./../../reducer/data/selectors.js";
-import {getAvatar} from "../../reducer/user/selectors.js";
+import {ActionCreator as StateActionCreator} from "../../reducer/state/state.js";
+
+import {movieType} from "../../prop-types/types.js";
+import {AppRoute} from "../../const.js";
+import history from "../../history.js";
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 400;
@@ -18,27 +23,17 @@ class AddReview extends React.PureComponent {
     this.submitFormRef = React.createRef();
     this.commentRef = React.createRef();
     this.sendReviewButtonRef = React.createRef();
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.toggleFormDisability = this.toggleFormDisability.bind(this);
-
-    this.state = {
-      commentAdded: false,
-      isFormInvalid: true
-    };
   }
 
-  toggleFormDisability() {
-    this.commentRef.current.disabled = !this.commentRef.current.disabled;
-    this.sendReviewButtonRef.current.disabled = !this.sendReviewButtonRef
-      .current.disabled;
+  componentDidMount() {
+    const {id, changeSelectedMovieId} = this.props;
+    changeSelectedMovieId(id);
   }
 
-  handleSubmit(evt, movie) {
+  _handleSubmit(evt, movie) {
     const {onSubmit} = this.props;
     evt.preventDefault();
-    this.toggleFormDisability();
+
 
     onSubmit(
         {
@@ -47,38 +42,27 @@ class AddReview extends React.PureComponent {
           comment: this.commentRef.current.value
         },
         () => {
-          this.toggleFormDisability();
-          this.setState({commentAdded: true});
-        },
-        () => {
-          this.toggleFormDisability();
+          history.goBack();
         }
     );
   }
 
-  handleChange(evt) {
-    this.setState({
-      isFormInvalid:
-        evt.target.value.length < MIN_REVIEW_LENGTH ||
-        evt.target.value.length > MAX_REVIEW_LENGTH
-    });
-  }
-
   render() {
     const {
-      selectedMovie,
-      promo,
+      id,
+      movie,
       isReviewPosting,
       isReviewSendingError,
-      avatarUrl,
-      onSignInClick
+      rating,
+      comment,
+      onFormDataChange
     } = this.props;
-    const starSelectDisable = isReviewPosting ? `disable` : ``;
-    const movie = selectedMovie || promo;
+
+    const isDisabled = isReviewPosting;
+    const isInvalid = rating === 0 || (comment < MIN_REVIEW_LENGTH || comment > MAX_REVIEW_LENGTH);
 
     return (
       <React.Fragment>
-        {(this.state.commentAdded) && <Redirect to="/" />}
         <section className="movie-card movie-card--full">
           <div className="movie-card__header">
             <div className="movie-card__bg">
@@ -87,31 +71,20 @@ class AddReview extends React.PureComponent {
 
             <h1 className="visually-hidden">WTW</h1>
 
-            <header className="page-header">
-              <div className="logo">
-                <a href="main.html" className="logo__link">
-                  <span className="logo__letter logo__letter--1">W</span>
-                  <span className="logo__letter logo__letter--2">T</span>
-                  <span className="logo__letter logo__letter--3">W</span>
-                </a>
-              </div>
-
+            <Header className={`movie-card__head`} isSignIn={false}>
               <nav className="breadcrumbs">
                 <ul className="breadcrumbs__list">
                   <li className="breadcrumbs__item">
-                    <a href="movie-page.html" className="breadcrumbs__link">
+                    <Link to={`${AppRoute.MOVIE_PAGE}/${id}`} className="breadcrumbs__link">
                       {movie.title}
-                    </a>
+                    </Link>
                   </li>
                   <li className="breadcrumbs__item">
-                    <a className="breadcrumbs__link">Add review</a>
+                    <Link to={AppRoute.ADD_REVIEW} className="breadcrumbs__link">Add review</Link>
                   </li>
                 </ul>
               </nav>
-
-              <UserBlock avatarUrl={avatarUrl} onSignInClick={onSignInClick}/>
-
-            </header>
+            </Header>
 
             <div className="movie-card__poster movie-card__poster--small">
               <img
@@ -128,23 +101,23 @@ class AddReview extends React.PureComponent {
               action="#"
               className="add-review__form"
               ref={this.submitFormRef}
-              onSubmit={(evt) => this.handleSubmit(evt, movie)}
+              onSubmit={(evt) => this._handleSubmit(evt, movie)}
             >
               <div className="rating">
                 <div className="rating__stars">
-                  <input className="rating__input" id="star-1" type="radio" name="rating" value="1" disabled={starSelectDisable}/>
+                  <input className="rating__input" id="star-1" type="radio" name="rating" value="1" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled}/>
                   <label className="rating__label" htmlFor="star-1" >Rating 1</label>
 
-                  <input className="rating__input" id="star-2" type="radio" name="rating" value="2" disabled={starSelectDisable}/>
+                  <input className="rating__input" id="star-2" type="radio" name="rating" value="2" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled}/>
                   <label className="rating__label" htmlFor="star-2">Rating 2</label>
 
-                  <input className="rating__input" id="star-3" type="radio" name="rating" value="3" disabled={starSelectDisable} defaultChecked />
+                  <input className="rating__input" id="star-3" type="radio" name="rating" value="3" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled}/>
                   <label className="rating__label" htmlFor="star-3">Rating 3</label>
 
-                  <input className="rating__input" id="star-4" type="radio" name="rating" value="4" disabled={starSelectDisable} />
+                  <input className="rating__input" id="star-4" type="radio" name="rating" value="4" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled} />
                   <label className="rating__label" htmlFor="star-4">Rating 4</label>
 
-                  <input className="rating__input" id="star-5" type="radio" name="rating" value="5" disabled={starSelectDisable} />
+                  <input className="rating__input" id="star-5" type="radio" name="rating" value="5" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled} />
                   <label className="rating__label" htmlFor="star-5">Rating 5</label>
                 </div>
               </div>
@@ -156,24 +129,25 @@ class AddReview extends React.PureComponent {
                   id="review-text"
                   placeholder="Review text"
                   ref={this.commentRef}
+                  disabled={isDisabled}
                   minLength={MIN_REVIEW_LENGTH}
                   maxLength={MAX_REVIEW_LENGTH}
-                  onChange={this.handleChange}
+                  onChange={(evt) => onFormDataChange(evt)}
                 />
                 <div className="add-review__submit">
                   <button
                     className="add-review__btn"
                     type="submit"
                     ref={this.sendReviewButtonRef}
-                    disabled={this.state.isFormInvalid}
-                    style={{cursor: `${this.state.isFormInvalid ? `default` : `pointer`}`}}
+                    disabled={isDisabled || isInvalid}
+                    style={{cursor: `${isDisabled || isInvalid ? `default` : `pointer`}`}}
                   >Post</button>
                 </div>
 
               </div>
             </form>
             {isReviewSendingError ?
-              <div style={{color: `#212121`}}>We cannot send your post right now due to the server problem. Please try again soon.</div> : ``}
+              <div style={{color: `#212121`}}>We cannot post your comment right now due to the server problem. Please try again soon.</div> : ``}
           </div>
 
         </section>
@@ -185,39 +159,28 @@ class AddReview extends React.PureComponent {
 const mapStateToProps = (state) => ({
   isReviewPosting: getReviewPosting(state),
   isReviewSendingError: getReviewSendingError(state),
-  avatarUrl: getAvatar(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(commentData, onSuccess, onError) {
     dispatch(ActionCreator.postingReview(true));
-    dispatch(Operation.sendReview(commentData, onSuccess, onError));
-  }
+    dispatch(DataOperation.sendReview(commentData, onSuccess, onError));
+  },
+  changeSelectedMovieId(id) {
+    dispatch(StateActionCreator.changeSelectedMovieId(id));
+  },
 });
 
 AddReview.propTypes = {
-  selectedMovie: movieType,
-  promo: PropTypes.shape({
-    id: PropTypes.number,
-    title: PropTypes.string,
-    posterUrl: PropTypes.string,
-    backgroundUrl: PropTypes.string,
-    previewUrl: PropTypes.string,
-    previewImage: PropTypes.string,
-    genre: PropTypes.string,
-    release: PropTypes.number,
-    director: PropTypes.string,
-    starring: PropTypes.arrayOf(PropTypes.string),
-    time: PropTypes.string,
-    rating: PropTypes.number,
-    votes: PropTypes.number,
-    description: PropTypes.string,
-  }),
+  id: PropTypes.number.isRequired,
+  movie: movieType.isRequired,
   onSubmit: PropTypes.func.isRequired,
   isReviewPosting: PropTypes.bool.isRequired,
   isReviewSendingError: PropTypes.bool.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-  onSignInClick: PropTypes.func.isRequired
+  changeSelectedMovieId: PropTypes.func.isRequired,
+  rating: PropTypes.number.isRequired,
+  comment: PropTypes.number.isRequired,
+  onFormDataChange: PropTypes.func.isRequired
 };
 
 export {AddReview};

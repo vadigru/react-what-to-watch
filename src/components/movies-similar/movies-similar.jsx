@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {movieType} from "../../prop-types/types.js";
+
 import MoviesList from "../movies-list/movies-list.jsx";
+
+import {movieType} from "../../prop-types/types.js";
 
 const getSimilarMovies = (movies, movie) => {
   return movies.filter((similarMovie) =>

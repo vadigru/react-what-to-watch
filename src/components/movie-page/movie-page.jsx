@@ -1,63 +1,71 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+
+import Header from "../header/header.jsx";
+import Footer from "../../components/footer/footer.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
 import MovieOverview from "../movie-overview/movie-overview.jsx";
 import MovieReviews from "../movie-reviews/movie-reviews.jsx";
 import MoviesSimilar from "../movies-similar/movies-similar.jsx";
-import UserBlock from "../user-block/user-block.jsx";
-import {movieType} from "../../prop-types/types.js";
 import Tabs from "../tabs/tabs.jsx";
-import {Tab} from "../../const.js";
-import withPlayer from "../../hocs/with-player/with-player.jsx";
-import VideoPlayerBig from "../video-player-big/video-player-big.jsx";
-import {getMovies} from "../../reducer/data/selectors.js";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
-import {getAuthorizationStatus, getAvatar} from "../../reducer/user/selectors.js";
-import {AuthorizationStatus} from "../../reducer/user/user";
 
-const VideoPlayerBigWrapped = withPlayer(VideoPlayerBig);
+import {Operation as DataOperation} from "../../reducer/data/data.js";
+import {ActionCreator} from "../../reducer/state/state.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 
-const MoviePage = (props) => {
-  const {movies,
-    movie,
-    onMovieCardClick,
-    activeTab,
-    onTabClick,
-    onBigPlayerOnOff,
-    isBigPlayerActive,
-    authorizationStatus,
-    avatarUrl,
-    onSignInClick
-  } = props;
+import {movieType} from "../../prop-types/types.js";
+import {Tab, AppRoute} from "../../const.js";
+import history from "../../history.js";
 
-  const {title,
-    posterUrl,
-    backgroundUrl,
-    genre,
-    release,
-    backgroundColor} = movie;
+const renderActiveTab = (activeTab, id, movie) => {
+  switch (activeTab) {
+    case Tab.DETAILS:
+      return <MovieDetails movie={movie} />;
+    case Tab.REVIEWS:
+      return <MovieReviews movieId={id} />;
+    default:
+      return <MovieOverview movie={movie} />;
+  }
+};
 
-  const renderActiveTab = () => {
-    switch (activeTab) {
-      case Tab.DETAILS:
-        return <MovieDetails movie={movie} />;
-      case Tab.REVIEWS:
-        return <MovieReviews movieId={movie.id} />;
-      default:
-        return <MovieOverview movie={movie} />;
-    }
-  };
+class MoviePage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
-  const tabNames = Object.values(Tab);
-  return (
-    isBigPlayerActive ? (
-      <VideoPlayerBigWrapped
-        movie={movie}
-        autoPlay={false}
-        onExitButtonClick={onBigPlayerOnOff}
-      />
-    ) : (
+  componentDidMount() {
+    const {id, changeSelectedMovieId} = this.props;
+    changeSelectedMovieId(id);
+  }
+
+  render() {
+    const {
+      id,
+      movie,
+      movies,
+      onMovieCardClick,
+      activeTab,
+      onTabClick,
+      authorizationStatus,
+      addMovieToFavorite,
+      removeMovieFromFavorite
+    } = this.props;
+
+    const {
+      title,
+      posterUrl,
+      backgroundUrl,
+      genre,
+      release,
+      backgroundColor
+    } = movie;
+
+    const tabNames = Object.values(Tab);
+
+    return (
       <React.Fragment>
         <section
           className="movie-card movie-card--full"
@@ -70,18 +78,7 @@ const MoviePage = (props) => {
 
             <h1 className="visually-hidden">WTW</h1>
 
-            <header className="page-header movie-card__head">
-              <div className="logo">
-                <a href="main.html" className="logo__link">
-                  <span className="logo__letter logo__letter--1">W</span>
-                  <span className="logo__letter logo__letter--2">T</span>
-                  <span className="logo__letter logo__letter--3">W</span>
-                </a>
-              </div>
-
-              <UserBlock avatarUrl={avatarUrl} onSignInClick={onSignInClick}/>
-
-            </header>
+            <Header className={`movie-card__head`} isSignIn={false}/>
 
             <div className="movie-card__wrap">
               <div className="movie-card__desc">
@@ -93,20 +90,41 @@ const MoviePage = (props) => {
 
                 <div className="movie-card__buttons">
                   <button className="btn btn--play movie-card__button" type="button"
-                    onClick={onBigPlayerOnOff}>
+                    onClick={() =>
+                      history.push(
+                          `${AppRoute.MOVIE_PAGE}/${movie.id}${AppRoute.PLAYER}`
+                      )
+                    }
+                  >
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list movie-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
+                  <button
+                    className="btn btn--list movie-card__button"
+                    type="button"
+                    onClick={() => {
+                      if (movie.isFavorite) {
+                        removeMovieFromFavorite(movie.id);
+                      } else {
+                        addMovieToFavorite(movie.id);
+                      }
+                    }}
+                  >
+                    {movie.isFavorite ? (
+                      <svg viewBox="0 0 18 14" width="18" height="14">
+                        <use xlinkHref="#in-list"></use>
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#add"></use>
+                      </svg>
+                    )}
                     <span>My list</span>
                   </button>
                   {authorizationStatus === AuthorizationStatus.AUTH && (
-                    <Link to="/dev-review" className="btn movie-card__button">
+                    <Link to={`${AppRoute.MOVIE_PAGE}/${movie.id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">
                       Add review
                     </Link>
                   )}
@@ -131,7 +149,7 @@ const MoviePage = (props) => {
                     />
                   </ul>
                 </nav>
-                {renderActiveTab()}
+                {renderActiveTab(activeTab, id, movie)}
               </div>
             </div>
           </div>
@@ -147,42 +165,41 @@ const MoviePage = (props) => {
             />
           </section>
 
-          <footer className="page-footer">
-            <div className="logo">
-              <a href="main.html" className="logo__link logo__link--light">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
+          <Footer />
 
-            <div className="copyright">
-              <p>© 2019 What to watch Ltd.</p>
-            </div>
-          </footer>
         </div>
       </React.Fragment>
-    )
-  );
-};
+    );
+  }
+}
 
 MoviePage.propTypes = {
-  movies: PropTypes.arrayOf(movieType),
-  movie: movieType.isRequired,
+  id: PropTypes.number.isRequired,
   activeTab: PropTypes.string,
+  authorizationStatus: PropTypes.string.isRequired,
+  movies: PropTypes.arrayOf(movieType).isRequired,
+  movie: movieType.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
   onTabClick: PropTypes.func.isRequired,
-  onBigPlayerOnOff: PropTypes.func.isRequired,
-  isBigPlayerActive: PropTypes.bool.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  avatarUrl: PropTypes.string.isRequired,
-  onSignInClick: PropTypes.func.isRequired
+  changeSelectedMovieId: PropTypes.func.isRequired,
+  addMovieToFavorite: PropTypes.func.isRequired,
+  removeMovieFromFavorite: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  movies: getMovies(state),
   authorizationStatus: getAuthorizationStatus(state),
-  avatarUrl: getAvatar(state),
 });
 
-export default connect(mapStateToProps)(MoviePage);
+const mapDispatchToProps = (dispatch) => ({
+  changeSelectedMovieId(id) {
+    dispatch(ActionCreator.changeSelectedMovieId(id));
+  },
+  addMovieToFavorite(id) {
+    dispatch(DataOperation.addMovieToFavorite(id));
+  },
+  removeMovieFromFavorite(id) {
+    dispatch(DataOperation.removeMovieFromFavorite(id));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);

@@ -1,5 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
+
 import withPlayer from "./with-player.jsx";
 
 const movie = {
@@ -44,7 +45,7 @@ const MockComponentWrapped = withPlayer(MockComponent);
 const ref = React.createRef();
 it(`render withPlayer`, () => {
   const tree = renderer.create(
-      <MockComponentWrapped movie={movie} autoPlay={false} onExitButtonClick={() => {}}>
+      <MockComponentWrapped movie={movie} autoPlay={false} onExitButtonClick={() => {}} id={2}>
         <video
           ref={ref}
           src={movie.previewUrl}

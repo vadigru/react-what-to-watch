@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+
 import {getReviews} from "../../reducer/data/selectors.js";
 import {getLoadingReviewsStatus} from "../../reducer/data/selectors.js";
+
 import {formatReviewDate} from "../../utils/common.js";
 
 const renderReviews = (reviews) => {

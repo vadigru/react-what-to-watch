@@ -22,3 +22,12 @@ export const RatingLevel = {
   GOOD: 8,
   AWESOME: 10
 };
+
+export const AppRoute = {
+  ROOT: `/`,
+  SIGN_IN: `/login`,
+  MY_LIST: `/mylist`,
+  MOVIE_PAGE: `/films`,
+  ADD_REVIEW: `/review`,
+  PLAYER: `/player`
+};

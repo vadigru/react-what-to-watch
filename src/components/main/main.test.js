@@ -1,10 +1,15 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
+import {Router} from "react-router-dom";
 import configureStore from "redux-mock-store";
+
 import Main from "./main.jsx";
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+
 import Namespace from "../../reducer/namespace.js";
+
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
@@ -139,15 +144,17 @@ it(`Should render Main component`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <Main
-            avatarUrl={``}
-            onMovieCardClick={() => () => {}}
-            isBigPlayerActive={false}
-            onBigPlayerOnOff={() => {}}
-            onSignInClick={() => {}}
-            loadingFilmsStatus={true}
-            loadingPromoStatus={true}
-          />
+          <Router history={history}>
+            <Main
+              avatarUrl={``}
+              onMovieCardClick={() => () => {}}
+              isBigPlayerActive={false}
+              onBigPlayerOnOff={() => {}}
+              onSignInClick={() => {}}
+              loadingFilmsStatus={true}
+              loadingPromoStatus={true}
+            />
+          </Router>
         </Provider>)
   .toJSON();
 

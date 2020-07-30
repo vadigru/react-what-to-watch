@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should render UserBlock component 1`] = `
+exports[`Should render AddReview component 1`] = `
 <section
   className="movie-card movie-card--full"
 >
@@ -21,14 +21,15 @@ exports[`Should render UserBlock component 1`] = `
       WTW
     </h1>
     <header
-      className="page-header"
+      className="page-header movie-card__head"
     >
       <div
         className="logo"
       >
         <a
-          className="logo__link"
-          href="main.html"
+          className="logo__link "
+          href="/"
+          onClick={[Function]}
         >
           <span
             className="logo__letter logo__letter--1"
@@ -58,7 +59,8 @@ exports[`Should render UserBlock component 1`] = `
           >
             <a
               className="breadcrumbs__link"
-              href="movie-page.html"
+              href="/films/1"
+              onClick={[Function]}
             >
               Movie Name
             </a>
@@ -68,6 +70,8 @@ exports[`Should render UserBlock component 1`] = `
           >
             <a
               className="breadcrumbs__link"
+              href="/review"
+              onClick={[Function]}
             >
               Add review
             </a>
@@ -79,8 +83,8 @@ exports[`Should render UserBlock component 1`] = `
       >
         <a
           className="user-block__link"
-          href="#"
-          onClick={[MockFunction]}
+          href="/login"
+          onClick={[Function]}
         >
           Sign in
         </a>
@@ -113,9 +117,10 @@ exports[`Should render UserBlock component 1`] = `
         >
           <input
             className="rating__input"
-            disabled=""
+            disabled={false}
             id="star-1"
             name="rating"
+            onChange={[Function]}
             type="radio"
             value="1"
           />
@@ -127,9 +132,10 @@ exports[`Should render UserBlock component 1`] = `
           </label>
           <input
             className="rating__input"
-            disabled=""
+            disabled={false}
             id="star-2"
             name="rating"
+            onChange={[Function]}
             type="radio"
             value="2"
           />
@@ -141,10 +147,10 @@ exports[`Should render UserBlock component 1`] = `
           </label>
           <input
             className="rating__input"
-            defaultChecked={true}
-            disabled=""
+            disabled={false}
             id="star-3"
             name="rating"
+            onChange={[Function]}
             type="radio"
             value="3"
           />
@@ -156,9 +162,10 @@ exports[`Should render UserBlock component 1`] = `
           </label>
           <input
             className="rating__input"
-            disabled=""
+            disabled={false}
             id="star-4"
             name="rating"
+            onChange={[Function]}
             type="radio"
             value="4"
           />
@@ -170,9 +177,10 @@ exports[`Should render UserBlock component 1`] = `
           </label>
           <input
             className="rating__input"
-            disabled=""
+            disabled={false}
             id="star-5"
             name="rating"
+            onChange={[Function]}
             type="radio"
             value="5"
           />
@@ -189,6 +197,7 @@ exports[`Should render UserBlock component 1`] = `
       >
         <textarea
           className="add-review__textarea"
+          disabled={false}
           id="review-text"
           maxLength={400}
           minLength={50}

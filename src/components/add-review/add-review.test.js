@@ -6,6 +6,8 @@ import configureStore from "redux-mock-store";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
 import Namespace from "../../reducer/namespace.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const mockStore = configureStore([]);
 
@@ -29,7 +31,7 @@ const movie = {
   videoUrl: `https://url.com`,
 };
 
-it(`Should render UserBlock component`, () => {
+it(`Should render AddReview component`, () => {
   const store = mockStore({
     [Namespace.DATA]: {
       films: [],
@@ -44,7 +46,7 @@ it(`Should render UserBlock component`, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 0
+      selectedMovieId: 1
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -53,19 +55,21 @@ it(`Should render UserBlock component`, () => {
     },
   });
 
-  const onSignInClick = jest.fn();
-
   const tree = renderer
     .create(
         <Provider store={store}>
-          <AddReview
-            selectedMovie={movie}
-            promo={movie}
-            isReviewPosting={false}
-            isReviewSendingError={false}
-            avatarUrl={``}
-            onSignInClick={onSignInClick}
-          />
+          <Router history={history}>
+            <AddReview
+              id={1}
+              movie={movie}
+              isReviewPosting={false}
+              isReviewSendingError={false}
+              avatarUrl={``}
+              rating={0}
+              comment={0}
+              onFormDataChange={() => {}}
+            />
+          </Router>
         </Provider>
     )
   .toJSON();

@@ -1,5 +1,5 @@
-import Namespace from "../namespace.js";
 import {createSelector} from "reselect";
+import Namespace from "../namespace.js";
 import {ALL_GENRES} from "../../const.js";
 
 export const getMovies = (state) => {
@@ -47,4 +47,12 @@ export const filterMoviesByGenre = (state) => {
 export const getMoviesByGenre = createSelector(
     (state) => state,
     filterMoviesByGenre
+);
+
+const findFavoriteMovies = (state) =>
+  state[Namespace.DATA].films.filter((movie) => movie.isFavorite);
+
+export const getFavoriteMovies = createSelector(
+    (state) => state,
+    findFavoriteMovies
 );

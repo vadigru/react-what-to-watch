@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {formatTime} from "../../utils/common.js";
+
 import {movieType} from "../../prop-types/types.js";
+import {formatTime} from "../../utils/common.js";
 
 const withPlayer = (Component) => {
   class WithPlayer extends React.PureComponent {
@@ -27,7 +28,7 @@ const withPlayer = (Component) => {
     componentDidMount() {
       const video = this.videoRef.current;
       if (video) {
-        video.muted = true;
+        video.muted = false;
       }
     }
 
@@ -76,7 +77,7 @@ const withPlayer = (Component) => {
     }
 
     render() {
-      const {onExitButtonClick} = this.props;
+      const {onExitButtonClick, id} = this.props;
       const {isPlaying} = this.state;
       return (
         <Component
@@ -90,12 +91,14 @@ const withPlayer = (Component) => {
           onExitButtonClick={onExitButtonClick}
           onLoadedMetadata={this._handleLoadedMetadata}
           onTimeUpdate={this._handleTimeUpdate}
+          id={id}
         />
       );
     }
   }
 
   WithPlayer.propTypes = {
+    id: PropTypes.number.isRequired,
     movie: movieType.isRequired,
     autoPlay: PropTypes.bool.isRequired,
     onExitButtonClick: PropTypes.func.isRequired,

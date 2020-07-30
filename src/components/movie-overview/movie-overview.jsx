@@ -1,5 +1,7 @@
 import React from "react";
+
 import {movieType} from "../../prop-types/types.js";
+
 import {getTextedRating} from "../../utils/common.js";
 
 const MovieOverview = (props) => {

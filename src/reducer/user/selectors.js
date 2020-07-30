@@ -11,3 +11,7 @@ export const getInvalidAuthorizationStatus = (state) => {
 export const getAvatar = (state) => {
   return state[Namespace.USER].avatarUrl;
 };
+
+export const getSignInFlag = (state) => {
+  return state[Namespace.USER].isSignIn;
+};

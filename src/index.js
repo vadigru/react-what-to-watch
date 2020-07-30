@@ -3,15 +3,15 @@ import ReactDom from "react-dom";
 import {createStore, applyMiddleware} from "redux";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
-import reducer from "./reducer/reducer.js";
-import App from "./components/app/app.jsx";
-import withActiveCard from "./hocs/with-active-card/with-active-card.jsx";
-import {createAPI} from "./api.js";
-import {Operation as DataOperation} from "./reducer/data/data.js";
-import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
 import {composeWithDevTools} from "redux-devtools-extension";
 
-const AppWithActiveCard = withActiveCard(App);
+import App from "./components/app/app.jsx";
+
+import {Operation as DataOperation} from "./reducer/data/data.js";
+import {Operation as UserOperation, ActionCreator, AuthorizationStatus} from "./reducer/user/user.js";
+import reducer from "./reducer/reducer.js";
+
+import {createAPI} from "./api.js";
 
 const onUnauthorized = () => {
   store.dispatch(
@@ -41,7 +41,7 @@ store.dispatch(UserOperation.checkAuth());
 const init = () => {
   ReactDom.render(
       <Provider store={store}>
-        <AppWithActiveCard
+        <App
           getReviews={getMovieReviews}
         />
       </Provider>,

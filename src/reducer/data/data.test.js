@@ -2,7 +2,7 @@ import {reducer, ActionType, ActionCreator, Operation} from "../data/data.js";
 import {filterMoviesByGenre} from "../data/selectors.js";
 import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../api.js";
-import {rebuildMovieData} from "../../utils/common.js";
+import {rebuildMovieData} from "../../adapters/movie-adapter.js";
 
 const api = createAPI(() => {});
 
@@ -181,8 +181,8 @@ it(`Should make a correct API call to /films`, () => {
   apiMock.onGet(`/films`).reply(200, []);
 
   return moviesLoader(dispatch, () => {}, api).then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(2);
-    expect(dispatch).toHaveBeenNthCalledWith(1, {
+    expect(dispatch).toHaveBeenCalledTimes(3);
+    expect(dispatch).toHaveBeenNthCalledWith(2, {
       type: ActionType.GET_MOVIES,
       payload: []
     });
@@ -200,7 +200,7 @@ it(`Should make a incorrect API call to /films`, () => {
     expect(dispatch).toHaveBeenCalledTimes(0);
   })
   .catch(() => {
-    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledTimes(2);
   }
   );
 });
@@ -213,8 +213,8 @@ it(`Should make a correct API call to /films/promo`, () => {
   apiMock.onGet(`/films/promo`).reply(200, {});
 
   return movieLoader(dispatch, () => {}, api).then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(2);
-    expect(dispatch).toHaveBeenNthCalledWith(1, {
+    expect(dispatch).toHaveBeenCalledTimes(3);
+    expect(dispatch).toHaveBeenNthCalledWith(2, {
       type: ActionType.GET_PROMO,
       payload: rebuildMovieData({})
     });
@@ -232,7 +232,7 @@ it(`Should make a incorrect API call to /films/promo`, () => {
     expect(dispatch).toHaveBeenCalledTimes(0);
   })
   .catch(() => {
-    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledTimes(2);
   }
   );
 });
@@ -309,7 +309,7 @@ it(`Should get comment posting error`, () => {
     expect(dispatch).toHaveBeenCalledTimes(0);
   })
     .catch(() => {
-      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenCalledTimes(3);
     });
 });
 

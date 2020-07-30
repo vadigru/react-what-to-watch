@@ -16,6 +16,26 @@ export const movieType = PropTypes.shape({
   votes: PropTypes.number.isRequired,
   description: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  // isFavorite: PropTypes.bool.isRequired,
+  isFavorite: PropTypes.bool.isRequired,
   videoUrl: PropTypes.string.isRequired,
+});
+
+export const promoType = PropTypes.shape({
+  title: PropTypes.string,
+  posterUrl: PropTypes.string,
+  backgroundUrl: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  previewUrl: PropTypes.string,
+  previewImage: PropTypes.string,
+  genre: PropTypes.string,
+  release: PropTypes.number,
+  director: PropTypes.string,
+  starring: PropTypes.arrayOf(PropTypes.string),
+  time: PropTypes.string,
+  rating: PropTypes.number,
+  votes: PropTypes.number,
+  description: PropTypes.string,
+  id: PropTypes.number,
+  isFavorite: PropTypes.bool,
+  videoUrl: PropTypes.string,
 });
