@@ -1,7 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
 
-const Tabs = (props) => {
+interface Props {
+  tabNames: string[];
+  className: string;
+  activeTab: string;
+  onTabClick: (tab: string) => void;
+  onGenreTabClick?: () => void;
+};
+
+const Tabs: React.FunctionComponent<Props> = (props) => {
   const {tabNames, className, activeTab, onTabClick, onGenreTabClick} = props;
 
   const chooseHandler = (tab) => {
@@ -34,12 +42,12 @@ const Tabs = (props) => {
   );
 };
 
-Tabs.propTypes = {
-  tabNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  className: PropTypes.string.isRequired,
-  activeTab: PropTypes.string.isRequired,
-  onTabClick: PropTypes.func.isRequired,
-  onGenreTabClick: PropTypes.func || null.isRequired
-};
+// Tabs.propTypes = {
+//   tabNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+//   className: PropTypes.string.isRequired,
+//   activeTab: PropTypes.string.isRequired,
+//   onTabClick: PropTypes.func.isRequired,
+//   onGenreTabClick: PropTypes.func || null.isRequired
+// };
 
 export default Tabs;

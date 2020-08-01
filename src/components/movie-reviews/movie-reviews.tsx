@@ -1,11 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import {getReviews} from "../../reducer/data/selectors.js";
-import {getLoadingReviewsStatus} from "../../reducer/data/selectors.js";
+import {getReviews} from "../../reducer/data/selectors";
+import {getLoadingReviewsStatus} from "../../reducer/data/selectors";
 
-import {formatReviewDate} from "../../utils/common.js";
+import {formatReviewDate} from "../../utils/common";
+
+interface Props {
+  reviews: {
+    id: number;
+    user: {
+      id: number;
+      name: string;
+    };
+    rating: number;
+    comment: string;
+    date: string;
+  }[];
+  loadingReviews: boolean;
+};
 
 const renderReviews = (reviews) => {
   return (
@@ -28,7 +42,7 @@ const renderReviews = (reviews) => {
   );
 };
 
-const MovieReviews = (props) => {
+const MovieReviews: React.FunctionComponent<Props> = (props) => {
   const {reviews, loadingReviews} = props;
   const reviewsHalf = Math.ceil(reviews.length / 2);
   const reviewsFirstHalf = reviews.slice(0, reviewsHalf);
@@ -50,19 +64,19 @@ const MovieReviews = (props) => {
   );
 };
 
-MovieReviews.propTypes = {
-  reviews: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    user: PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    }).isRequired,
-    rating: PropTypes.number.isRequired,
-    comment: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-  })).isRequired,
-  loadingReviews: PropTypes.bool.isRequired
-};
+// MovieReviews.propTypes = {
+//   reviews: PropTypes.arrayOf(PropTypes.shape({
+//     id: PropTypes.number.isRequired,
+//     user: PropTypes.shape({
+//       id: PropTypes.number.isRequired,
+//       name: PropTypes.string.isRequired,
+//     }).isRequired,
+//     rating: PropTypes.number.isRequired,
+//     comment: PropTypes.string.isRequired,
+//     date: PropTypes.string.isRequired,
+//   })).isRequired,
+//   loadingReviews: PropTypes.bool.isRequired
+// };
 
 const mapStateToProps = (state) => ({
   reviews: getReviews(state),

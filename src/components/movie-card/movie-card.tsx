@@ -1,11 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
 
-import VideoPlayer from "../video-player/video-player.jsx";
+import VideoPlayer from "../video-player/video-player";
 
-import {movieType} from "../../prop-types/types.js";
+import {Movie} from "../../prop-types/types";
 
-const MovieCard = (props) => {
+interface Props {
+  movie: Movie;
+  onMovieCardClick: () => void;
+  onMouseEnter: (movie: Movie) => void;
+  onMouseLeave: () => void;
+  isPlaying: boolean;
+};
+
+const MovieCard: React.FunctionComponent<Props> = (props) => {
   const {isPlaying, onMouseEnter, onMouseLeave} = props;
   const {movie, onMovieCardClick} = props;
   const {title, previewUrl, previewImage} = movie;
@@ -50,12 +58,12 @@ const MovieCard = (props) => {
   );
 };
 
-MovieCard.propTypes = {
-  movie: movieType.isRequired,
-  onMovieCardClick: PropTypes.func.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-};
+// MovieCard.propTypes = {
+//   movie: movieType.isRequired,
+//   onMovieCardClick: PropTypes.func.isRequired,
+//   onMouseEnter: PropTypes.func.isRequired,
+//   onMouseLeave: PropTypes.func.isRequired,
+//   isPlaying: PropTypes.bool.isRequired,
+// };
 
 export default MovieCard;

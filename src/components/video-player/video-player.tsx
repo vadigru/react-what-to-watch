@@ -1,7 +1,15 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
 
-class VideoPlayer extends React.PureComponent {
+interface Props {
+  isPlaying: boolean;
+  src: string;
+  autoPlay: boolean;
+};
+
+class VideoPlayer extends React.PureComponent<Props> {
+  private videoRef: React.RefObject<HTMLVideoElement>;
+
   constructor(props) {
     super(props);
 
@@ -14,7 +22,6 @@ class VideoPlayer extends React.PureComponent {
 
     if (video) {
       video.src = src;
-      video.autoPlay = autoPlay;
       video.muted = true;
     }
   }
@@ -24,7 +31,6 @@ class VideoPlayer extends React.PureComponent {
 
     if (video) {
       video.src = ``;
-      video.autoPlay = null;
       video.muted = null;
     }
   }
@@ -37,19 +43,18 @@ class VideoPlayer extends React.PureComponent {
         ref={this.videoRef}
         src={src}
         autoPlay={autoPlay}
-        onClick={this.handleVideoPlay}
+        // onClick={this.handleVideoPlay}
         width="100%"
         height="175"
-      >
-      </video>
+      />
     );
   }
 }
 
-VideoPlayer.propTypes = {
-  isPlaying: PropTypes.bool.isRequired,
-  src: PropTypes.string.isRequired,
-  autoPlay: PropTypes.bool.isRequired
-};
+// VideoPlayer.propTypes = {
+//   isPlaying: PropTypes.bool.isRequired,
+//   src: PropTypes.string.isRequired,
+//   autoPlay: PropTypes.bool.isRequired
+// };
 
 export default VideoPlayer;

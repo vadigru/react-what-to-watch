@@ -40,7 +40,13 @@ exports[`Should render SignIn component 1`] = `
     <div
       className="user-block"
     >
-      
+      <a
+        className="user-block__link"
+        href="/login"
+        onClick={[Function]}
+      >
+        Sign in
+      </a>
     </div>
   </header>
   <div

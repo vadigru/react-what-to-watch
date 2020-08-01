@@ -1,22 +1,51 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {AxiosPromise} from "axios";
 
-import Header from "../header/header.jsx";
+import Header from "../header/header";
 
-import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
-import {getReviewPosting, getReviewSendingError} from "./../../reducer/data/selectors.js";
-import {ActionCreator as StateActionCreator} from "../../reducer/state/state.js";
+import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data";
+import {getReviewPosting, getReviewSendingError} from "../../reducer/data/selectors";
+import {ActionCreator as StateActionCreator} from "../../reducer/state/state";
 
-import {movieType} from "../../prop-types/types.js";
-import {AppRoute} from "../../const.js";
-import history from "../../history.js";
+import {Movie} from "../../prop-types/types";
+import {AppRoute} from "../../const";
+import history from "../../history";
 
 const MIN_REVIEW_LENGTH = 50;
 const MAX_REVIEW_LENGTH = 400;
 
-class AddReview extends React.PureComponent {
+interface Props {
+  id: number;
+  movie: Movie;
+  onSubmit: (
+    {
+      movieId,
+      rating,
+      comment
+    }: { movieId: number | string; rating: number; comment: string },
+    onSuccess: () => void,
+    onError: () => void
+  ) => AxiosPromise;
+  isReviewPosting: boolean;
+  isReviewSendingError: boolean;
+  changeSelectedMovieId: (
+    id: number
+  ) => {
+    type: string;
+    payload: string;
+  };
+  rating: number;
+  comment: number;
+  onFormDataChange: (evt: React.SyntheticEvent<EventTarget>) => void;
+};
+
+class AddReview extends React.PureComponent<Props> {
+  private submitFormRef: React.RefObject<HTMLFormElement>;
+  private commentRef: React.RefObject<HTMLTextAreaElement>;
+  private sendReviewButtonRef: React.RefObject<HTMLButtonElement>;
   constructor(props) {
     super(props);
 
@@ -43,7 +72,8 @@ class AddReview extends React.PureComponent {
         },
         () => {
           history.goBack();
-        }
+        },
+        () => {}
     );
   }
 
@@ -71,7 +101,7 @@ class AddReview extends React.PureComponent {
 
             <h1 className="visually-hidden">WTW</h1>
 
-            <Header className={`movie-card__head`} isSignIn={false}>
+            <Header className={`movie-card__head`}>
               <nav className="breadcrumbs">
                 <ul className="breadcrumbs__list">
                   <li className="breadcrumbs__item">
@@ -171,17 +201,17 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-AddReview.propTypes = {
-  id: PropTypes.number.isRequired,
-  movie: movieType.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  isReviewPosting: PropTypes.bool.isRequired,
-  isReviewSendingError: PropTypes.bool.isRequired,
-  changeSelectedMovieId: PropTypes.func.isRequired,
-  rating: PropTypes.number.isRequired,
-  comment: PropTypes.number.isRequired,
-  onFormDataChange: PropTypes.func.isRequired
-};
+// AddReview.propTypes = {
+//   id: PropTypes.number.isRequired,
+//   movie: movieType.isRequired,
+//   onSubmit: PropTypes.func.isRequired,
+//   isReviewPosting: PropTypes.bool.isRequired,
+//   isReviewSendingError: PropTypes.bool.isRequired,
+//   changeSelectedMovieId: PropTypes.func.isRequired,
+//   rating: PropTypes.number.isRequired,
+//   comment: PropTypes.number.isRequired,
+//   onFormDataChange: PropTypes.func.isRequired
+// };
 
 export {AddReview};
 export default connect(mapStateToProps, mapDispatchToProps)(AddReview);

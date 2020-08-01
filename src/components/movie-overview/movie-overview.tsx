@@ -1,10 +1,14 @@
-import React from "react";
+import * as React from "react";
 
-import {movieType} from "../../prop-types/types.js";
+import {Movie} from "../../prop-types/types";
 
-import {getTextedRating} from "../../utils/common.js";
+import {getTextedRating} from "../../utils/common";
 
-const MovieOverview = (props) => {
+interface Props {
+  movie: Movie;
+};
+
+const MovieOverview: React.FunctionComponent<Props> = (props) => {
   const {movie} = props;
   const {rating, votes, director, starring, description} = movie;
   return (
@@ -30,8 +34,8 @@ const MovieOverview = (props) => {
   );
 };
 
-MovieOverview.propTypes = {
-  movie: movieType.isRequired
-};
+// MovieOverview.propTypes = {
+//   movie: movieType.isRequired
+// };
 
 export default MovieOverview;

@@ -1,10 +1,23 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
+import {connect} from "react-redux";
 
-import Header from "../header/header.jsx";
-import Footer from "../../components/footer/footer.jsx";
+import Header from "../header/header";
+import Footer from "../footer/footer";
 
-class SignIn extends React.PureComponent {
+import {ActionCreator as UserActionCreator} from "../../reducer/user/user";
+import {getSignInFlag} from "../../reducer/user/selectors";
+
+interface Props {
+  onSubmit: ({login: sring, password: string}) => void;
+  isValid: boolean;
+  signInFlag: boolean;
+  changeSignInFlag: (boolean) => void;
+};
+
+class SignIn extends React.PureComponent<Props> {
+  private loginRef: React.RefObject<HTMLInputElement>;
+  private passwordRef: React.RefObject<HTMLInputElement>;
   constructor(props) {
     super(props);
 
@@ -24,13 +37,17 @@ class SignIn extends React.PureComponent {
     });
   }
 
-  render() {
-    const {isValid} = this.props;
+  componentDidMount() {
+    const {changeSignInFlag} = this.props;
+    changeSignInFlag(true);
+  }
 
+  render() {
+    const {isValid, signInFlag} = this.props;
     return (
       <div className="user-page">
 
-        <Header className={`user-page__head`} isSignIn={true}>
+        <Header className={`user-page__head`} isSignIn={signInFlag}>
           <h1 className="page-title user-page__title">Sign in</h1>
         </Header>
 
@@ -86,9 +103,22 @@ class SignIn extends React.PureComponent {
   }
 }
 
-SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  isValid: PropTypes.bool.isRequired
-};
+const mapStateToProps = (state) => ({
+  signInFlag: getSignInFlag(state)
+});
 
-export default SignIn;
+const mapDispatchToProps = (dispatch) => ({
+  changeSignInFlag(boolean) {
+    dispatch(UserActionCreator.changeSignInFlag(boolean));
+  }
+});
+
+// SignIn.propTypes = {
+//   onSubmit: PropTypes.func.isRequired,
+//   isValid: PropTypes.bool.isRequired,
+//   signInFlag: PropTypes.bool.isRequired,
+//   changeSignInFlag: PropTypes.func.isRequired,
+// };
+
+export {SignIn};
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

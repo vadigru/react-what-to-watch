@@ -1,5 +1,5 @@
 import {extend} from "../../utils/common.js";
-import {rebuildMovieData, rebuildMoviesData} from "../../adapters/movie-adapter.js";
+import {rebuildMovieData, rebuildMoviesData} from "../../adapters/movie-adapter.tsx";
 import Namespace from "../namespace.js";
 
 const initialState = {
@@ -45,11 +45,11 @@ const ActionCreator = {
     type: ActionType.POST_REVIEW,
     payload: reviews,
   }),
-  addMovieToFavorite: (movie = {}) => ({
+  addMovieToFavorite: (movie) => ({
     type: ActionType.ADD_MOVIE_TO_FAVORITE,
     payload: movie
   }),
-  removeMovieFromFavorite: (movie = {}) => ({
+  removeMovieFromFavorite: (movie) => ({
     type: ActionType.REMOVE_MOVIE_FROM_FAVORITE,
     payload: movie
   }),
@@ -135,8 +135,7 @@ const Operation = {
     });
   },
   addMovieToFavorite: (movieId) => (dispatch, getState, api) => {
-    return api.post(`/favorite/${movieId}/1`)
-    .then((response) => {
+    return api.post(`/favorite/${movieId}/1`).then((response) => {
       const movie = rebuildMovieData(response.data);
       const state = getState();
 
@@ -168,7 +167,6 @@ const Operation = {
 };
 
 const reducer = (state = initialState, action) => {
-
   switch (action.type) {
     case ActionType.GET_MOVIES:
       return extend(state, {
@@ -198,7 +196,7 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.GET_FAVORITE_MOVIES:
       return extend(state, {
-        reviews: action.payload,
+        getFavoriteMovies: action.payload,
       });
     case ActionType.IS_FILMS_LOADING:
       return extend(state, {

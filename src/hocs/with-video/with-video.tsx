@@ -1,9 +1,24 @@
-import React from "react";
+import * as React from "react";
+import {Subtract} from "utility-types";
 
-import {START_DELAY} from "../../const.js";
+import {START_DELAY} from "../../const";
+
+interface State {
+  isPlaying: boolean;
+};
+
+interface InjectedProps {
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+  isPlaying: boolean;
+};
 
 const withVideo = (Component) => {
-  class WithVideo extends React.PureComponent {
+  type P = React.ComponentProps<typeof Component>;
+  type T = Subtract<P, InjectedProps>;
+
+  class WithVideo extends React.PureComponent<T, State> {
+    private timer: NodeJS.Timeout;
     constructor(props) {
       super(props);
 

@@ -150,6 +150,18 @@ it(`Action creator should return correct action`, () => {
     type: ActionType.POST_REVIEW,
     payload: reviews[0],
   });
+  expect(ActionCreator.addMovieToFavorite(movie)).toEqual({
+    type: ActionType.ADD_MOVIE_TO_FAVORITE,
+    payload: movie,
+  });
+  expect(ActionCreator.removeMovieFromFavorite(movie)).toEqual({
+    type: ActionType.REMOVE_MOVIE_FROM_FAVORITE,
+    payload: movie,
+  });
+  expect(ActionCreator.getFavoriteMovies(movie)).toEqual({
+    type: ActionType.GET_FAVORITE_MOVIES,
+    payload: movie,
+  });
   expect(ActionCreator.loadingFilms(false)).toEqual({
     type: ActionType.IS_FILMS_LOADING,
     payload: false,
@@ -194,7 +206,7 @@ it(`Should make a incorrect API call to /films`, () => {
   const dispatch = jest.fn();
   const reviewsLoader = Operation.getMovies(1);
 
-  apiMock.onGet(`/films`).reply(404, [{fake: true}]);
+  apiMock.onGet(`/films`).reply(404, []);
 
   return reviewsLoader(dispatch, () => {}, api).then(() => {
     expect(dispatch).toHaveBeenCalledTimes(0);
@@ -237,21 +249,21 @@ it(`Should make a incorrect API call to /films/promo`, () => {
   );
 });
 
-// it(`Should make a correct API call to /comments/:movieId`, () => {
-//   const apiMock = new MockAdapter(api);
-//   const dispatch = jest.fn();
-//   const reviewsLoader = Operation.getReviews(1);
+it(`Should make a correct API call to /comments/:movieId`, () => {
+  const apiMock = new MockAdapter(api);
+  const dispatch = jest.fn();
+  const reviewsLoader = Operation.getReviews(1);
 
-//   apiMock.onGet(`comments/1`).reply(200, []);
+  apiMock.onGet(`/comments/1`).reply(200, []);
 
-//   return reviewsLoader(dispatch, () => {}, api).then(() => {
-//     expect(dispatch).toHaveBeenCalledTimes(2);
-//     expect(dispatch).toHaveBeenNthCalledWith(1, {
-//       type: ActionType.GET_REVIEWS,
-//       payload: []
-//     });
-//   });
-// });
+  return reviewsLoader(dispatch, () => {}, api).then(() => {
+    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenNthCalledWith(1, {
+      type: ActionType.GET_REVIEWS,
+      payload: []
+    });
+  });
+});
 
 it(`Should make an incorrect API call to /comments/:movieId`, () => {
   const apiMock = new MockAdapter(api);
@@ -278,16 +290,16 @@ it(`Should make an incorrect API call to /comments/:movieId`, () => {
 //   };
 //   const sendReview = Operation.sendReview(1, commentData);
 
-//   apiMock.onPost(`/comments/1`, {
+//   apiMock.onGet(`/comments/1`, {
 //     rating: ``,
 //     comment: ``
 //   }).reply(`200`, []);
 
 //   return sendReview(dispatch, () => {}, api).then(() => {
-//     expect(dispatch).toHaveBeenCalledTimes(0);
+//     expect(dispatch).toHaveBeenCalledTimes(3);
 //   })
 //     .catch(() => {
-//       expect(dispatch).toHaveBeenCalledTimes(2);
+//       expect(dispatch).toHaveBeenCalledTimes(3);
 //     });
 // });
 
@@ -312,6 +324,63 @@ it(`Should get comment posting error`, () => {
       expect(dispatch).toHaveBeenCalledTimes(3);
     });
 });
+
+it(`Should add movie to favorite`, () => {
+  const apiMock = new MockAdapter(api);
+  const dispatch = jest.fn();
+  const addMovie = Operation.addMovieToFavorite(1, movie);
+
+  apiMock.onPost(`/favorite/1/1`, movie).reply(200, []);
+
+  return addMovie(dispatch, () => {}, api).then(() => {
+    expect(dispatch).toHaveBeenCalledTimes(1);
+  })
+    .catch(() => {
+      expect(dispatch).toHaveBeenCalledTimes(0);
+    });
+});
+
+// it(`Should add movie to favorite errror`, () => {
+//   const apiMock = new MockAdapter(api);
+//   const dispatch = jest.fn();
+//   const addMovie = Operation.addMovieToFavorite(1, movie);
+
+//   apiMock.onPost(`/favorite/1/1`, movie).reply(404, []);
+
+//   return addMovie(dispatch, () => {}, api).then(() => {
+//     expect(dispatch).toHaveBeenCalledTimes(1);
+//   })
+//     .catch(() => {
+//       expect(dispatch).toHaveBeenCalledTimes(1);
+//     });
+// });
+
+it(`Should remove movie from favorite`, () => {
+  const apiMock = new MockAdapter(api);
+  const dispatch = jest.fn();
+  const removeMovie = Operation.removeMovieFromFavorite(1, movie);
+
+  apiMock.onPost(`/favorite/1/0`, movie).reply(200, []);
+
+  return removeMovie(dispatch, () => {}, api).then(() => {
+    expect(dispatch).toHaveBeenCalledTimes(1);
+  })
+    .catch(() => {
+      expect(dispatch).toHaveBeenCalledTimes(0);
+    });
+});
+
+// it(`Should get movies from favorites`, () => {
+//   const apiMock = new MockAdapter(api);
+//   const dispatch = jest.fn();
+//   const getFavorites = Operation.getFavoriteMovies();
+
+//   apiMock.onGet(`/favorite`).reply(200, films);
+
+//   return getFavorites(dispatch, () => {}, api).then(() => {
+//     expect(dispatch).toHaveBeenCalledTimes(1);
+//   });
+// });
 
 it(`Reducer should load movies from the server`, () => {
   expect(reducer({
@@ -368,44 +437,66 @@ it(`Reducer should change flag for films loading`, () => {
   });
 });
 
-it(`Reducer should change flag for films loading`, () => {
+it(`Reducer should change flag for promo loading`, () => {
   expect(reducer({
     isPromoLoading: false
   }, {
-    type: ActionType. IS_PROMO_LOADING,
+    type: ActionType.IS_PROMO_LOADING,
     payload: true,
   })).toEqual({
     isPromoLoading: true
   });
 });
 
-it(`Reducer should change flag for films loading`, () => {
+it(`Reducer should change flag for reviews loading`, () => {
   expect(reducer({
     isReviewsLoading: false
   }, {
-    type: ActionType. IS_REVIEWS_LOADING,
+    type: ActionType.IS_REVIEWS_LOADING,
     payload: true,
   })).toEqual({
     isReviewsLoading: true
   });
 });
 
-it(`Reducer should change flag for films loading`, () => {
+it(`Reducer should change flag for review posting loading`, () => {
   expect(reducer({
     isReviewPosting: false
   }, {
-    type: ActionType. IS_REVIEW_POSTING,
+    type: ActionType.IS_REVIEW_POSTING,
     payload: true,
   })).toEqual({
     isReviewPosting: true
   });
 });
 
-it(`Reducer should change flag for films loading`, () => {
+it(`Reducer should add movie to favorites`, () => {
+  expect(reducer({
+    films,
+  }, {
+    type: ActionType.ADD_MOVIE_TO_FAVORITE,
+    payload: movie,
+  })).toEqual({
+    films: [movie]
+  });
+});
+
+it(`Reducer should remove movie frome favorites`, () => {
+  expect(reducer({
+    films,
+  }, {
+    type: ActionType.REMOVE_MOVIE_FROM_FAVORITE,
+    payload: movie,
+  })).toEqual({
+    films: [movie]
+  });
+});
+
+it(`Reducer should change flag for review when posting error`, () => {
   expect(reducer({
     isReviewSendingError: false
   }, {
-    type: ActionType. IS_REVIEW_SENDING_ERROR,
+    type: ActionType.IS_REVIEW_SENDING_ERROR,
     payload: true,
   })).toEqual({
     isReviewSendingError: true

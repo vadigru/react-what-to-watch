@@ -1,7 +1,22 @@
-import React from "react";
+import * as React from "react";
+import {Subtract} from "utility-types";
+
+interface State {
+  rating: number;
+  comment: number;
+};
+
+interface InjectedProps {
+  rating: number;
+  comment: number;
+  onFormDataChange: (evt: React.SyntheticEvent<EventTarget>) => void;
+};
 
 const withForm = (Component) => {
-  class WithForm extends React.PureComponent {
+  type P = React.ComponentProps<typeof Component>;
+  type T = Subtract<P, InjectedProps>;
+
+  class WithForm extends React.PureComponent<T, State> {
     constructor(props) {
       super(props);
 

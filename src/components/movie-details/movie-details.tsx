@@ -1,8 +1,12 @@
-import React from "react";
+import * as React from "react";
 
-import {movieType} from "../../prop-types/types.js";
+import {Movie} from "../../prop-types/types";
 
-const MovieDetails = (props) => {
+interface Props {
+  movie: Movie;
+};
+
+const MovieDetails: React.FunctionComponent<Props> = (props) => {
   const {movie} = props;
   const {genre, release, director, starring, time} = movie;
   return (
@@ -44,8 +48,8 @@ const MovieDetails = (props) => {
   );
 };
 
-MovieDetails.propTypes = {
-  movie: movieType.isRequired
-};
+// MovieDetails.propTypes = {
+//   movie: movieType.isRequired
+// };
 
 export default MovieDetails;

@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import renderer from "react-test-renderer";
 import AddReview from "./add-review.jsx";
 import {Provider} from "react-redux";

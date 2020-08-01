@@ -1,24 +1,41 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
+import {AxiosPromise} from "axios";
 
-import Header from "../header/header.jsx";
-import Footer from "../../components/footer/footer.jsx";
-import MovieDetails from "../movie-details/movie-details.jsx";
-import MovieOverview from "../movie-overview/movie-overview.jsx";
-import MovieReviews from "../movie-reviews/movie-reviews.jsx";
-import MoviesSimilar from "../movies-similar/movies-similar.jsx";
-import Tabs from "../tabs/tabs.jsx";
+import Header from "../header/header";
+import Footer from "../footer/footer";
+import MovieDetails from "../movie-details/movie-details";
+import MovieOverview from "../movie-overview/movie-overview";
+import MovieReviews from "../movie-reviews/movie-reviews";
+import MoviesSimilar from "../movies-similar/movies-similar";
+import Tabs from "../tabs/tabs";
 
-import {Operation as DataOperation} from "../../reducer/data/data.js";
-import {ActionCreator} from "../../reducer/state/state.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {Operation as DataOperation} from "../../reducer/data/data";
+import {ActionCreator} from "../../reducer/state/state";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import {getAuthorizationStatus} from "../../reducer/user/selectors";
 
-import {movieType} from "../../prop-types/types.js";
-import {Tab, AppRoute} from "../../const.js";
-import history from "../../history.js";
+import {Movie} from "../../prop-types/types";
+import {Tab, AppRoute} from "../../const";
+import history from "../../history";
+
+interface Props {
+  id: number;
+  activeTab: string;
+  authorizationStatus: string;
+  movies: Movie[];
+  movie: Movie;
+  onMovieCardClick: (id: number) => void;
+  onTabClick: () => void;
+  changeSelectedMovieId: (id: number) => {
+    type: string;
+    payload: string;
+  };
+  addMovieToFavorite: (id: number) => AxiosPromise;
+  removeMovieFromFavorite: (id: number) => AxiosPromise;
+};
 
 const renderActiveTab = (activeTab, id, movie) => {
   switch (activeTab) {
@@ -31,7 +48,7 @@ const renderActiveTab = (activeTab, id, movie) => {
   }
 };
 
-class MoviePage extends React.PureComponent {
+class MoviePage extends React.PureComponent<Props> {
   constructor(props) {
     super(props);
   }
@@ -63,7 +80,7 @@ class MoviePage extends React.PureComponent {
       backgroundColor
     } = movie;
 
-    const tabNames = Object.values(Tab);
+    const tabNames = Object.keys(Tab).map(key => Tab[key]);
 
     return (
       <React.Fragment>
@@ -78,7 +95,7 @@ class MoviePage extends React.PureComponent {
 
             <h1 className="visually-hidden">WTW</h1>
 
-            <Header className={`movie-card__head`} isSignIn={false}/>
+            <Header className={`movie-card__head`} />
 
             <div className="movie-card__wrap">
               <div className="movie-card__desc">
@@ -173,18 +190,18 @@ class MoviePage extends React.PureComponent {
   }
 }
 
-MoviePage.propTypes = {
-  id: PropTypes.number.isRequired,
-  activeTab: PropTypes.string,
-  authorizationStatus: PropTypes.string.isRequired,
-  movies: PropTypes.arrayOf(movieType).isRequired,
-  movie: movieType.isRequired,
-  onMovieCardClick: PropTypes.func.isRequired,
-  onTabClick: PropTypes.func.isRequired,
-  changeSelectedMovieId: PropTypes.func.isRequired,
-  addMovieToFavorite: PropTypes.func.isRequired,
-  removeMovieFromFavorite: PropTypes.func.isRequired
-};
+// MoviePage.propTypes = {
+//   id: PropTypes.number.isRequired,
+//   activeTab: PropTypes.string,
+//   authorizationStatus: PropTypes.string.isRequired,
+//   movies: PropTypes.arrayOf(movieType).isRequired,
+//   movie: movieType.isRequired,
+//   onMovieCardClick: PropTypes.func.isRequired,
+//   onTabClick: PropTypes.func.isRequired,
+//   changeSelectedMovieId: PropTypes.func.isRequired,
+//   addMovieToFavorite: PropTypes.func.isRequired,
+//   removeMovieFromFavorite: PropTypes.func.isRequired
+// };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),

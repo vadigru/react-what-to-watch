@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
@@ -35,6 +35,7 @@ it(`Should render SignIn component`, () => {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
       isValidAuthorization: true,
       avatarUrl: ``,
+      isSignIn: false,
     },
   });
 

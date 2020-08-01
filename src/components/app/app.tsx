@@ -1,35 +1,51 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
 import {connect} from "react-redux";
 import {Switch, Route, Router} from "react-router-dom";
+import {AxiosPromise} from "axios";
 
-import AddReview from "../add-review/add-review.jsx";
-import Loading from "../../loader.jsx";
-import Main from "../main/main.jsx";
-import MoviePage from "../movie-page/movie-page.jsx";
-import MyList from "../my-list/my-list.jsx";
-import PrivateRoute from "../../private-route/private-route.jsx";
-import SignIn from "../sign-in/sign-in.jsx";
-import VideoPlayerBig from "../../components/video-player-big/video-player-big.jsx";
-import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
-import withForm from "../../hocs/with-form/with-form.jsx";
-import withPlayer from "../../hocs/with-player/with-player.jsx";
+import AddReview from "../add-review/add-review";
+import Loading from "../../loader";
+import Main from "../main/main";
+import MoviePage from "../movie-page/movie-page";
+import MyList from "../my-list/my-list";
+import PrivateRoute from "../../private-route/private-route";
+import SignIn from "../sign-in/sign-in";
+import VideoPlayerBig from "../video-player-big/video-player-big";
+import withActiveTab from "../../hocs/with-active-tab/with-active-tab";
+import withForm from "../../hocs/with-form/with-form";
+import withPlayer from "../../hocs/with-player/with-player";
 
-import {ActionCreator} from "../../reducer/state/state.js";
-import {getSelectedMovie} from "../../reducer/state/selectors.js";
-import {getLoadingFilmsStatus, getLoadingPromoStatus} from "../../reducer/data/selectors.js";
-import {Operation as UserOperation} from "../../reducer/user/user.js";
-import {getInvalidAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {ActionCreator} from "../../reducer/state/state";
+import {getSelectedMovie} from "../../reducer/state/selectors";
+import {getLoadingFilmsStatus, getLoadingPromoStatus} from "../../reducer/data/selectors";
+import {Operation as UserOperation} from "../../reducer/user/user";
+import {getInvalidAuthorizationStatus} from "../../reducer/user/selectors";
 
-import {movieType, promoType} from "../../prop-types/types.js";
-import {AppRoute} from "../../const.js";
-import history from "../../history.js";
+import {Movie} from "../../prop-types/types";
+import {AppRoute} from "../../const";
+import history from "../../history";
+
+
+interface Props {
+  movies: Movie[];
+  movie: Movie;
+  promo: Movie;
+  login: (authData: {email: string, password: string}) => AxiosPromise;
+  isValidAuthorization: boolean;
+  isFilmsLoading: boolean;
+  isPromoLoading: boolean;
+  getReviews: (id: number) => AxiosPromise;
+  changeSelectedMovieId: (id: number) => {
+    type: string;
+    payload: string;
+  };
+};
 
 const MoviePageWithActiveTab = withActiveTab(MoviePage);
 const AddReviewWithForm = withForm(AddReview);
 const VideoPlayerBigWithPlayer = withPlayer(VideoPlayerBig);
 
-class App extends React.PureComponent {
+class App extends React.PureComponent<Props> {
   constructor(props) {
     super(props);
 
@@ -38,6 +54,7 @@ class App extends React.PureComponent {
 
   _handleMovieCardClick(id) {
     const {getReviews, changeSelectedMovieId} = this.props;
+    console.log(typeof id);
     return () => {
       getReviews(id);
       changeSelectedMovieId(id);
@@ -53,7 +70,7 @@ class App extends React.PureComponent {
       login,
       isValidAuthorization,
       isFilmsLoading,
-      isPromoLoading
+      isPromoLoading,
     } = this.props;
 
     if (isFilmsLoading || isPromoLoading) {
@@ -141,7 +158,6 @@ class App extends React.PureComponent {
                     });
                   }}
                   isValid={isValidAuthorization}
-                  isSignIn={false}
                 />
               );
             }}>
@@ -167,21 +183,20 @@ const mapDispatchToProps = (dispatch) => ({
   },
   changeSelectedMovieId(id) {
     dispatch(ActionCreator.changeSelectedMovieId(id));
-  }
+  },
 });
 
-App.propTypes = {
-  movies: PropTypes.arrayOf(movieType).isRequired,
-  movie: movieType,
-  promo: promoType,
-  login: PropTypes.func.isRequired,
-  isValidAuthorization: PropTypes.bool.isRequired,
-  isFilmsLoading: PropTypes.bool.isRequired,
-  isPromoLoading: PropTypes.bool.isRequired,
-  getReviews: PropTypes.func.isRequired,
-  changeSelectedMovieId: PropTypes.func.isRequired,
-
-};
+// App.propTypes = {
+//   movies: PropTypes.arrayOf(movieType).isRequired,
+//   movie: movieType,
+//   promo: promoType,
+//   login: PropTypes.func.isRequired,
+//   isValidAuthorization: PropTypes boolean.isRequired,
+//   isFilmsLoading: PropTypes boolean.isRequired,
+//   isPromoLoading: PropTypes boolean.isRequired,
+//   getReviews: PropTypes.func.isRequired,
+//   changeSelectedMovieId: PropTypes.func.isRequired,
+// };
 
 export {App};
 export default connect(mapStateToProps, mapDispatchToProps)(App);

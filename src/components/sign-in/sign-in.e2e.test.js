@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 import Enzyme, {mount} from "enzyme";
@@ -50,6 +50,7 @@ it(`Should submit a form`, () => {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
       isValidAuthorization: true,
       avatarUrl: ``,
+      isSignIn: false,
     },
   });
 

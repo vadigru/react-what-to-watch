@@ -1,9 +1,12 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 
-import {AppRoute} from "../../const.js";
+import {AppRoute} from "../../const";
 
+interface Props {
+  className?: string;
+};
 
 const Logo = (props) => {
   const {className = ``} = props;
@@ -18,8 +21,8 @@ const Logo = (props) => {
   );
 };
 
-Logo.propTypes = {
-  className: PropTypes.string
-};
+// Logo.propTypes = {
+//   className: PropTypes.string
+// };
 
 export default Logo;

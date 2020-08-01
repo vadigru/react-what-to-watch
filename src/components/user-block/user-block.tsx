@@ -1,14 +1,20 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getAuthorizationStatus, getAvatar} from "../../reducer/user/selectors.js";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import {getAuthorizationStatus, getAvatar} from "../../reducer/user/selectors";
 
-import {AppRoute} from "../../const.js";
+import {AppRoute} from "../../const";
 
-const UserBlock = (props) => {
+interface Props {
+  avatarUrl: string;
+  authorizationStatus: string;
+  isSignIn: boolean;
+};
+
+const UserBlock: React.FunctionComponent<Props> = (props) => {
   const {avatarUrl, authorizationStatus, isSignIn} = props;
   const signIn = isSignIn ? `` :
     <Link to={AppRoute.SIGN_IN} className="user-block__link">
@@ -33,11 +39,11 @@ const mapStateToProps = (state) => ({
   avatarUrl: getAvatar(state),
 });
 
-UserBlock.propTypes = {
-  avatarUrl: PropTypes.string.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  isSignIn: PropTypes.bool.isRequired
-};
+// UserBlock.propTypes = {
+//   avatarUrl: PropTypes.string.isRequired,
+//   authorizationStatus: PropTypes.string.isRequired,
+//   isSignIn: PropTypes.bool.isRequired,
+// };
 
 export {UserBlock};
 export default connect(mapStateToProps, null)(UserBlock);

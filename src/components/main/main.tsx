@@ -1,30 +1,47 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as React from "react";
+// import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {AxiosPromise} from "axios";
 
-import Header from "../header/header.jsx";
-import Footer from "../../components/footer/footer.jsx";
-import MoviesList from "../movies-list/movies-list.jsx";
-import ShowMoreButton from "../show-more-button/show-more-button.jsx";
-import Tabs from "../tabs/tabs.jsx";
+import Header from "../header/header";
+import Footer from "../footer/footer";
+import MoviesList from "../movies-list/movies-list";
+import ShowMoreButton from "../show-more-button/show-more-button";
+import Tabs from "../tabs/tabs";
 
-import {Operation} from "../../reducer/data/data.js";
+import {Operation} from "../../reducer/data/data";
 import {
   getMovies,
   getPromo,
   getMoviesByGenre,
   getLoadingFilmsStatus,
   getLoadingPromoStatus
-} from "../../reducer/data/selectors.js";
-import {ActionCreator} from "../../reducer/state/state.js";
-import {getGenre, getShowedMovies} from "../../reducer/state/selectors.js";
+} from "../../reducer/data/selectors";
+import {ActionCreator} from "../../reducer/state/state";
+import {getGenre, getShowedMovies} from "../../reducer/state/selectors";
 
-import {movieType, promoType} from "../../prop-types/types.js";
-import {getMaxGenresCount, getGenresList} from "../../utils/common.js";
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT, AppRoute} from "../../const.js";
-import history from "../../history.js";
+import {Movie} from "../../prop-types/types";
+import {getMaxGenresCount, getGenresList} from "../../utils/common";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT, AppRoute} from "../../const";
+import history from "../../history";
 
-const Main = (props) => {
+interface Props {
+  promo: Movie;
+  movies: Movie[];
+  showedMovies: number;
+  showMoreMovies: () => void;
+  showDefaultMovies: () => void;
+  genre: string;
+  changeGenre: (genre: string) => void;
+  onMovieCardClick: (id: number) => void;
+  filteredMovies: Movie[];
+  loadingFilmsStatus: boolean;
+  loadingPromoStatus: boolean;
+  addMovieToFavorite: (id: number) => AxiosPromise;
+  removeMovieFromFavorite: (id: number) => AxiosPromise;
+};
+
+const Main: React.FunctionComponent<Props> = (props) => {
   const {
     movies,
     showedMovies,
@@ -52,7 +69,7 @@ const Main = (props) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header className={`movie-card__head`} isSignIn={false}/>
+        <Header className={`movie-card__head`} />
 
         {loadingPromoStatus ?
           <div style={{textAlign: `center`}}>UNABLE TO FIND PROMO MOVIE DUE TO THE SERVER ERROR</div> :
@@ -175,21 +192,21 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-Main.propTypes = {
-  promo: promoType.isRequired,
-  movies: PropTypes.arrayOf(movieType).isRequired,
-  showedMovies: PropTypes.number.isRequired,
-  showMoreMovies: PropTypes.func.isRequired,
-  showDefaultMovies: PropTypes.func.isRequired,
-  genre: PropTypes.string.isRequired,
-  changeGenre: PropTypes.func.isRequired,
-  onMovieCardClick: PropTypes.func.isRequired,
-  filteredMovies: PropTypes.arrayOf(movieType).isRequired,
-  loadingFilmsStatus: PropTypes.bool.isRequired,
-  loadingPromoStatus: PropTypes.bool.isRequired,
-  addMovieToFavorite: PropTypes.func.isRequired,
-  removeMovieFromFavorite: PropTypes.func.isRequired
-};
+// Main.propTypes = {
+//   promo: promoType.isRequired,
+//   movies: PropTypes.arrayOf(movieType).isRequired,
+//   showedMovies: PropTypes.number.isRequired,
+//   showMoreMovies: PropTypes.func.isRequired,
+//   showDefaultMovies: PropTypes.func.isRequired,
+//   genre: PropTypes.string.isRequired,
+//   changeGenre: PropTypes.func.isRequired,
+//   onMovieCardClick: PropTypes.func.isRequired,
+//   filteredMovies: PropTypes.arrayOf(movieType).isRequired,
+//   loadingFilmsStatus: PropTypes.bool.isRequired,
+//   loadingPromoStatus: PropTypes.bool.isRequired,
+//   addMovieToFavorite: PropTypes.func.isRequired,
+//   removeMovieFromFavorite: PropTypes.func.isRequired
+// };
 
 export {Main};
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
