@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Route, Redirect, RouteComponentProps} from "react-router-dom";
 
@@ -13,9 +12,9 @@ interface Props {
   exact: boolean;
   path: string;
   render: (routeProps: RouteComponentProps<number> | null) => void;
-};
+}
 
-const PrivateRoute: React.FunctionComponent<Props> = (props) => {
+const PrivateRoute: React.FunctionComponent<Props> = (props: Props) => {
   const {render, path, exact, authorizationStatus} = props;
 
   return (
@@ -32,13 +31,6 @@ const PrivateRoute: React.FunctionComponent<Props> = (props) => {
     />
   );
 };
-
-// PrivateRoute.propTypes = {
-//   authorizationStatus: PropTypes.string.isRequired,
-//   exact: PropTypes.bool.isRequired,
-//   path: PropTypes.string.isRequired,
-//   render: PropTypes.func.isRequired
-// };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state)

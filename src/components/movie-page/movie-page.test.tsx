@@ -1,6 +1,17 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
-import MoviesList from "./movies-list.jsx";
+import * as renderer from "react-test-renderer";
+import {Provider} from "react-redux";
+import {Router} from "react-router-dom";
+import configureStore from "redux-mock-store";
+
+import MoviePage from "./movie-page";
+
+import {AuthorizationStatus} from "../../reducer/user/user";
+import Namespace from "../../reducer/namespace";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
+import history from "../../history";
+
+const mockStore = configureStore([]);
 
 const films = [
   {
@@ -81,13 +92,69 @@ const films = [
   },
 ];
 
-it(`Should render MovieList component`, () => {
+const movie = {
+  title: `Movie Name`,
+  posterUrl: `https://url.com`,
+  backgroundUrl: `https://url.com`,
+  backgroundColor: `some color`,
+  previewUrl: `https://url.com`,
+  previewImage: `https://url.com`,
+  genre: `genre`,
+  release: 2020,
+  director: `Famous Director`,
+  starring: [`Actor One`, `Actor Two`, `Actor Three`],
+  time: `1h 30m`,
+  rating: 10,
+  votes: 1000000,
+  description: `Some Description`,
+  id: 1,
+  isFavorite: true,
+  videoUrl: `https://url.com`,
+};
+
+
+it(`Should render MoviePage component`, () => {
+  const store = mockStore({
+    [Namespace.DATA]: {
+      films,
+      promo: movie,
+      reviews: [],
+      isFilmsLoading: false,
+      isPromoLoading: false,
+      isReviewsLoading: false,
+      isReviewPosting: false,
+      isReviewSendingError: false,
+    },
+    [Namespace.STATE]: {
+      genre: ALL_GENRES,
+      showedMovies: MOVIES_DEFAULT_AMOUNT,
+      selectedMovieId: 8
+    },
+    [Namespace.USER]: {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      isValidAuthorization: true,
+      avatarUrl: ``,
+    },
+  });
+
   const tree = renderer
     .create(
-        <MoviesList
-          movies={films}
-          onMovieCardClick={() => () => {}}
-        />)
+        <Provider store={store}>
+          <Router history={history}>
+            <MoviePage
+              id={8}
+              movie={movie}
+              movies={films}
+              onMovieCardClick={() => {}}
+              activeTab={`Overview`}
+              onTabClick={() => {}}
+              authorizationStatus={AuthorizationStatus.AUTH}
+              addMovieToFavorite={() => {}}
+              removeMovieFromFavorite={() => {}}
+            />
+          </Router>
+        </Provider>
+    )
   .toJSON();
 
   expect(tree).toMatchSnapshot();

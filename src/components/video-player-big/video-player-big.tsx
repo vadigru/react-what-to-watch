@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import {ActionCreator} from "../../reducer/state/state";
@@ -7,7 +6,7 @@ import {ActionCreator} from "../../reducer/state/state";
 import {Movie} from "../../prop-types/types";
 
 interface Props {
-  id: number
+  id: number;
   movie: Movie;
   autoPlay: boolean;
   isPlaying: boolean;
@@ -16,7 +15,7 @@ interface Props {
   getPlaybackProgress: () => string;
   getRemainingTime: () => string;
   videoRef: React.RefObject<HTMLVideoElement>;
-  onExitButtonClick: () => {}
+  onExitButtonClick: () => {};
   onLoadedMetadata: (evt: React.SyntheticEvent<EventTarget>) => void;
   onTimeUpdate: (evt: React.SyntheticEvent<EventTarget>) => void;
   changeSelectedMovieId: (
@@ -25,7 +24,7 @@ interface Props {
     type: string;
     payload: string;
   };
-};
+}
 
 class VideoPlayerBig extends React.PureComponent<Props> {
 
@@ -131,25 +130,6 @@ class VideoPlayerBig extends React.PureComponent<Props> {
     );
   }
 }
-
-// VideoPlayerBig.propTypes = {
-//   id: PropTypes.number.isRequired,
-//   movie: movieType.isRequired,
-//   autoPlay: PropTypes.bool.isRequired,
-//   isPlaying: PropTypes.bool.isRequired,
-//   onPlayButtonClick: PropTypes.func.isRequired,
-//   onFullscreenButtonClick: PropTypes.func,
-//   getPlaybackProgress: PropTypes.func.isRequired,
-//   getRemainingTime: PropTypes.func.isRequired,
-//   videoRef: PropTypes.oneOfType([
-//     PropTypes.func,
-//     PropTypes.shape({current: PropTypes.instanceOf(Element)})
-//   ]).isRequired,
-//   onExitButtonClick: PropTypes.func.isRequired,
-//   onLoadedMetadata: PropTypes.func.isRequired,
-//   onTimeUpdate: PropTypes.func.isRequired,
-//   changeSelectedMovieId: PropTypes.func.isRequired
-// };
 
 const mapDispatchToProps = (dispatch) => ({
   changeSelectedMovieId(id) {

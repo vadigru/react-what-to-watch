@@ -115,7 +115,7 @@ const Operation = {
         throw err;
       });
   },
-  sendReview: (reviewData, onSuccess, onError) => (dispatch, getState, api) => {
+  sendReview: (reviewData, onSuccess) => (dispatch, getState, api) => {
     dispatch(ActionCreator.sendingReviewError(false));
     return api.post(`/comments/${reviewData.movieId}`, {
       rating: reviewData.rating,
@@ -130,7 +130,6 @@ const Operation = {
     .catch((err)=>{
       dispatch(ActionCreator.sendingReviewError(true));
       dispatch(ActionCreator.postingReview(false));
-      onError();
       throw err;
     });
   },

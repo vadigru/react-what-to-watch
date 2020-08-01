@@ -1,11 +1,10 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 
 interface Props {
   isPlaying: boolean;
   src: string;
   autoPlay: boolean;
-};
+}
 
 class VideoPlayer extends React.PureComponent<Props> {
   private videoRef: React.RefObject<HTMLVideoElement>;
@@ -17,7 +16,7 @@ class VideoPlayer extends React.PureComponent<Props> {
   }
 
   componentDidMount() {
-    const {src, autoPlay} = this.props;
+    const {src} = this.props;
     const video = this.videoRef.current;
 
     if (video) {
@@ -43,18 +42,11 @@ class VideoPlayer extends React.PureComponent<Props> {
         ref={this.videoRef}
         src={src}
         autoPlay={autoPlay}
-        // onClick={this.handleVideoPlay}
         width="100%"
         height="175"
       />
     );
   }
 }
-
-// VideoPlayer.propTypes = {
-//   isPlaying: PropTypes.bool.isRequired,
-//   src: PropTypes.string.isRequired,
-//   autoPlay: PropTypes.bool.isRequired
-// };
 
 export default VideoPlayer;

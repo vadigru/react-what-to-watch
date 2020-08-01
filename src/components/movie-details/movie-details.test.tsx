@@ -1,6 +1,6 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
-import MovieDetails from "./movie-details.jsx";
+import * as renderer from "react-test-renderer";
+import MovieDetails from "./movie-details";
 
 const movie = {
   title: `Movie Name`,

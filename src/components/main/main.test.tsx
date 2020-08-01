@@ -1,14 +1,15 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import {Provider} from "react-redux";
+import {Router} from "react-router-dom";
 import configureStore from "redux-mock-store";
 
-import VideoPlayerBig from "./video-player-big.jsx";
+import Main from "./main";
 
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import Namespace from "../../reducer/namespace.js";
+import Namespace from "../../reducer/namespace";
 
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
+import history from "../../history";
 
 const mockStore = configureStore([]);
 
@@ -111,8 +112,12 @@ const movie = {
   videoUrl: `https://url.com`,
 };
 
-it(`Should render VideoPlayer component`, () => {
-  const ref = React.createRef();
+const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`
+};
+
+it(`Should render Main component`, () => {
   const store = mockStore({
     [Namespace.DATA]: {
       films,
@@ -127,35 +132,29 @@ it(`Should render VideoPlayer component`, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 4
+      selectedMovieId: 0
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
       isValidAuthorization: true,
       avatarUrl: ``,
-      isSignIn: false
     },
   });
 
   const tree = renderer
     .create(
         <Provider store={store}>
-          <VideoPlayerBig
-            isPlaying={false}
-            src={movie.videoUrl}
-            autoPlay={false}
-            movie={movie}
-            onPlayButtonClick={() => {}}
-            onFullscreenButtonClick={() => {}}
-            getPlaybackProgress={() => {}}
-            getRemainingTime={() => {}}
-            videoRef={ref}
-            onExitButtonClick={() => {}}
-            onLoadedMetadata={() => {}}
-            onTimeUpdate={() => {}}
-            videoUrl={movie.videoUrl}
-            id={2}
-          />
+          <Router history={history}>
+            <Main
+              avatarUrl={``}
+              onMovieCardClick={() => () => {}}
+              isBigPlayerActive={false}
+              onBigPlayerOnOff={() => {}}
+              onSignInClick={() => {}}
+              loadingFilmsStatus={true}
+              loadingPromoStatus={true}
+            />
+          </Router>
         </Provider>)
   .toJSON();
 

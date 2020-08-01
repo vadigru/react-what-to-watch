@@ -5,13 +5,13 @@ import {START_DELAY} from "../../const";
 
 interface State {
   isPlaying: boolean;
-};
+}
 
 interface InjectedProps {
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   isPlaying: boolean;
-};
+}
 
 const withVideo = (Component) => {
   type P = React.ComponentProps<typeof Component>;

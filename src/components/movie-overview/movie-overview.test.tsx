@@ -1,6 +1,6 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
-import MovieOverview from "./movie-overview.jsx";
+import * as renderer from "react-test-renderer";
+import MovieOverview from "./movie-overview";
 
 const movie = {
   title: `Movie Name`,

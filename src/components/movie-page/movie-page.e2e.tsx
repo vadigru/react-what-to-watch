@@ -5,12 +5,12 @@ import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import configureStore from "redux-mock-store";
 
-import MoviePage from "./movie-page.jsx";
+import MoviePage from "./movie-page";
 
-// import {mapStateToProps} from "../../reducer/state/selectors.js";
-import Namespace from "../../reducer/namespace.js";
+// import {mapStateToProps} from "../../reducer/state/selectors";
+import Namespace from "../../reducer/namespace";
 
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
 
 const mockStore = configureStore([]);
 

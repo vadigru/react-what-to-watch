@@ -1,6 +1,16 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
-import MoviesSimilar from "./movies-similar.jsx";
+import * as renderer from "react-test-renderer";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
+
+import VideoPlayerBig from "./video-player-big";
+
+import {AuthorizationStatus} from "../../reducer/user/user";
+import Namespace from "../../reducer/namespace";
+
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
+
+const mockStore = configureStore([]);
 
 const films = [
   {
@@ -101,15 +111,52 @@ const movie = {
   videoUrl: `https://url.com`,
 };
 
-it(`Should render MoviesSimilar component`, () => {
+it(`Should render VideoPlayer component`, () => {
+  const ref = React.createRef();
+  const store = mockStore({
+    [Namespace.DATA]: {
+      films,
+      promo: movie,
+      reviews: [],
+      isFilmsLoading: false,
+      isPromoLoading: false,
+      isReviewsLoading: false,
+      isReviewPosting: false,
+      isReviewSendingError: false,
+    },
+    [Namespace.STATE]: {
+      genre: ALL_GENRES,
+      showedMovies: MOVIES_DEFAULT_AMOUNT,
+      selectedMovieId: 4
+    },
+    [Namespace.USER]: {
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      isValidAuthorization: true,
+      avatarUrl: ``,
+      isSignIn: false
+    },
+  });
+
   const tree = renderer
     .create(
-        <MoviesSimilar
-          movies={films}
-          movie={movie}
-          previewImage={movie.previewImage}
-          onMovieCardClick={() => {}}
-        />)
+        <Provider store={store}>
+          <VideoPlayerBig
+            isPlaying={false}
+            src={movie.videoUrl}
+            autoPlay={false}
+            movie={movie}
+            onPlayButtonClick={() => {}}
+            onFullscreenButtonClick={() => {}}
+            getPlaybackProgress={() => {}}
+            getRemainingTime={() => {}}
+            videoRef={ref}
+            onExitButtonClick={() => {}}
+            onLoadedMetadata={() => {}}
+            onTimeUpdate={() => {}}
+            videoUrl={movie.videoUrl}
+            id={2}
+          />
+        </Provider>)
   .toJSON();
 
   expect(tree).toMatchSnapshot();

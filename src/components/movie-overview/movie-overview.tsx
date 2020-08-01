@@ -6,9 +6,9 @@ import {getTextedRating} from "../../utils/common";
 
 interface Props {
   movie: Movie;
-};
+}
 
-const MovieOverview: React.FunctionComponent<Props> = (props) => {
+const MovieOverview: React.FunctionComponent<Props> = (props: Props) => {
   const {movie} = props;
   const {rating, votes, director, starring, description} = movie;
   return (
@@ -33,9 +33,5 @@ const MovieOverview: React.FunctionComponent<Props> = (props) => {
     </React.Fragment>
   );
 };
-
-// MovieOverview.propTypes = {
-//   movie: movieType.isRequired
-// };
 
 export default MovieOverview;

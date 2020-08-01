@@ -30,7 +30,7 @@ interface Props {
   movies: Movie[];
   movie: Movie;
   promo: Movie;
-  login: (authData: {email: string, password: string}) => AxiosPromise;
+  login: (authData: {email: string; password: string}) => AxiosPromise;
   isValidAuthorization: boolean;
   isFilmsLoading: boolean;
   isPromoLoading: boolean;
@@ -39,7 +39,7 @@ interface Props {
     type: string;
     payload: string;
   };
-};
+}
 
 const MoviePageWithActiveTab = withActiveTab(MoviePage);
 const AddReviewWithForm = withForm(AddReview);
@@ -54,7 +54,6 @@ class App extends React.PureComponent<Props> {
 
   _handleMovieCardClick(id) {
     const {getReviews, changeSelectedMovieId} = this.props;
-    console.log(typeof id);
     return () => {
       getReviews(id);
       changeSelectedMovieId(id);
@@ -185,18 +184,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.changeSelectedMovieId(id));
   },
 });
-
-// App.propTypes = {
-//   movies: PropTypes.arrayOf(movieType).isRequired,
-//   movie: movieType,
-//   promo: promoType,
-//   login: PropTypes.func.isRequired,
-//   isValidAuthorization: PropTypes boolean.isRequired,
-//   isFilmsLoading: PropTypes boolean.isRequired,
-//   isPromoLoading: PropTypes boolean.isRequired,
-//   getReviews: PropTypes.func.isRequired,
-//   changeSelectedMovieId: PropTypes.func.isRequired,
-// };
 
 export {App};
 export default connect(mapStateToProps, mapDispatchToProps)(App);

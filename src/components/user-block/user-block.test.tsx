@@ -1,16 +1,16 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 import configureStore from "redux-mock-store";
 
-import UserBlock from "./user-block.jsx";
+import UserBlock from "./user-block";
 
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import Namespace from "../../reducer/namespace.js";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import Namespace from "../../reducer/namespace";
 
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
-import history from "../../history.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
+import history from "../../history";
 
 const mockStore = configureStore([]);
 

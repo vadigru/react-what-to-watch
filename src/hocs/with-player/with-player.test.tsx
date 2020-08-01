@@ -1,7 +1,7 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 
-import withPlayer from "./with-player.jsx";
+import withPlayer from "./with-player";
 
 const movie = {
   title: `Movie Name`,

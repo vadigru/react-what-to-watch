@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {AxiosPromise} from "axios";
@@ -35,7 +34,7 @@ interface Props {
   };
   addMovieToFavorite: (id: number) => AxiosPromise;
   removeMovieFromFavorite: (id: number) => AxiosPromise;
-};
+}
 
 const renderActiveTab = (activeTab, id, movie) => {
   switch (activeTab) {
@@ -80,7 +79,7 @@ class MoviePage extends React.PureComponent<Props> {
       backgroundColor
     } = movie;
 
-    const tabNames = Object.keys(Tab).map(key => Tab[key]);
+    const tabNames = Object.keys(Tab).map((key) => Tab[key]);
 
     return (
       <React.Fragment>
@@ -189,19 +188,6 @@ class MoviePage extends React.PureComponent<Props> {
     );
   }
 }
-
-// MoviePage.propTypes = {
-//   id: PropTypes.number.isRequired,
-//   activeTab: PropTypes.string,
-//   authorizationStatus: PropTypes.string.isRequired,
-//   movies: PropTypes.arrayOf(movieType).isRequired,
-//   movie: movieType.isRequired,
-//   onMovieCardClick: PropTypes.func.isRequired,
-//   onTabClick: PropTypes.func.isRequired,
-//   changeSelectedMovieId: PropTypes.func.isRequired,
-//   addMovieToFavorite: PropTypes.func.isRequired,
-//   removeMovieFromFavorite: PropTypes.func.isRequired
-// };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),

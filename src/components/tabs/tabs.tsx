@@ -7,9 +7,9 @@ interface Props {
   activeTab: string;
   onTabClick: (tab: string) => void;
   onGenreTabClick?: () => void;
-};
+}
 
-const Tabs: React.FunctionComponent<Props> = (props) => {
+const Tabs: React.FunctionComponent<Props> = (props: Props) => {
   const {tabNames, className, activeTab, onTabClick, onGenreTabClick} = props;
 
   const chooseHandler = (tab) => {

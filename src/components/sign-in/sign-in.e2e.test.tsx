@@ -5,14 +5,14 @@ import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import configureStore from "redux-mock-store";
 
-import SignIn from "./sign-in.jsx";
+import SignIn from "./sign-in";
 
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import Namespace from "../../reducer/namespace.js";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import Namespace from "../../reducer/namespace";
 
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
 
-import history from "../../history.js";
+import history from "../../history";
 
 const mockStore = configureStore([]);
 

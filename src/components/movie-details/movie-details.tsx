@@ -4,9 +4,9 @@ import {Movie} from "../../prop-types/types";
 
 interface Props {
   movie: Movie;
-};
+}
 
-const MovieDetails: React.FunctionComponent<Props> = (props) => {
+const MovieDetails: React.FunctionComponent<Props> = (props: Props) => {
   const {movie} = props;
   const {genre, release, director, starring, time} = movie;
   return (
@@ -47,9 +47,5 @@ const MovieDetails: React.FunctionComponent<Props> = (props) => {
     </React.Fragment>
   );
 };
-
-// MovieDetails.propTypes = {
-//   movie: movieType.isRequired
-// };
 
 export default MovieDetails;

@@ -4,13 +4,13 @@ import {Subtract} from "utility-types";
 interface State {
   rating: number;
   comment: number;
-};
+}
 
 interface InjectedProps {
   rating: number;
   comment: number;
   onFormDataChange: (evt: React.SyntheticEvent<EventTarget>) => void;
-};
+}
 
 const withForm = (Component) => {
   type P = React.ComponentProps<typeof Component>;

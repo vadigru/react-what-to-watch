@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import Header from "../header/header";
@@ -13,7 +12,7 @@ interface Props {
   isValid: boolean;
   signInFlag: boolean;
   changeSignInFlag: (boolean) => void;
-};
+}
 
 class SignIn extends React.PureComponent<Props> {
   private loginRef: React.RefObject<HTMLInputElement>;
@@ -112,13 +111,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(UserActionCreator.changeSignInFlag(boolean));
   }
 });
-
-// SignIn.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-//   isValid: PropTypes.bool.isRequired,
-//   signInFlag: PropTypes.bool.isRequired,
-//   changeSignInFlag: PropTypes.func.isRequired,
-// };
 
 export {SignIn};
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

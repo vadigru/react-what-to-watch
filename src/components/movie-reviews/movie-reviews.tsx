@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
 import {getReviews} from "../../reducer/data/selectors";
@@ -19,7 +18,7 @@ interface Props {
     date: string;
   }[];
   loadingReviews: boolean;
-};
+}
 
 const renderReviews = (reviews) => {
   return (
@@ -42,7 +41,7 @@ const renderReviews = (reviews) => {
   );
 };
 
-const MovieReviews: React.FunctionComponent<Props> = (props) => {
+const MovieReviews: React.FunctionComponent<Props> = (props: Props) => {
   const {reviews, loadingReviews} = props;
   const reviewsHalf = Math.ceil(reviews.length / 2);
   const reviewsFirstHalf = reviews.slice(0, reviewsHalf);
@@ -63,20 +62,6 @@ const MovieReviews: React.FunctionComponent<Props> = (props) => {
     </React.Fragment>
   );
 };
-
-// MovieReviews.propTypes = {
-//   reviews: PropTypes.arrayOf(PropTypes.shape({
-//     id: PropTypes.number.isRequired,
-//     user: PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       name: PropTypes.string.isRequired,
-//     }).isRequired,
-//     rating: PropTypes.number.isRequired,
-//     comment: PropTypes.string.isRequired,
-//     date: PropTypes.string.isRequired,
-//   })).isRequired,
-//   loadingReviews: PropTypes.bool.isRequired
-// };
 
 const mapStateToProps = (state) => ({
   reviews: getReviews(state),

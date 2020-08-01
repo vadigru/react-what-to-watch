@@ -1,6 +1,6 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
-import withActiveTab from "./with-active-tab.jsx";
+import * as renderer from "react-test-renderer";
+import withActiveTab from "./with-active-tab";
 
 const MockComponent = () => <div />;
 

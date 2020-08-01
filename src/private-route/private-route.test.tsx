@@ -1,10 +1,10 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import configureStore from "redux-mock-store";
 import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 
-import {PrivateRoute} from "./private-route.jsx";
+import {PrivateRoute} from "./private-route.js";
 
 import {AuthorizationStatus} from "../reducer/user/user.js";
 import {AppRoute} from "../const.js";

@@ -1,8 +1,6 @@
 import * as React from "react";
 import {Subtract} from "utility-types";
 
-// import PropTypes from "prop-types";
-
 import {Movie} from "../../prop-types/types";
 import {formatTime} from "../../utils/common";
 
@@ -11,7 +9,7 @@ interface Props {
   movie: Movie;
   autoPlay: boolean;
   onExitButtonClick: () => void;
-};
+}
 
 interface InjectedProps {
   isPlaying: boolean;
@@ -24,19 +22,19 @@ interface InjectedProps {
   onLoadedMetadata: (evt: React.SyntheticEvent<EventTarget>) => void;
   onTimeUpdate: (evt: React.SyntheticEvent<EventTarget>) => void;
   id: number;
-};
+}
 
 interface State {
-  isPlaying: boolean,
-  videoDuration: number,
+  isPlaying: boolean;
+  videoDuration: number;
   currentTime: number;
-};
+}
 
 const withPlayer = (Component) => {
   type P = React.ComponentProps<typeof Component>;
   type T = Props & Subtract<P, InjectedProps>;
 
-  class WithPlayer extends React.PureComponent<T, State>  {
+  class WithPlayer extends React.PureComponent<T, State> {
     private videoRef: React.RefObject<HTMLVideoElement>;
     constructor(props) {
       super(props);
@@ -128,13 +126,6 @@ const withPlayer = (Component) => {
       );
     }
   }
-
-  // WithPlayer.propTypes = {
-  //   id: PropTypes.number.isRequired,
-  //   movie: movieType.isRequired,
-  //   autoPlay: PropTypes.bool.isRequired,
-  //   onExitButtonClick: PropTypes.func.isRequired,
-  // };
 
   return WithPlayer;
 };

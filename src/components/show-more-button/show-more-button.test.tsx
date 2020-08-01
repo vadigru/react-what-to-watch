@@ -1,6 +1,6 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
-import ShowMoreButton from "./show-more-button.jsx";
+import * as renderer from "react-test-renderer";
+import ShowMoreButton from "./show-more-button";
 
 it(`Should render ShowMoreButton component`, () => {
   const showMoreMovies = jest.fn();

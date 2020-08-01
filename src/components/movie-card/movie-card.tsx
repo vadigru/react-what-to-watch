@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 
 import VideoPlayer from "../video-player/video-player";
 
@@ -11,9 +10,9 @@ interface Props {
   onMouseEnter: (movie: Movie) => void;
   onMouseLeave: () => void;
   isPlaying: boolean;
-};
+}
 
-const MovieCard: React.FunctionComponent<Props> = (props) => {
+const MovieCard: React.FunctionComponent<Props> = (props: Props) => {
   const {isPlaying, onMouseEnter, onMouseLeave} = props;
   const {movie, onMovieCardClick} = props;
   const {title, previewUrl, previewImage} = movie;
@@ -57,13 +56,5 @@ const MovieCard: React.FunctionComponent<Props> = (props) => {
     </article>
   );
 };
-
-// MovieCard.propTypes = {
-//   movie: movieType.isRequired,
-//   onMovieCardClick: PropTypes.func.isRequired,
-//   onMouseEnter: PropTypes.func.isRequired,
-//   onMouseLeave: PropTypes.func.isRequired,
-//   isPlaying: PropTypes.bool.isRequired,
-// };
 
 export default MovieCard;

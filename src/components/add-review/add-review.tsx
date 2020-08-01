@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {AxiosPromise} from "axios";
@@ -26,8 +25,7 @@ interface Props {
       rating,
       comment
     }: { movieId: number | string; rating: number; comment: string },
-    onSuccess: () => void,
-    onError: () => void
+    onSuccess: () => void
   ) => AxiosPromise;
   isReviewPosting: boolean;
   isReviewSendingError: boolean;
@@ -40,7 +38,7 @@ interface Props {
   rating: number;
   comment: number;
   onFormDataChange: (evt: React.SyntheticEvent<EventTarget>) => void;
-};
+}
 
 class AddReview extends React.PureComponent<Props> {
   private submitFormRef: React.RefObject<HTMLFormElement>;
@@ -72,8 +70,7 @@ class AddReview extends React.PureComponent<Props> {
         },
         () => {
           history.goBack();
-        },
-        () => {}
+        }
     );
   }
 
@@ -200,18 +197,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(StateActionCreator.changeSelectedMovieId(id));
   },
 });
-
-// AddReview.propTypes = {
-//   id: PropTypes.number.isRequired,
-//   movie: movieType.isRequired,
-//   onSubmit: PropTypes.func.isRequired,
-//   isReviewPosting: PropTypes.bool.isRequired,
-//   isReviewSendingError: PropTypes.bool.isRequired,
-//   changeSelectedMovieId: PropTypes.func.isRequired,
-//   rating: PropTypes.number.isRequired,
-//   comment: PropTypes.number.isRequired,
-//   onFormDataChange: PropTypes.func.isRequired
-// };
 
 export {AddReview};
 export default connect(mapStateToProps, mapDispatchToProps)(AddReview);

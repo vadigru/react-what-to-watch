@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 
 import MoviesList from "../movies-list/movies-list";
 
@@ -9,14 +8,14 @@ interface Props {
   movies: Movie[];
   movie: Movie;
   onMovieCardClick: (id: number) => void;
-};
+}
 
 const getSimilarMovies = (movies, movie) => {
   return movies.filter((similarMovie) =>
     similarMovie.genre === movie.genre && similarMovie.title !== movie.title).slice(0, 4);
 };
 
-const MoviesSimilar: React.FunctionComponent<Props> = (props) => {
+const MoviesSimilar: React.FunctionComponent<Props> = (props: Props) => {
   const {movies, movie, onMovieCardClick} = props;
 
   return (
@@ -26,11 +25,5 @@ const MoviesSimilar: React.FunctionComponent<Props> = (props) => {
     />
   );
 };
-
-// MoviesSimilar.propTypes = {
-//   movies: PropTypes.arrayOf(movieType).isRequired,
-//   movie: movieType.isRequired,
-//   onMovieCardClick: PropTypes.func.isRequired
-// };
 
 export default React.memo(MoviesSimilar);

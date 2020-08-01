@@ -1,6 +1,6 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
-import MovieCard from "./movie-card.jsx";
+import * as renderer from "react-test-renderer";
+import MovieCard from "./movie-card";
 
 const movie = {
   title: `Movie Name`,

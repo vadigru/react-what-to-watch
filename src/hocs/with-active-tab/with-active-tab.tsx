@@ -5,11 +5,11 @@ import {Tab} from "../../const";
 
 interface InjectedProps {
   activeTab: string;
-};
+}
 
 interface State {
   activeTab: string;
-};
+}
 
 const withActiveTab = (Component) => {
   type P = React.ComponentProps<typeof Component>;

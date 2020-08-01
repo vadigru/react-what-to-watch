@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
@@ -12,9 +11,9 @@ interface Props {
   avatarUrl: string;
   authorizationStatus: string;
   isSignIn: boolean;
-};
+}
 
-const UserBlock: React.FunctionComponent<Props> = (props) => {
+const UserBlock: React.FunctionComponent<Props> = (props: Props) => {
   const {avatarUrl, authorizationStatus, isSignIn} = props;
   const signIn = isSignIn ? `` :
     <Link to={AppRoute.SIGN_IN} className="user-block__link">
@@ -38,12 +37,6 @@ const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
   avatarUrl: getAvatar(state),
 });
-
-// UserBlock.propTypes = {
-//   avatarUrl: PropTypes.string.isRequired,
-//   authorizationStatus: PropTypes.string.isRequired,
-//   isSignIn: PropTypes.bool.isRequired,
-// };
 
 export {UserBlock};
 export default connect(mapStateToProps, null)(UserBlock);

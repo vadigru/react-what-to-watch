@@ -1,17 +1,17 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 import configureStore from "redux-mock-store";
 
-import Footer from "./footer.jsx";
+import Footer from "./footer";
 
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-// import {mapStateToProps} from "../../reducer/state/selectors.js";
-import Namespace from "../../reducer/namespace.js";
-// import {getSelectedMovie} from "../../reducer/state/selectors.js";
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
-import history from "../../history.js";
+import {AuthorizationStatus} from "../../reducer/user/user";
+// import {mapStateToProps} from "../../reducer/state/selectors";
+import Namespace from "../../reducer/namespace";
+// import {getSelectedMovie} from "../../reducer/state/selectors";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
+import history from "../../history";
 
 const mockStore = configureStore([]);
 

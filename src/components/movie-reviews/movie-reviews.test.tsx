@@ -1,20 +1,28 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
+import MovieReviews from "./movie-reviews";
 import {Provider} from "react-redux";
-import {Router} from "react-router-dom";
 import configureStore from "redux-mock-store";
-
-import Header from "./header.jsx";
-
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import Namespace from "../../reducer/namespace.js";
-
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
-import history from "../../history.js";
+import Namespace from "../../reducer/namespace";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
+import {AuthorizationStatus} from "../../reducer/user/user";
 
 const mockStore = configureStore([]);
 
-it(`Should render Header component`, () => {
+const mock = [
+  {
+    id: 1,
+    user: {
+      id: 4,
+      name: `Kate Muir`
+    },
+    rating: 8.9,
+    comment: `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
+    date: `2019-05-08T14:13:56.569Z`
+  }
+];
+
+it(`Should render MovieDetails component`, () => {
   const store = mockStore({
     [Namespace.DATA]: {
       films: [],
@@ -29,7 +37,7 @@ it(`Should render Header component`, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 8
+      selectedMovieId: 0
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -41,13 +49,10 @@ it(`Should render Header component`, () => {
   const tree = renderer
     .create(
         <Provider store={store}>
-          <Router history={history}>
-            <Header
-              avatarUrl={``}
-              className={``}
-              isSignIn={true}
-            />
-          </Router>
+          <MovieReviews
+            loadingReviews={true}
+            reviews={mock}
+          />
         </Provider>
     )
   .toJSON();

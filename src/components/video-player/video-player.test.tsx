@@ -1,6 +1,6 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
-import VideoPlayer from "./video-player.jsx";
+import * as renderer from "react-test-renderer";
+import VideoPlayer from "./video-player";
 
 const mock = {
   posterUrl: `https://url.com/poster.jpg`,

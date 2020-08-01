@@ -1,15 +1,14 @@
 import * as React from "react";
-import renderer from "react-test-renderer";
+import * as renderer from "react-test-renderer";
 import {Provider} from "react-redux";
-import {Router} from "react-router-dom";
 import configureStore from "redux-mock-store";
 
-import Main from "./main.jsx";
+import App from "./app";
 
-import Namespace from "../../reducer/namespace.js";
+import {AuthorizationStatus} from "../../reducer/user/user";
 
-import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const.js";
-import history from "../../history.js";
+import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
+import Namespace from "../../reducer/namespace";
 
 const mockStore = configureStore([]);
 
@@ -112,12 +111,7 @@ const movie = {
   videoUrl: `https://url.com`,
 };
 
-const AuthorizationStatus = {
-  AUTH: `AUTH`,
-  NO_AUTH: `NO_AUTH`
-};
-
-it(`Should render Main component`, () => {
+it(`Should render App component`, () => {
   const store = mockStore({
     [Namespace.DATA]: {
       films,
@@ -138,25 +132,31 @@ it(`Should render Main component`, () => {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
       isValidAuthorization: true,
       avatarUrl: ``,
+      isSignIn: false
     },
   });
 
   const tree = renderer
     .create(
         <Provider store={store}>
-          <Router history={history}>
-            <Main
-              avatarUrl={``}
-              onMovieCardClick={() => () => {}}
-              isBigPlayerActive={false}
-              onBigPlayerOnOff={() => {}}
-              onSignInClick={() => {}}
-              loadingFilmsStatus={true}
-              loadingPromoStatus={true}
-            />
-          </Router>
-        </Provider>)
-  .toJSON();
+          <App
+            promo={movie}
+            movies={films}
+            movie={movie}
+            login={() => {}}
+            authorizationStatus={AuthorizationStatus.AUTH}
+            isFilmsLoading={true}
+            isPromoLoading={true}
+            getReviews={() => {}}
+          />
+        </Provider>,
+        {
+          createNodeMock: () => {
+            return document.createElement(`div`);
+          }
+        }
+    )
+    .toJSON();
 
   expect(tree).toMatchSnapshot();
 });

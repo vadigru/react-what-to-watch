@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {AxiosPromise} from "axios";
 
@@ -39,9 +38,9 @@ interface Props {
   loadingPromoStatus: boolean;
   addMovieToFavorite: (id: number) => AxiosPromise;
   removeMovieFromFavorite: (id: number) => AxiosPromise;
-};
+}
 
-const Main: React.FunctionComponent<Props> = (props) => {
+const Main: React.FunctionComponent<Props> = (props: Props) => {
   const {
     movies,
     showedMovies,
@@ -191,22 +190,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(Operation.removeMovieFromFavorite(id));
   }
 });
-
-// Main.propTypes = {
-//   promo: promoType.isRequired,
-//   movies: PropTypes.arrayOf(movieType).isRequired,
-//   showedMovies: PropTypes.number.isRequired,
-//   showMoreMovies: PropTypes.func.isRequired,
-//   showDefaultMovies: PropTypes.func.isRequired,
-//   genre: PropTypes.string.isRequired,
-//   changeGenre: PropTypes.func.isRequired,
-//   onMovieCardClick: PropTypes.func.isRequired,
-//   filteredMovies: PropTypes.arrayOf(movieType).isRequired,
-//   loadingFilmsStatus: PropTypes.bool.isRequired,
-//   loadingPromoStatus: PropTypes.bool.isRequired,
-//   addMovieToFavorite: PropTypes.func.isRequired,
-//   removeMovieFromFavorite: PropTypes.func.isRequired
-// };
 
 export {Main};
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
