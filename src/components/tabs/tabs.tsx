@@ -1,5 +1,4 @@
 import * as React from "react";
-// import PropTypes from "prop-types";
 
 interface Props {
   tabNames: string[];
@@ -41,13 +40,5 @@ const Tabs: React.FunctionComponent<Props> = (props: Props) => {
     </ul>
   );
 };
-
-// Tabs.propTypes = {
-//   tabNames: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-//   className: PropTypes.string.isRequired,
-//   activeTab: PropTypes.string.isRequired,
-//   onTabClick: PropTypes.func.isRequired,
-//   onGenreTabClick: PropTypes.func || null.isRequired
-// };
 
 export default Tabs;

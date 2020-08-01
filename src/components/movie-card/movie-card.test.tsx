@@ -1,8 +1,12 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
+
 import MovieCard from "./movie-card";
 
-const movie = {
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
+
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -27,9 +31,9 @@ it(`Should render MovieCard component`, () => {
     .create(
         <MovieCard
           movie={movie}
-          onMovieCardClick={() => () => {}}
-          onMouseEnter={() => {}}
-          onMouseLeave={() => {}}
+          onMovieCardClick={() => noop}
+          onMouseEnter={noop}
+          onMouseLeave={noop}
           isPlaying={true}
         />)
   .toJSON();

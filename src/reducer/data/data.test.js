@@ -2,7 +2,7 @@ import {reducer, ActionType, ActionCreator, Operation} from "../data/data.js";
 import {filterMoviesByGenre} from "../data/selectors.js";
 import MockAdapter from "axios-mock-adapter";
 import {createAPI} from "../../api.js";
-import {rebuildMovieData} from "../../adapters/movie-adapter.js";
+import {rebuildMovieData} from "../../adapters/movie-adapter";
 
 const api = createAPI(() => {});
 
@@ -281,28 +281,6 @@ it(`Should make an incorrect API call to /comments/:movieId`, () => {
   );
 });
 
-// it(`Should get comment posting success`, () => {
-//   const apiMock = new MockAdapter(api);
-//   const dispatch = jest.fn();
-//   const commentData = {
-//     rating: ``,
-//     comment: ``
-//   };
-//   const sendReview = Operation.sendReview(1, commentData);
-
-//   apiMock.onGet(`/comments/1`, {
-//     rating: ``,
-//     comment: ``
-//   }).reply(`200`, []);
-
-//   return sendReview(dispatch, () => {}, api).then(() => {
-//     expect(dispatch).toHaveBeenCalledTimes(3);
-//   })
-//     .catch(() => {
-//       expect(dispatch).toHaveBeenCalledTimes(3);
-//     });
-// });
-
 it(`Should get comment posting error`, () => {
   const apiMock = new MockAdapter(api);
   const dispatch = jest.fn();
@@ -321,7 +299,7 @@ it(`Should get comment posting error`, () => {
     expect(dispatch).toHaveBeenCalledTimes(0);
   })
     .catch(() => {
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(4);
     });
 });
 
@@ -340,21 +318,6 @@ it(`Should add movie to favorite`, () => {
     });
 });
 
-// it(`Should add movie to favorite errror`, () => {
-//   const apiMock = new MockAdapter(api);
-//   const dispatch = jest.fn();
-//   const addMovie = Operation.addMovieToFavorite(1, movie);
-
-//   apiMock.onPost(`/favorite/1/1`, movie).reply(404, []);
-
-//   return addMovie(dispatch, () => {}, api).then(() => {
-//     expect(dispatch).toHaveBeenCalledTimes(1);
-//   })
-//     .catch(() => {
-//       expect(dispatch).toHaveBeenCalledTimes(1);
-//     });
-// });
-
 it(`Should remove movie from favorite`, () => {
   const apiMock = new MockAdapter(api);
   const dispatch = jest.fn();
@@ -369,18 +332,6 @@ it(`Should remove movie from favorite`, () => {
       expect(dispatch).toHaveBeenCalledTimes(0);
     });
 });
-
-// it(`Should get movies from favorites`, () => {
-//   const apiMock = new MockAdapter(api);
-//   const dispatch = jest.fn();
-//   const getFavorites = Operation.getFavoriteMovies();
-
-//   apiMock.onGet(`/favorite`).reply(200, films);
-
-//   return getFavorites(dispatch, () => {}, api).then(() => {
-//     expect(dispatch).toHaveBeenCalledTimes(1);
-//   });
-// });
 
 it(`Reducer should load movies from the server`, () => {
   expect(reducer({

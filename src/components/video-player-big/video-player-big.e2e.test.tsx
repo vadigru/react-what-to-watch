@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Provider} from "react-redux";
 import {configure, mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import * as Adapter from "enzyme-adapter-react-16";
 import configureStore from "redux-mock-store";
 
 import VideoPlayerBig from './video-player-big';
@@ -9,6 +9,8 @@ import VideoPlayerBig from './video-player-big';
 import Namespace from "../../reducer/namespace";
 
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
@@ -16,7 +18,7 @@ configure({
   adapter: new Adapter()
 });
 
-const movie = {
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -80,12 +82,12 @@ it(`Click by Play, Exit and FullScreen button calls callback`, () => {
           movie={movie}
           onPlayButtonClick={hadleBigPlayerPlay}
           onFullscreenButtonClick={handleFullscreenButtonClick}
-          getPlaybackProgress={() => {}}
-          getRemainingTime={() => {}}
+          getPlaybackProgress={noop}
+          getRemainingTime={noop}
           videoRef={ref}
           onExitButtonClick={handleExitButtonClick}
-          onLoadedMetadata={() => {}}
-          onTimeUpdate={() => {}}
+          onLoadedMetadata={noop}
+          onTimeUpdate={noop}
           videoUrl={movie.videoUrl}
           id={2}
         />

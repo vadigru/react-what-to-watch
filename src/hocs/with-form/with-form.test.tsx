@@ -1,6 +1,9 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
+
 import withForm from "./with-form";
+
+import {noop} from "../../utils/common";
 
 const MockComponent = () => <div />;
 
@@ -11,7 +14,7 @@ it(`render withForm`, () => {
       <MockComponentWithForm
         rating={0}
         comment={0}
-        onFormDataChange={() => {}}
+        onFormDataChange={noop}
       />, {
         createNodeMock: () => {
           return {};

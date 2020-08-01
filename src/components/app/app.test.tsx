@@ -9,10 +9,12 @@ import {AuthorizationStatus} from "../../reducer/user/user";
 
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
 import Namespace from "../../reducer/namespace";
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
-const films = [
+const films: Movie[] = [
   {
     title: `Movie Name`,
     posterUrl: `https://url.com`,
@@ -91,7 +93,7 @@ const films = [
   },
 ];
 
-const movie = {
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -143,11 +145,11 @@ it(`Should render App component`, () => {
             promo={movie}
             movies={films}
             movie={movie}
-            login={() => {}}
+            login={noop}
             authorizationStatus={AuthorizationStatus.AUTH}
             isFilmsLoading={true}
             isPromoLoading={true}
-            getReviews={() => {}}
+            getReviews={noop}
           />
         </Provider>,
         {

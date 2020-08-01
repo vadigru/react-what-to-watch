@@ -1,8 +1,12 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
+
 import MoviesList from "./movies-list";
 
-const films = [
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
+
+const films: Movie[] = [
   {
     title: `Movie Name`,
     posterUrl: `https://url.com`,
@@ -86,7 +90,7 @@ it(`Should render MovieList component`, () => {
     .create(
         <MoviesList
           movies={films}
-          onMovieCardClick={() => () => {}}
+          onMovieCardClick={() => noop}
         />)
   .toJSON();
 

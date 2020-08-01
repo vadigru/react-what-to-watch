@@ -117,12 +117,13 @@ const Operation = {
   },
   sendReview: (reviewData, onSuccess) => (dispatch, getState, api) => {
     dispatch(ActionCreator.sendingReviewError(false));
+    dispatch(ActionCreator.postingReview(true));
     return api.post(`/comments/${reviewData.movieId}`, {
       rating: reviewData.rating,
       comment: reviewData.comment
     })
-    .then((response) => {
-      dispatch(ActionCreator.getReviews(response.data));
+    .then(() => {
+      dispatch(Operation.getReviews(reviewData.movieId));
       dispatch(ActionCreator.sendingReviewError(false));
       dispatch(ActionCreator.postingReview(false));
       onSuccess();

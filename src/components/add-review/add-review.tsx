@@ -5,7 +5,7 @@ import {AxiosPromise} from "axios";
 
 import Header from "../header/header";
 
-import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data";
+import {Operation as DataOperation} from "../../reducer/data/data";
 import {getReviewPosting, getReviewSendingError} from "../../reducer/data/selectors";
 import {ActionCreator as StateActionCreator} from "../../reducer/state/state";
 
@@ -189,9 +189,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(commentData, onSuccess, onError) {
-    dispatch(ActionCreator.postingReview(true));
-    dispatch(DataOperation.sendReview(commentData, onSuccess, onError));
+  onSubmit(commentData, onSuccess) {
+    dispatch(DataOperation.sendReview(commentData, onSuccess));
   },
   changeSelectedMovieId(id) {
     dispatch(StateActionCreator.changeSelectedMovieId(id));

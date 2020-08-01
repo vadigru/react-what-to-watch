@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
-import Enzyme, {mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import {configure, mount} from "enzyme";
+import * as Adapter from "enzyme-adapter-react-16";
 import configureStore from "redux-mock-store";
 
 import SignIn from "./sign-in";
@@ -11,22 +11,18 @@ import {AuthorizationStatus} from "../../reducer/user/user";
 import Namespace from "../../reducer/namespace";
 
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
-
 import history from "../../history";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
-Enzyme.configure({
+configure({
   adapter: new Adapter(),
 });
 
 const UserData = {
   login: ``,
   password: ``
-};
-
-const preventEvent = {
-  preventDefault() {}
 };
 
 it(`Should submit a form`, () => {
@@ -54,7 +50,7 @@ it(`Should submit a form`, () => {
     },
   });
 
-  const handleSubmit = jest.fn(() => {});
+  const handleSubmit = jest.fn(noop);
 
   const signIn = mount(
       <Provider store={store}>
@@ -70,7 +66,7 @@ it(`Should submit a form`, () => {
 
   const form = signIn.find(`.sign-in__form`);
 
-  form.simulate(`submit`, preventEvent);
+  form.simulate(`submit`, noop);
 
   expect(handleSubmit).toHaveBeenCalledTimes(1);
   expect(handleSubmit).toHaveBeenCalledWith(UserData);

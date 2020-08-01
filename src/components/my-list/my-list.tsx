@@ -6,7 +6,6 @@ import Footer from "../footer/footer";
 import MoviesList from "../movies-list/movies-list";
 import {getFavoriteMovies} from "../../reducer/data/selectors";
 
-
 import {Movie} from "../../prop-types/types";
 
 interface Props {

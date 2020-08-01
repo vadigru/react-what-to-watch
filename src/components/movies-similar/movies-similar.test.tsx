@@ -1,8 +1,12 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
+
 import MoviesSimilar from "./movies-similar";
 
-const films = [
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
+
+const films: Movie[] = [
   {
     title: `Movie Name`,
     posterUrl: `https://url.com`,
@@ -81,7 +85,7 @@ const films = [
   },
 ];
 
-const movie = {
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -107,8 +111,7 @@ it(`Should render MoviesSimilar component`, () => {
         <MoviesSimilar
           movies={films}
           movie={movie}
-          previewImage={movie.previewImage}
-          onMovieCardClick={() => {}}
+          onMovieCardClick={noop}
         />)
   .toJSON();
 

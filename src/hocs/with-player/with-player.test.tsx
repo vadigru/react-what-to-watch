@@ -3,7 +3,10 @@ import * as renderer from "react-test-renderer";
 
 import withPlayer from "./with-player";
 
-const movie = {
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
+
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -25,38 +28,36 @@ const movie = {
 
 const MockComponent = () => <div>
   <video
-    ref={ref}
+    ref={React.createRef()}
     src={movie.previewUrl}
-    previewImage={movie.previewImage}
     className="player__video"
     poster={movie.backgroundUrl}
     width="100%"
     autoPlay={false}
-    onClick={() => {}}
-    onLoadedMetadata={() => {}}
-    onTimeUpdate={() => {}}
+    onClick={noop}
+    onLoadedMetadata={noop}
+    onTimeUpdate={noop}
   >
   </video>
-  <button className="pause" onClick={() => {}} />
-  <button className="play" onClick={() => {}} />
+  <button className="pause" onClick={noop} />
+  <button className="play" onClick={noop} />
 </div>;
 
 const MockComponentWrapped = withPlayer(MockComponent);
-const ref = React.createRef();
+
 it(`render withPlayer`, () => {
   const tree = renderer.create(
-      <MockComponentWrapped movie={movie} autoPlay={false} onExitButtonClick={() => {}} id={2}>
+      <MockComponentWrapped movie={movie} autoPlay={false} onExitButtonClick={noop} id={2}>
         <video
-          ref={ref}
+          ref={React.createRef()}
           src={movie.previewUrl}
-          previewImage={movie.previewImage}
           className="player__video"
           poster={movie.backgroundUrl}
           width="100%"
           autoPlay={false}
-          onClick={() => {}}
-          onLoadedMetadata={() => {}}
-          onTimeUpdate={() => {}}
+          onClick={noop}
+          onLoadedMetadata={noop}
+          onTimeUpdate={noop}
         >
         </video>
       </MockComponentWrapped>, {

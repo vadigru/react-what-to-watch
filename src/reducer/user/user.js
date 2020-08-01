@@ -77,7 +77,7 @@ const Operation = {
   },
 
   login: (authData) => (dispatch, getState, api) => {
-    // dispatch(ActionCreator.requireValidAuthorization(true));
+    dispatch(ActionCreator.requireValidAuthorization(true));
     return api.post(`/login`, {
       email: authData.login,
       password: authData.password

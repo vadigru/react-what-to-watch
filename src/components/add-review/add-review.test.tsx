@@ -8,10 +8,12 @@ import Namespace from "../../reducer/namespace";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import {Router} from "react-router-dom";
 import history from "../../history";
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
-const movie = {
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -67,7 +69,7 @@ it(`Should render AddReview component`, () => {
               avatarUrl={``}
               rating={0}
               comment={0}
-              onFormDataChange={() => {}}
+              onFormDataChange={noop}
             />
           </Router>
         </Provider>

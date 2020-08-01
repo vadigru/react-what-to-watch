@@ -9,10 +9,12 @@ import {AuthorizationStatus} from "../../reducer/user/user";
 import Namespace from "../../reducer/namespace";
 
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
-const films = [
+const films: Movie[] = [
   {
     title: `Movie Name`,
     posterUrl: `https://url.com`,
@@ -91,7 +93,7 @@ const films = [
   },
 ];
 
-const movie = {
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -145,14 +147,14 @@ it(`Should render VideoPlayer component`, () => {
             src={movie.videoUrl}
             autoPlay={false}
             movie={movie}
-            onPlayButtonClick={() => {}}
-            onFullscreenButtonClick={() => {}}
-            getPlaybackProgress={() => {}}
-            getRemainingTime={() => {}}
+            onPlayButtonClick={noop}
+            onFullscreenButtonClick={noop}
+            getPlaybackProgress={noop}
+            getRemainingTime={noop}
             videoRef={ref}
-            onExitButtonClick={() => {}}
-            onLoadedMetadata={() => {}}
-            onTimeUpdate={() => {}}
+            onExitButtonClick={noop}
+            onLoadedMetadata={noop}
+            onTimeUpdate={noop}
             videoUrl={movie.videoUrl}
             id={2}
           />

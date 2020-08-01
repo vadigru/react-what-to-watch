@@ -59,3 +59,6 @@ export const formatReviewDate = (dateData, isForShow) => {
   return isForShow ? `${month} ${day}, ${year}` : `${year}-${month}-${day}`;
 };
 
+export const noop = () => {
+  void 0;
+};

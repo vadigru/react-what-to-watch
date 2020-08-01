@@ -11,6 +11,7 @@ import Namespace from "../../reducer/namespace";
 
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
 import history from "../../history";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
@@ -45,7 +46,7 @@ it(`Should render SignIn component`, () => {
           <Router history={history}>
             <SignIn
               isValid={true}
-              onSubmit={() => {}}
+              onSubmit={noop}
             />
           </Router>
         </Provider>

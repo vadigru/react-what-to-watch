@@ -10,10 +10,12 @@ import {AuthorizationStatus} from "../../reducer/user/user";
 import Namespace from "../../reducer/namespace";
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
 import history from "../../history";
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
-const films = [
+const films: Movie[] = [
   {
     title: `Movie Name`,
     posterUrl: `https://url.com`,
@@ -92,7 +94,7 @@ const films = [
   },
 ];
 
-const movie = {
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -145,12 +147,13 @@ it(`Should render MoviePage component`, () => {
               id={8}
               movie={movie}
               movies={films}
-              onMovieCardClick={() => {}}
+              onMovieCardClick={noop}
               activeTab={`Overview`}
-              onTabClick={() => {}}
+              onTabClick={noop}
               authorizationStatus={AuthorizationStatus.AUTH}
-              addMovieToFavorite={() => {}}
-              removeMovieFromFavorite={() => {}}
+              addMovieToFavorite={noop}
+              removeMovieFromFavorite={noop}
+              getComments={noop}
             />
           </Router>
         </Provider>

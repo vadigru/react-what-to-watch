@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
-import Enzyme, {mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import {configure, mount} from "enzyme";
+import * as Adapter from "enzyme-adapter-react-16";
 import configureStore from "redux-mock-store";
 
 import ShowMoreButton from "../show-more-button/show-more-button";
@@ -12,14 +12,16 @@ import Namespace from "../../reducer/namespace";
 
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
 import history from "../../history";
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
-Enzyme.configure({
+configure({
   adapter: new Adapter(),
 });
 
-const films = [
+const films: Movie[] = [
   {
     title: `Movie Name`,
     posterUrl: `https://url.com`,
@@ -98,7 +100,7 @@ const films = [
   },
 ];
 
-const movie = {
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -124,7 +126,9 @@ const AuthorizationStatus = {
 };
 
 const preventEvent = {
-  preventDefault() {}
+  preventDefault() {
+    void 0;
+  }
 };
 
 it(`Should movie card be pressed`, () => {
@@ -151,7 +155,7 @@ it(`Should movie card be pressed`, () => {
     },
   });
 
-  const handleMovieCardClick = jest.fn(() => () => {});
+  const handleMovieCardClick = jest.fn(() => noop);
 
   const main = mount(
       <Provider store={store}>
@@ -159,7 +163,7 @@ it(`Should movie card be pressed`, () => {
           <Main
             avatarUrl={``}
             onMovieCardClick={() => handleMovieCardClick}
-            // isBigPlayerActive={false}
+            loadingFilmsStatus={true}
             loadingPromoStatus={true}
           />
         </Router>

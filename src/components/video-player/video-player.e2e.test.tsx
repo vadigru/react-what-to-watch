@@ -1,9 +1,12 @@
 import * as React from "react";
-import Enzyme, {mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import {configure, mount} from "enzyme";
+import * as Adapter from "enzyme-adapter-react-16";
+
 import VideoPlayer from "./video-player";
 
-Enzyme.configure({
+import {noop} from "../../utils/common";
+
+configure({
   adapter: new Adapter()
 });
 
@@ -17,7 +20,7 @@ it(`Should change VideoPlayer state on click`, () => {
 
   const spy = jest
     .spyOn(window.HTMLMediaElement.prototype, `play`)
-    .mockImplementation(() => {});
+    .mockImplementation(noop);
 
   const videoPlayer = mount(
       <VideoPlayer

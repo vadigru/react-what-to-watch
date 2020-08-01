@@ -10,10 +10,12 @@ import Namespace from "../../reducer/namespace";
 
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
 import history from "../../history";
+import {Movie} from "../../prop-types/types";
+import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
-const films = [
+const films: Movie[] = [
   {
     title: `Movie Name`,
     posterUrl: `https://url.com`,
@@ -92,7 +94,7 @@ const films = [
   },
 ];
 
-const movie = {
+const movie: Movie = {
   title: `Movie Name`,
   posterUrl: `https://url.com`,
   backgroundUrl: `https://url.com`,
@@ -147,10 +149,7 @@ it(`Should render Main component`, () => {
           <Router history={history}>
             <Main
               avatarUrl={``}
-              onMovieCardClick={() => () => {}}
-              isBigPlayerActive={false}
-              onBigPlayerOnOff={() => {}}
-              onSignInClick={() => {}}
+              onMovieCardClick={() => noop}
               loadingFilmsStatus={true}
               loadingPromoStatus={true}
             />
