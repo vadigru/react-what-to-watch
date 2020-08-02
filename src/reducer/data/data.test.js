@@ -158,10 +158,6 @@ it(`Action creator should return correct action`, () => {
     type: ActionType.REMOVE_MOVIE_FROM_FAVORITE,
     payload: movie,
   });
-  expect(ActionCreator.getFavoriteMovies(movie)).toEqual({
-    type: ActionType.GET_FAVORITE_MOVIES,
-    payload: movie,
-  });
   expect(ActionCreator.loadingFilms(false)).toEqual({
     type: ActionType.IS_FILMS_LOADING,
     payload: false,

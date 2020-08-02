@@ -19,6 +19,7 @@ import {getAuthorizationStatus} from "../../reducer/user/selectors";
 import {Movie} from "../../prop-types/types";
 import {Tab, AppRoute} from "../../const";
 import history from "../../history";
+import Loading from "../../loader";
 
 interface Props {
   id: number;
@@ -82,109 +83,111 @@ class MoviePage extends React.PureComponent<Props> {
     const tabNames = Object.keys(Tab).map((key) => Tab[key]);
 
     return (
-      <React.Fragment>
-        <section
-          className="movie-card movie-card--full"
-          style={{backgroundColor: `${backgroundColor}`}}
-        >
-          <div className="movie-card__hero">
-            <div className="movie-card__bg">
-              <img src={backgroundUrl} alt={title} />
-            </div>
+      movie.id !== id ? <Loading /> :
+        <React.Fragment>
+          <section
+            className="movie-card movie-card--full"
+            style={{backgroundColor: `${backgroundColor}`}}
+          >
+            <div className="movie-card__hero">
+              <div className="movie-card__bg">
+                <img src={backgroundUrl} alt={title} />
+              </div>
 
-            <h1 className="visually-hidden">WTW</h1>
+              <h1 className="visually-hidden">WTW</h1>
 
-            <Header className={`movie-card__head`} />
+              <Header className={`movie-card__head`} />
 
-            <div className="movie-card__wrap">
-              <div className="movie-card__desc">
-                <h2 className="movie-card__title">{title}</h2>
-                <p className="movie-card__meta">
-                  <span className="movie-card__genre">{genre}</span>
-                  <span className="movie-card__year">{release}</span>
-                </p>
+              <div className="movie-card__wrap">
+                <div className="movie-card__desc">
+                  <h2 className="movie-card__title">{title}</h2>
+                  <p className="movie-card__meta">
+                    <span className="movie-card__genre">{genre}</span>
+                    <span className="movie-card__year">{release}</span>
+                  </p>
 
-                <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button"
-                    onClick={() =>
-                      history.push(
-                          `${AppRoute.MOVIE_PAGE}/${movie.id}${AppRoute.PLAYER}`
-                      )
-                    }
-                  >
-                    <svg viewBox="0 0 19 19" width="19" height="19">
-                      <use xlinkHref="#play-s"></use>
-                    </svg>
-                    <span>Play</span>
-                  </button>
-                  <button
-                    className="btn btn--list movie-card__button"
-                    type="button"
-                    onClick={() => {
-                      if (movie.isFavorite) {
-                        removeMovieFromFavorite(movie.id);
-                      } else {
-                        addMovieToFavorite(movie.id);
+                  <div className="movie-card__buttons">
+                    <button className="btn btn--play movie-card__button" type="button"
+                      onClick={() =>
+                        history.push(
+                            `${AppRoute.MOVIE_PAGE}/${movie.id}${AppRoute.PLAYER}`
+                        )
                       }
-                    }}
-                  >
-                    {movie.isFavorite ? (
-                      <svg viewBox="0 0 18 14" width="18" height="14">
-                        <use xlinkHref="#in-list"></use>
+                    >
+                      <svg viewBox="0 0 19 19" width="19" height="19">
+                        <use xlinkHref="#play-s"></use>
                       </svg>
-                    ) : (
-                      <svg viewBox="0 0 19 20" width="19" height="20">
-                        <use xlinkHref="#add"></use>
-                      </svg>
+                      <span>Play</span>
+                    </button>
+                    <button
+                      className="btn btn--list movie-card__button"
+                      type="button"
+                      onClick={() => {
+                        if (movie.isFavorite) {
+                          removeMovieFromFavorite(movie.id);
+                        } else {
+                          addMovieToFavorite(movie.id);
+                        }
+                      }}
+                    >
+                      {movie.isFavorite ? (
+                        <svg viewBox="0 0 18 14" width="18" height="14">
+                          <use xlinkHref="#in-list"></use>
+                        </svg>
+                      ) : (
+                        <svg viewBox="0 0 19 20" width="19" height="20">
+                          <use xlinkHref="#add"></use>
+                        </svg>
+                      )}
+                      <span>My list</span>
+                    </button>
+                    {authorizationStatus === AuthorizationStatus.AUTH && (
+                      <Link to={`${AppRoute.MOVIE_PAGE}/${movie.id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">
+                        Add review
+                      </Link>
                     )}
-                    <span>My list</span>
-                  </button>
-                  {authorizationStatus === AuthorizationStatus.AUTH && (
-                    <Link to={`${AppRoute.MOVIE_PAGE}/${movie.id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">
-                      Add review
-                    </Link>
-                  )}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="movie-card__wrap movie-card__translate-top">
-            <div className="movie-card__info">
-              <div className="movie-card__poster movie-card__poster--big">
-                <img src={posterUrl} alt={title} width="218" height="327" />
-              </div>
-              <div className="movie-card__desc">
-                <nav className="movie-nav movie-card__nav">
-                  <ul className="movie-nav__list">
-                    <Tabs
-                      className={`movie-nav__`}
-                      tabNames={tabNames}
-                      activeTab={activeTab}
-                      onTabClick={onTabClick}
-                    />
-                  </ul>
-                </nav>
-                {renderActiveTab(activeTab, id, movie)}
+            <div className="movie-card__wrap movie-card__translate-top">
+              <div className="movie-card__info">
+                <div className="movie-card__poster movie-card__poster--big">
+                  <img src={posterUrl} alt={title} width="218" height="327" />
+                </div>
+                <div className="movie-card__desc">
+                  <nav className="movie-nav movie-card__nav">
+                    <ul className="movie-nav__list">
+                      <Tabs
+                        className={`movie-nav__`}
+                        tabNames={tabNames}
+                        activeTab={activeTab}
+                        onTabClick={onTabClick}
+                      />
+                    </ul>
+                  </nav>
+                  {renderActiveTab(activeTab, id, movie)}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        <div className="page-content">
-          <section className="catalog catalog--like-this">
-            <h2 className="catalog__title">More like this</h2>
-            <MoviesSimilar
-              movies={movies}
-              movie={movie}
-              onMovieCardClick={onMovieCardClick}
-            />
           </section>
 
-          <Footer />
+          <div className="page-content">
+            <section className="catalog catalog--like-this">
+              <h2 className="catalog__title">More like this</h2>
+              <MoviesSimilar
+                movies={movies}
+                movie={movie}
+                onMovieCardClick={onMovieCardClick}
+              />
+            </section>
 
-        </div>
-      </React.Fragment>
+            <Footer />
+
+          </div>
+        </React.Fragment>
+
     );
   }
 }
