@@ -148,7 +148,7 @@ it(`Operation correct login`, () => {
   apiMock.onPost(`/login`).reply(200, {});
 
   return login(dispatch, () => {}, api).then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(3);
+    expect(dispatch).toHaveBeenCalledTimes(4);
   });
 });
 

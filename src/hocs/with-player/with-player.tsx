@@ -2,7 +2,6 @@ import * as React from "react";
 import {Subtract} from "utility-types";
 
 import {Movie} from "../../prop-types/types";
-import {formatTime} from "../../utils/common";
 
 interface Props {
   id: number;
@@ -44,13 +43,11 @@ const withPlayer = (Component) => {
       this.state = {
         isPlaying: false,
         videoDuration: 0,
-        currentTime: 0
+        currentTime: 0,
       };
 
       this._handleVideoPlay = this._handleVideoPlay.bind(this);
       this._handleFullscreen = this._handleFullscreen.bind(this);
-      this._getPlaybackProgress = this._getPlaybackProgress.bind(this);
-      this._getRemainingTime = this._getRemainingTime.bind(this);
       this._handleTimeUpdate = this._handleTimeUpdate.bind(this);
       this._handleLoadedMetadata = this._handleLoadedMetadata.bind(this);
     }
@@ -60,12 +57,24 @@ const withPlayer = (Component) => {
       if (video) {
         video.muted = false;
       }
+
     }
 
     componentWillUnmount() {
       const video = this.videoRef.current;
       if (video) {
         video.muted = null;
+      }
+    }
+
+    componentDidUpdate() {
+      const video = this.videoRef.current;
+
+      if (document.fullscreenElement) {
+        video.controls = true;
+      }
+      if (document.fullscreenElement === null) {
+        video.controls = false;
       }
     }
 
@@ -85,14 +94,6 @@ const withPlayer = (Component) => {
       video.requestFullscreen();
     }
 
-    _getPlaybackProgress() {
-      return String((this.state.currentTime / this.state.videoDuration) * 100);
-    }
-
-    _getRemainingTime() {
-      return formatTime(this.state.videoDuration - this.state.currentTime);
-    }
-
     _handleTimeUpdate(evt) {
       this.setState({
         currentTime: Math.floor(evt.target.currentTime)
@@ -109,19 +110,20 @@ const withPlayer = (Component) => {
     render() {
       const {onExitButtonClick, id} = this.props;
       const {isPlaying} = this.state;
+
       return (
         <Component
           {...this.props}
+          id={id}
           isPlaying={isPlaying}
+          duration={this.state.videoDuration}
+          progress={this.state.currentTime}
+          videoRef={this.videoRef}
           onPlayButtonClick={this._handleVideoPlay}
           onFullscreenButtonClick={this._handleFullscreen}
-          getPlaybackProgress={this._getPlaybackProgress}
-          getRemainingTime={this._getRemainingTime}
-          videoRef={this.videoRef}
           onExitButtonClick={onExitButtonClick}
           onLoadedMetadata={this._handleLoadedMetadata}
           onTimeUpdate={this._handleTimeUpdate}
-          id={id}
         />
       );
     }

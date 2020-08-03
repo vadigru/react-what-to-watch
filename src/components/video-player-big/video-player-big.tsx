@@ -4,17 +4,18 @@ import {connect} from "react-redux";
 import {ActionCreator} from "../../reducer/state/state";
 
 import {Movie} from "../../prop-types/types";
+import {formatTime} from "../../utils/common";
 
 interface Props {
   id: number;
   movie: Movie;
-  autoPlay: boolean;
   isPlaying: boolean;
+  duration: number;
+  progress: number;
+  videoRef: React.RefObject<HTMLVideoElement>;
+  autoPlay: boolean;
   onPlayButtonClick: () => void;
   onFullscreenButtonClick: () => void;
-  getPlaybackProgress: () => string;
-  getRemainingTime: () => string;
-  videoRef: React.RefObject<HTMLVideoElement>;
   onExitButtonClick: () => {};
   onLoadedMetadata: (evt: React.SyntheticEvent<EventTarget>) => void;
   onTimeUpdate: (evt: React.SyntheticEvent<EventTarget>) => void;
@@ -39,20 +40,23 @@ class VideoPlayerBig extends React.PureComponent<Props> {
 
   render() {
     const {
-      onExitButtonClick,
       movie,
-      autoPlay,
       isPlaying,
+      duration,
+      progress,
+      videoRef,
+      autoPlay,
       onPlayButtonClick,
       onFullscreenButtonClick,
-      getPlaybackProgress,
-      getRemainingTime,
-      videoRef,
+      onExitButtonClick,
       onLoadedMetadata,
-      onTimeUpdate
+      onTimeUpdate,
     } = this.props;
 
     const {videoUrl, backgroundUrl} = movie;
+
+    const progressInPct = progress / duration * 100;
+    const timeLeft = formatTime(duration - progress);
 
     return (
       <div className="player">
@@ -79,15 +83,15 @@ class VideoPlayerBig extends React.PureComponent<Props> {
         <div className="player__controls">
           <div className="player__controls-row">
             <div className="player__time">
-              <progress className="player__progress" value={getPlaybackProgress()} max="100"></progress>
+              <progress className="player__progress" value={`${progressInPct}`} max="100"></progress>
               <div
                 className="player__toggler"
-                style={{left: `${getPlaybackProgress()}%`}}
+                style={{left: `${progressInPct}%`}}
               >
                   Toggler
               </div>
             </div>
-            <div className="player__time-value">{getRemainingTime()}</div>
+            <div className="player__time-value">{timeLeft}</div>
           </div>
 
           <div className="player__controls-row">
@@ -112,7 +116,7 @@ class VideoPlayerBig extends React.PureComponent<Props> {
                 </React.Fragment>
               )}
             </button>
-            <div className="player__name">Transpotting</div>
+            <div className="player__name">{movie.title}</div>
 
             <button
               type="button"

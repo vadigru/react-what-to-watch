@@ -33,12 +33,13 @@ exports[`Should render VideoPlayer component 1`] = `
         <progress
           className="player__progress"
           max="100"
+          value="0"
         />
         <div
           className="player__toggler"
           style={
             Object {
-              "left": "undefined%",
+              "left": "0%",
             }
           }
         >
@@ -47,7 +48,9 @@ exports[`Should render VideoPlayer component 1`] = `
       </div>
       <div
         className="player__time-value"
-      />
+      >
+        00:01:40
+      </div>
     </div>
     <div
       className="player__controls-row"
@@ -73,7 +76,7 @@ exports[`Should render VideoPlayer component 1`] = `
       <div
         className="player__name"
       >
-        Transpotting
+        Movie Name
       </div>
       <button
         className="player__full-screen"

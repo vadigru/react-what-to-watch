@@ -143,20 +143,19 @@ it(`Should render VideoPlayer component`, () => {
     .create(
         <Provider store={store}>
           <VideoPlayerBig
-            isPlaying={false}
-            src={movie.videoUrl}
-            autoPlay={false}
+            id={2}
             movie={movie}
+            isPlaying={false}
+            duration={100}
+            progress={0}
+            videoRef={ref}
+            autoPlay={false}
+            src={movie.videoUrl}
             onPlayButtonClick={noop}
             onFullscreenButtonClick={noop}
-            getPlaybackProgress={noop}
-            getRemainingTime={noop}
-            videoRef={ref}
             onExitButtonClick={noop}
             onLoadedMetadata={noop}
             onTimeUpdate={noop}
-            videoUrl={movie.videoUrl}
-            id={2}
           />
         </Provider>)
   .toJSON();

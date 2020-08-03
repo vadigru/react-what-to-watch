@@ -76,20 +76,19 @@ it(`Click by Play, Exit and FullScreen button calls callback`, () => {
   const wrapper = mount(
       <Provider store={store}>
         <VideoPlayerBig
-          isPlaying={false}
-          src={movie.videoUrl}
-          autoPlay={false}
+          id={2}
           movie={movie}
+          isPlaying={false}
+          duration={100}
+          progress={0}
+          videoRef={ref}
+          autoPlay={false}
+          src={movie.videoUrl}
           onPlayButtonClick={hadleBigPlayerPlay}
           onFullscreenButtonClick={handleFullscreenButtonClick}
-          getPlaybackProgress={noop}
-          getRemainingTime={noop}
-          videoRef={ref}
           onExitButtonClick={handleExitButtonClick}
           onLoadedMetadata={noop}
           onTimeUpdate={noop}
-          videoUrl={movie.videoUrl}
-          id={2}
         />
       </Provider>
   );
