@@ -148,7 +148,7 @@ it(`Operation correct login`, () => {
   apiMock.onPost(`/login`).reply(200, {});
 
   return login(dispatch, () => {}, api).then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenCalledTimes(4);
   });
 });
 
@@ -168,6 +168,6 @@ it(`Operation incorrect login`, () => {
     expect(dispatch).toHaveBeenCalledTimes(0);
   })
   .catch(() => {
-    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledTimes(2);
   });
 });

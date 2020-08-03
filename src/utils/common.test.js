@@ -1,5 +1,6 @@
 import {getTextedRating, formatTime, formatMovieTime, getMaxGenresCount, getGenresList} from "./common.js";
-import {rebuildMovieData} from "../adapters/movie-adapter.js";
+import {rebuildMovieData} from "../adapters/movie-adapter.tsx";
+
 const films = [
   {
     title: `Movie Name`,

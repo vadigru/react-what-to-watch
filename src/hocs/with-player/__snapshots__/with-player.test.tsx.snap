@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render withPlayer 1`] = `
+<div>
+  <video
+    autoPlay={false}
+    className="player__video"
+    onClick={[Function]}
+    onLoadedMetadata={[Function]}
+    onTimeUpdate={[Function]}
+    poster="https://url.com"
+    src="https://url.com"
+    width="100%"
+  />
+  <button
+    className="pause"
+    onClick={[Function]}
+  />
+  <button
+    className="play"
+    onClick={[Function]}
+  />
+</div>
+`;

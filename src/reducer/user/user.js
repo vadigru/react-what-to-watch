@@ -1,4 +1,5 @@
 import {extend} from "../../utils/common.js";
+import StoreLocal from "../../localStorage/localStorage";
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,
@@ -7,10 +8,14 @@ const AuthorizationStatus = {
 
 const SERVER_URL = `https://4.react.pages.academy`;
 
+export const authLocalStorage = new StoreLocal(`AuthorizationStatus`);
+export const avatarLocalStorage = new StoreLocal(`AvatarUrl`);
+
+
 const initialState = {
-  authorizationStatus: AuthorizationStatus.NO_AUTH,
+  authorizationStatus: authLocalStorage.getAll() || AuthorizationStatus.NO_AUTH,
   isValidAuthorization: true,
-  avatarUrl: ``,
+  avatarUrl: avatarLocalStorage.getAll() || ``,
   isSignIn: false
 };
 
@@ -67,9 +72,20 @@ const Operation = {
   checkAuth: () => (dispatch, getState, api) => {
     return api.get(`/login`)
     .then((response) => {
-      const {avatar_url: avatar} = response.data;
-      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(ActionCreator.setAvatarUrl(avatar));
+      if (response.status === 200) {
+        const {avatar_url: avatar} = response.data;
+        authLocalStorage.clear();
+        authLocalStorage.setItem(`AUTH`);
+        avatarLocalStorage.setItem(avatar);
+        dispatch(ActionCreator.requireAuthorization(authLocalStorage.getAll()));
+        dispatch(ActionCreator.setAvatarUrl(avatarLocalStorage.getAll()));
+
+      } else {
+        authLocalStorage.clear();
+        authLocalStorage.setItem(`NO_AUTH`);
+        dispatch(ActionCreator.requireAuthorization(authLocalStorage.getAll()));
+      }
+
     })
     .catch((err) => {
       throw err;
@@ -77,16 +93,19 @@ const Operation = {
   },
 
   login: (authData) => (dispatch, getState, api) => {
-    // dispatch(ActionCreator.requireValidAuthorization(true));
+    dispatch(ActionCreator.requireValidAuthorization(true));
     return api.post(`/login`, {
       email: authData.login,
       password: authData.password
     })
     .then((response) => {
       const {avatar_url: avatar} = response.data;
-      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
-      dispatch(ActionCreator.setAvatarUrl(avatar));
-
+      authLocalStorage.clear();
+      authLocalStorage.setItem(`AUTH`);
+      avatarLocalStorage.setItem(avatar);
+      dispatch(ActionCreator.requireAuthorization(authLocalStorage.getAll()));
+      dispatch(ActionCreator.requireValidAuthorization(true));
+      dispatch(ActionCreator.setAvatarUrl(avatarLocalStorage.getAll()));
     })
     .catch((err)=>{
       dispatch(ActionCreator.requireValidAuthorization(false));

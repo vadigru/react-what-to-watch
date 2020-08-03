@@ -1,5 +1,5 @@
 import {extend} from "../../utils/common.js";
-import {rebuildMovieData, rebuildMoviesData} from "../../adapters/movie-adapter.js";
+import {rebuildMovieData, rebuildMoviesData} from "../../adapters/movie-adapter.tsx";
 import Namespace from "../namespace.js";
 
 const initialState = {
@@ -20,7 +20,6 @@ const ActionType = {
   POST_REVIEW: `POST_REVIEW`,
   ADD_MOVIE_TO_FAVORITE: `ADD_MOVIE_TO_FAVORITE`,
   REMOVE_MOVIE_FROM_FAVORITE: `REMOVE_MOVIE_FROM_FAVORITE`,
-  GET_FAVORITE_MOVIES: `GET_FAVORITE_MOVIES`,
   IS_FILMS_LOADING: `IS_FILMS_LOADING`,
   IS_PROMO_LOADING: `IS_PROMO_LOADING`,
   IS_REVIEWS_LOADING: `IS_REVIEWS_LOADING`,
@@ -45,17 +44,13 @@ const ActionCreator = {
     type: ActionType.POST_REVIEW,
     payload: reviews,
   }),
-  addMovieToFavorite: (movie = {}) => ({
+  addMovieToFavorite: (movie) => ({
     type: ActionType.ADD_MOVIE_TO_FAVORITE,
     payload: movie
   }),
-  removeMovieFromFavorite: (movie = {}) => ({
+  removeMovieFromFavorite: (movie) => ({
     type: ActionType.REMOVE_MOVIE_FROM_FAVORITE,
     payload: movie
-  }),
-  getFavoriteMovies: (movies) => ({
-    type: ActionType.GET_FAVORITE_MOVIES,
-    payload: movies
   }),
   loadingFilms: (isLoading) => ({
     type: ActionType.IS_FILMS_LOADING,
@@ -115,14 +110,15 @@ const Operation = {
         throw err;
       });
   },
-  sendReview: (reviewData, onSuccess, onError) => (dispatch, getState, api) => {
+  sendReview: (reviewData, onSuccess) => (dispatch, getState, api) => {
     dispatch(ActionCreator.sendingReviewError(false));
+    dispatch(ActionCreator.postingReview(true));
     return api.post(`/comments/${reviewData.movieId}`, {
       rating: reviewData.rating,
       comment: reviewData.comment
     })
-    .then((response) => {
-      dispatch(ActionCreator.getReviews(response.data));
+    .then(() => {
+      dispatch(Operation.getReviews(reviewData.movieId));
       dispatch(ActionCreator.sendingReviewError(false));
       dispatch(ActionCreator.postingReview(false));
       onSuccess();
@@ -130,13 +126,11 @@ const Operation = {
     .catch((err)=>{
       dispatch(ActionCreator.sendingReviewError(true));
       dispatch(ActionCreator.postingReview(false));
-      onError();
       throw err;
     });
   },
   addMovieToFavorite: (movieId) => (dispatch, getState, api) => {
-    return api.post(`/favorite/${movieId}/1`)
-    .then((response) => {
+    return api.post(`/favorite/${movieId}/1`).then((response) => {
       const movie = rebuildMovieData(response.data);
       const state = getState();
 
@@ -159,16 +153,9 @@ const Operation = {
       dispatch(ActionCreator.removeMovieFromFavorite(movie));
     });
   },
-  getFavoriteMovies: () => (dispatch, getState, api) => {
-    return api.get(`/favorite}`)
-      .then((response) => {
-        dispatch(ActionCreator.getFavoriteMovies(response.data));
-      });
-  },
 };
 
 const reducer = (state = initialState, action) => {
-
   switch (action.type) {
     case ActionType.GET_MOVIES:
       return extend(state, {
@@ -195,10 +182,6 @@ const reducer = (state = initialState, action) => {
           ...state.films.filter((movie) => movie.id !== action.payload.id),
           action.payload
         ]
-      });
-    case ActionType.GET_FAVORITE_MOVIES:
-      return extend(state, {
-        reviews: action.payload,
       });
     case ActionType.IS_FILMS_LOADING:
       return extend(state, {
