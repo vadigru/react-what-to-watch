@@ -73,7 +73,17 @@ it(`Reducer should change authorizationStatus by a given value`, () => {
   })).toEqual({
     avatarUrl: `https://4.react.pages.academy/img/1.png`,
   });
+
+  expect(reducer({
+    isSignIn: true,
+  }, {
+    type: ActionType.IS_SIGNE_IN,
+    payload: true,
+  })).toEqual({
+    isSignIn: true,
+  });
 });
+
 
 it(`Action creator for require authorization returns correct action`, () => {
   expect(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)).toEqual({
@@ -125,10 +135,14 @@ it(`Should make a incorrect API call to /login`, () => {
   const dispatch = jest.fn();
   const authChecker = Operation.checkAuth();
 
-  apiMock.onGet(`/login`).reply(404);
+  apiMock.onGet(`/login`).reply(401);
 
   return authChecker(dispatch, () => {}, api).then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(0);
+    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenNthCalledWith(2, {
+      type: ActionType.REQUIRE_AUTHORIZATION,
+      payload: AuthorizationStatus.NO_AUTH
+    });
   })
   .catch(() => {
     expect(dispatch).toHaveBeenCalledTimes(0);
@@ -159,7 +173,7 @@ it(`Operation incorrect login`, () => {
   };
 
   const apiMock = new MockAdapter(api);
-  apiMock.onPost(`/login`).reply(404, {});
+  apiMock.onPost(`/login`).reply(401, {});
 
   const dispatch = jest.fn();
   const login = Operation.login(authData);

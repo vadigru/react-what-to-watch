@@ -3,8 +3,8 @@ import * as renderer from "react-test-renderer";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 
-import withActiveTab from "./with-active-tab";
-import MoviePage from "../../components/movie-page/movie-page";
+import withVideo from "./with-video";
+import VideoPlayer from "../../components/video-player/video-player";
 
 import {AuthorizationStatus} from "../../reducer/user/user";
 
@@ -115,7 +115,7 @@ const movie: Movie = {
   videoUrl: `https://url.com`,
 };
 
-const MockComponentWrapped = withActiveTab(MoviePage);
+const MockComponentWrapped = withVideo(VideoPlayer);
 
 it(`render withPlayer`, () => {
 
@@ -146,10 +146,9 @@ it(`render withPlayer`, () => {
   const tree = renderer.create(
       <Provider store={store}>
         <MockComponentWrapped
-          id={2}
-          movie={movie}
-          movies={films}
-          onMovieCardClick={noop}
+          onMouseEnter={noop}
+          onMouseLeave={noop}
+          isPlaying={false}
         />
       </Provider>
       , {

@@ -1,3 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render withForm 1`] = `<div />`;
+exports[`render withPlayer 1`] = `
+<div
+  className="sweet-loading"
+>
+  <div
+    className="css-1hme1xw"
+  >
+    <div
+      className="css-y61f9w"
+    />
+    <div
+      className="css-f8ppzn"
+    />
+  </div>
+</div>
+`;

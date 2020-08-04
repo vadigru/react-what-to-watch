@@ -73,19 +73,21 @@ const withPlayer = (Component) => {
       if (document.fullscreenElement) {
         video.controls = true;
       }
-      if (document.fullscreenElement === null) {
+      if (!document.fullscreenElement) {
         video.controls = false;
       }
     }
 
     _handleVideoPlay() {
       const video = this.videoRef.current;
-      if (video.paused) {
-        video.play();
-        this.setState({isPlaying: true});
-      } else {
-        video.pause();
-        this.setState({isPlaying: false});
+      if (!document.fullscreenElement) {
+        if (video.paused) {
+          video.play();
+          this.setState({isPlaying: true});
+        } else {
+          video.pause();
+          this.setState({isPlaying: false});
+        }
       }
     }
 
@@ -109,15 +111,15 @@ const withPlayer = (Component) => {
 
     render() {
       const {onExitButtonClick, id} = this.props;
-      const {isPlaying} = this.state;
+      const {isPlaying, videoDuration, currentTime} = this.state;
 
       return (
         <Component
           {...this.props}
           id={id}
           isPlaying={isPlaying}
-          duration={this.state.videoDuration}
-          progress={this.state.currentTime}
+          duration={videoDuration}
+          progress={currentTime}
           videoRef={this.videoRef}
           onPlayButtonClick={this._handleVideoPlay}
           onFullscreenButtonClick={this._handleFullscreen}

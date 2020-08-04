@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render withPlayer 1`] = `
+<video
+  height="175"
+  width="100%"
+/>
+`;

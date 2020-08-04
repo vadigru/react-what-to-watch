@@ -13,8 +13,10 @@ import {Movie} from "../../prop-types/types";
 import {AppRoute} from "../../const";
 import history from "../../history";
 
-const MIN_REVIEW_LENGTH = 50;
-const MAX_REVIEW_LENGTH = 400;
+const ReviewLength = {
+  MIN: 50,
+  MAX: 400,
+};
 
 interface Props {
   id: number;
@@ -86,7 +88,7 @@ class AddReview extends React.PureComponent<Props> {
     } = this.props;
 
     const isDisabled = isReviewPosting;
-    const isInvalid = rating === 0 || (comment < MIN_REVIEW_LENGTH || comment > MAX_REVIEW_LENGTH);
+    const isInvalid = rating === 0 || (comment < ReviewLength.MIN || comment > ReviewLength.MAX);
 
     return (
       <React.Fragment>
@@ -157,8 +159,8 @@ class AddReview extends React.PureComponent<Props> {
                   placeholder="Review text"
                   ref={this.commentRef}
                   disabled={isDisabled}
-                  minLength={MIN_REVIEW_LENGTH}
-                  maxLength={MAX_REVIEW_LENGTH}
+                  minLength={ReviewLength.MIN}
+                  maxLength={ReviewLength.MAX}
                   onChange={(evt) => onFormDataChange(evt)}
                 />
                 <div className="add-review__submit">

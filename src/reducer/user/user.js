@@ -1,5 +1,5 @@
 import {extend} from "../../utils/common.js";
-import StoreLocal from "../../localStorage/localStorage";
+import StoreLocal from "../../local-storage/local-storage";
 
 const AuthorizationStatus = {
   AUTH: `AUTH`,

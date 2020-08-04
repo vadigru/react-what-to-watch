@@ -55,5 +55,4 @@ const withForm = (Component) => {
   return WithForm;
 };
 
-
 export default withForm;
