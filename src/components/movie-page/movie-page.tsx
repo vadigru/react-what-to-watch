@@ -77,13 +77,16 @@ class MoviePage extends React.PureComponent<Props> {
       backgroundUrl,
       genre,
       release,
-      backgroundColor
+      backgroundColor,
+      isFavorite,
+      id: movieId
     } = movie;
 
     const tabNames = Object.keys(Tab).map((key) => Tab[key]);
+    const isAuth = authorizationStatus === AuthorizationStatus.AUTH;
 
     return (
-      movie.id !== id ? <Loading /> :
+      movieId !== id ? <Loading /> :
         <React.Fragment>
           <section
             className="movie-card movie-card--full"
@@ -110,7 +113,7 @@ class MoviePage extends React.PureComponent<Props> {
                     <button className="btn btn--play movie-card__button" type="button"
                       onClick={() =>
                         history.push(
-                            `${AppRoute.MOVIE_PAGE}/${movie.id}${AppRoute.PLAYER}`
+                            `${AppRoute.MOVIE_PAGE}/${movieId}${AppRoute.PLAYER}`
                         )
                       }
                     >
@@ -123,14 +126,14 @@ class MoviePage extends React.PureComponent<Props> {
                       className="btn btn--list movie-card__button"
                       type="button"
                       onClick={() => {
-                        if (movie.isFavorite) {
-                          removeMovieFromFavorite(movie.id);
+                        if (isFavorite) {
+                          removeMovieFromFavorite(movieId);
                         } else {
-                          addMovieToFavorite(movie.id);
+                          addMovieToFavorite(movieId);
                         }
                       }}
                     >
-                      {movie.isFavorite ? (
+                      {isFavorite ? (
                         <svg viewBox="0 0 18 14" width="18" height="14">
                           <use xlinkHref="#in-list"></use>
                         </svg>
@@ -141,7 +144,7 @@ class MoviePage extends React.PureComponent<Props> {
                       )}
                       <span>My list</span>
                     </button>
-                    {authorizationStatus === AuthorizationStatus.AUTH && (
+                    {isAuth && (
                       <Link to={`${AppRoute.MOVIE_PAGE}/${movie.id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">
                         Add review
                       </Link>

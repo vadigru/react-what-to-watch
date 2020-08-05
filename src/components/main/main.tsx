@@ -58,6 +58,8 @@ const Main: React.FunctionComponent<Props> = (props: Props) => {
   } = props;
 
   const genresList = getMaxGenresCount(getGenresList(movies));
+  const isThereMoreMovies = filteredMovies.length > MOVIES_DEFAULT_AMOUNT && genre !== ALL_GENRES ||
+        showedMovies < movies.length && genre === ALL_GENRES;
 
   return (
     <React.Fragment>
@@ -150,8 +152,7 @@ const Main: React.FunctionComponent<Props> = (props: Props) => {
             </React.Fragment>
           }
 
-          {filteredMovies.length > MOVIES_DEFAULT_AMOUNT && genre !== ALL_GENRES ||
-            showedMovies < movies.length && genre === ALL_GENRES
+          {isThereMoreMovies
             ? <ShowMoreButton onShowMoreButtonClick={showMoreMovies}/>
             : null}
         </section>

@@ -16,13 +16,14 @@ interface Props {
 
 const PrivateRoute: React.FunctionComponent<Props> = (props: Props) => {
   const {render, path, exact, authorizationStatus} = props;
+  const isAuth = authorizationStatus === AuthorizationStatus.AUTH;
 
   return (
     <Route
       path={path}
       exact={exact}
       render={(routeProps) => {
-        return authorizationStatus === AuthorizationStatus.AUTH ? (
+        return isAuth ? (
           render(routeProps)
         ) : (
           <Redirect to={AppRoute.SIGN_IN} />

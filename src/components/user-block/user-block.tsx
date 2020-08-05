@@ -15,11 +15,12 @@ interface Props {
 
 const UserBlock: React.FunctionComponent<Props> = (props: Props) => {
   const {avatarUrl, authorizationStatus, isSignIn} = props;
+  const isAuth = authorizationStatus === AuthorizationStatus.AUTH;
   const signIn = isSignIn ? `` :
     <Link to={AppRoute.SIGN_IN} className="user-block__link">
       Sign in
     </Link>;
-  const avatar = authorizationStatus === AuthorizationStatus.AUTH && !isSignIn ?
+  const avatar = isAuth && !isSignIn ?
     <Link to={AppRoute.MY_LIST}>
       <div className="user-block__avatar">
         <img src={avatarUrl} alt="User avatar" width="63" height="63" />
@@ -28,7 +29,7 @@ const UserBlock: React.FunctionComponent<Props> = (props: Props) => {
     ``;
   return (
     <div className="user-block">
-      {authorizationStatus === AuthorizationStatus.AUTH ? avatar : signIn}
+      {isAuth ? avatar : signIn}
     </div>
   );
 };
