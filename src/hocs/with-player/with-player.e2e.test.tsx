@@ -61,7 +61,6 @@ it(`Checks onFullscreenButtonClick callback `, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 0
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -74,8 +73,7 @@ it(`Checks onFullscreenButtonClick callback `, () => {
       <Provider store={store}>
         <VideoPlayerBigWrapped
           ref={React.createRef()}
-          id={1}
-          movie={movie}
+          activeFilm={movie}
           onExitButtonClick={noop}
           autoPlay={true}
         />
@@ -107,7 +105,6 @@ it(`Checks video play `, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 0
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -120,8 +117,7 @@ it(`Checks video play `, () => {
       <Provider store={store}>
         <VideoPlayerBigWrapped
           ref={React.createRef()}
-          id={1}
-          movie={movie}
+          activeMovie={movie}
           onExitButtonClick={noop}
           autoPlay={true}
         />

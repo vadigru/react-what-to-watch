@@ -8,7 +8,6 @@ import {
 const initialState = {
   genre: ALL_GENRES,
   showedMovies: MOVIES_DEFAULT_AMOUNT,
-  selectedMovieId: 1
 };
 
 const ActionType = {
@@ -22,10 +21,6 @@ const ActionCreator = {
   changeGenre: (genre = ALL_GENRES) => ({
     type: ActionType.CHANGE_GENRE,
     payload: genre,
-  }),
-  changeSelectedMovieId: (id = 1) => ({
-    type: ActionType. CHANGE_SELECTED_MOVIE_ID,
-    payload: id,
   }),
   showMoreMovies: () => ({
     type: ActionType.SHOW_MORE_MOVIES,
@@ -50,10 +45,6 @@ const reducer = (state = initialState, action) => {
     case ActionType.SHOW_DEFAULT_MOVIES:
       return extend(state, {
         showedMovies: MOVIES_DEFAULT_AMOUNT,
-      });
-    case ActionType.CHANGE_SELECTED_MOVIE_ID:
-      return extend(state, {
-        selectedMovieId: action.payload,
       });
   }
   return state;

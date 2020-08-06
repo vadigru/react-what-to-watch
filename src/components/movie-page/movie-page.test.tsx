@@ -130,7 +130,6 @@ it(`Should render MoviePage component`, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 8
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -144,8 +143,7 @@ it(`Should render MoviePage component`, () => {
         <Provider store={store}>
           <Router history={history}>
             <MoviePage
-              id={8}
-              movie={movie}
+              activeMovie={movie}
               movies={films}
               onMovieCardClick={noop}
               activeTab={`Overview`}

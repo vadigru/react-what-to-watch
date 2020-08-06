@@ -5,7 +5,7 @@ exports[`Should render VideoPlayer component 1`] = `
   className="player"
 >
   <video
-    autoPlay={false}
+    autoPlay={true}
     className="player__video"
     onClick={[Function]}
     onLoadedMetadata={[Function]}

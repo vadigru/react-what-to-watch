@@ -114,6 +114,7 @@ const initialState = {
   isReviewsLoading: false,
   isReviewPosting: false,
   isReviewSendingError: false,
+  isDataLoadingError: false,
 };
 
 const reviews = [
@@ -142,7 +143,7 @@ it(`Action creator should return correct action`, () => {
     type: ActionType.GET_PROMO,
     payload: movie,
   });
-  expect(ActionCreator.getReviews(reviews)).toEqual({
+  expect(ActionCreator.getMovieReviews(reviews)).toEqual({
     type: ActionType.GET_REVIEWS,
     payload: reviews,
   });
@@ -178,6 +179,10 @@ it(`Action creator should return correct action`, () => {
     type: ActionType.IS_REVIEW_SENDING_ERROR,
     payload: false,
   });
+  expect(ActionCreator.dataLoadingError(false)).toEqual({
+    type: ActionType.IS_DATA_LOADING_ERROR,
+    payload: false,
+  });
 });
 
 
@@ -189,8 +194,8 @@ it(`Should make a correct API call to /films`, () => {
   apiMock.onGet(`/films`).reply(200, []);
 
   return moviesLoader(dispatch, () => {}, api).then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(3);
-    expect(dispatch).toHaveBeenNthCalledWith(2, {
+    expect(dispatch).toHaveBeenCalledTimes(5);
+    expect(dispatch).toHaveBeenNthCalledWith(3, {
       type: ActionType.GET_MOVIES,
       payload: []
     });
@@ -208,7 +213,7 @@ it(`Should make a incorrect API call to /films`, () => {
     expect(dispatch).toHaveBeenCalledTimes(0);
   })
   .catch(() => {
-    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenCalledTimes(4);
   }
   );
 });
@@ -221,8 +226,8 @@ it(`Should make a correct API call to /films/promo`, () => {
   apiMock.onGet(`/films/promo`).reply(200, {});
 
   return movieLoader(dispatch, () => {}, api).then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(3);
-    expect(dispatch).toHaveBeenNthCalledWith(2, {
+    expect(dispatch).toHaveBeenCalledTimes(5);
+    expect(dispatch).toHaveBeenNthCalledWith(3, {
       type: ActionType.GET_PROMO,
       payload: rebuildMovieData({})
     });
@@ -240,7 +245,7 @@ it(`Should make a incorrect API call to /films/promo`, () => {
     expect(dispatch).toHaveBeenCalledTimes(0);
   })
   .catch(() => {
-    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenCalledTimes(4);
   }
   );
 });
@@ -248,13 +253,13 @@ it(`Should make a incorrect API call to /films/promo`, () => {
 it(`Should make a correct API call to /comments/:movieId`, () => {
   const apiMock = new MockAdapter(api);
   const dispatch = jest.fn();
-  const reviewsLoader = Operation.getReviews(1);
+  const reviewsLoader = Operation.getMovieReviews(1);
 
   apiMock.onGet(`/comments/1`).reply(200, []);
 
   return reviewsLoader(dispatch, () => {}, api).then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(2);
-    expect(dispatch).toHaveBeenNthCalledWith(1, {
+    expect(dispatch).toHaveBeenCalledTimes(3);
+    expect(dispatch).toHaveBeenNthCalledWith(2, {
       type: ActionType.GET_REVIEWS,
       payload: []
     });
@@ -264,7 +269,7 @@ it(`Should make a correct API call to /comments/:movieId`, () => {
 it(`Should make an incorrect API call to /comments/:movieId`, () => {
   const apiMock = new MockAdapter(api);
   const dispatch = jest.fn();
-  const reviewsLoader = Operation.getReviews(1);
+  const reviewsLoader = Operation.getMovieReviews(1);
 
   apiMock.onGet(`comments/1`).reply(404, []);
 
@@ -272,7 +277,7 @@ it(`Should make an incorrect API call to /comments/:movieId`, () => {
     expect(dispatch).toHaveBeenCalledTimes(0);
   })
   .catch(() => {
-    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledTimes(2);
   }
   );
 });

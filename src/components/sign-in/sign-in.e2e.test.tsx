@@ -40,7 +40,6 @@ it(`Should submit a form`, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 0
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,

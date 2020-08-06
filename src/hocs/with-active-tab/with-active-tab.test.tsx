@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
+import {Router} from "react-router-dom";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
 
@@ -12,7 +13,7 @@ import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
 import Namespace from "../../reducer/namespace";
 import {Movie} from "../../prop-types/types";
 import {noop} from "../../utils/common";
-
+import history from "../../history";
 
 const mockStore = configureStore([]);
 
@@ -117,7 +118,7 @@ const movie: Movie = {
 
 const MockComponentWrapped = withActiveTab(MoviePage);
 
-it(`render withPlayer`, () => {
+it(`render withActiveTAb`, () => {
 
   const store = mockStore({
     [Namespace.DATA]: {
@@ -133,7 +134,6 @@ it(`render withPlayer`, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 0
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -145,12 +145,15 @@ it(`render withPlayer`, () => {
 
   const tree = renderer.create(
       <Provider store={store}>
-        <MockComponentWrapped
-          id={2}
-          movie={movie}
-          movies={films}
-          onMovieCardClick={noop}
-        />
+        <Router history={history}>
+          <MockComponentWrapped
+            id={2}
+            activeMovie={movie}
+            movies={films}
+            onMovieCardClick={noop}
+            getMovieReviews={noop}
+          />
+        </Router>
       </Provider>
       , {
         createNodeMock: () => {

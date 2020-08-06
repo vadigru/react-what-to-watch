@@ -4,18 +4,17 @@ import {Provider} from "react-redux";
 import {Router} from "react-router-dom";
 import configureStore from "redux-mock-store";
 
-import SignIn from "./sign-in";
+import MovieError from "./movie-error";
 
 import {AuthorizationStatus} from "../../reducer/user/user";
 import Namespace from "../../reducer/namespace";
 
 import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT} from "../../const";
 import history from "../../history";
-import {noop} from "../../utils/common";
 
 const mockStore = configureStore([]);
 
-it(`Should render SignIn component`, () => {
+it(`Should render Header component`, () => {
   const store = mockStore({
     [Namespace.DATA]: {
       films: [],
@@ -35,7 +34,6 @@ it(`Should render SignIn component`, () => {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
       isValidAuthorization: true,
       avatarUrl: ``,
-      isSignIn: false,
     },
   });
 
@@ -43,10 +41,7 @@ it(`Should render SignIn component`, () => {
     .create(
         <Provider store={store}>
           <Router history={history}>
-            <SignIn
-              isValid={true}
-              onSubmit={noop}
-            />
+            <MovieError />
           </Router>
         </Provider>
     )

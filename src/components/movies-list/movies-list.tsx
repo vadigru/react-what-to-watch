@@ -7,7 +7,7 @@ import {Movie} from "../../prop-types/types";
 
 interface Props {
   movies: Movie[];
-  onMovieCardClick: (id: number) => void;
+  onMovieCardClick: ({}) => void;
 }
 
 const MovieCardWithVideo = withVideo(MovieCard);

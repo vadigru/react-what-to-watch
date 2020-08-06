@@ -11,6 +11,7 @@ interface Props {
 const MovieOverview: React.FunctionComponent<Props> = (props: Props) => {
   const {movie} = props;
   const {rating, votes, director, starring, description} = movie;
+
   return (
     <React.Fragment>
       <div className="movie-rating">

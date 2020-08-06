@@ -1,8 +1,7 @@
 import * as React from "react";
 import {connect} from "react-redux";
 
-import {getReviews} from "../../reducer/data/selectors";
-import {getLoadingReviewsStatus} from "../../reducer/data/selectors";
+import {getLoadingReviewsStatus, getReviews} from "../../reducer/data/selectors";
 
 import {formatReviewDate} from "../../utils/common";
 
@@ -69,4 +68,4 @@ const mapStateToProps = (state) => ({
 });
 
 export {MovieReviews};
-export default connect(mapStateToProps)(MovieReviews);
+export default connect(mapStateToProps, null)(MovieReviews);

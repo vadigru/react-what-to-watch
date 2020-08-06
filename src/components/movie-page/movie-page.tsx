@@ -6,43 +6,40 @@ import {AxiosPromise} from "axios";
 import Header from "../header/header";
 import Footer from "../footer/footer";
 import MovieDetails from "../movie-details/movie-details";
+import MovieError from "../../components/movie-error/movie-error";
 import MovieOverview from "../movie-overview/movie-overview";
 import MovieReviews from "../movie-reviews/movie-reviews";
 import MoviesSimilar from "../movies-similar/movies-similar";
 import Tabs from "../tabs/tabs";
 
 import {Operation as DataOperation} from "../../reducer/data/data";
-import {ActionCreator} from "../../reducer/state/state";
+import {getLoadingReviewsStatus} from "../../reducer/data/selectors";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 
 import {Movie} from "../../prop-types/types";
 import {Tab, AppRoute} from "../../const";
 import history from "../../history";
-import Loading from "../../loader";
 
 interface Props {
   id: number;
   activeTab: string;
   authorizationStatus: string;
+  activeMovie: Movie;
   movies: Movie[];
-  movie: Movie;
+  isReviewsLoading: boolean;
   onMovieCardClick: (id: number) => void;
   onTabClick: () => void;
-  changeSelectedMovieId: (id: number) => {
-    type: string;
-    payload: string;
-  };
   addMovieToFavorite: (id: number) => AxiosPromise;
   removeMovieFromFavorite: (id: number) => AxiosPromise;
 }
 
-const renderActiveTab = (activeTab, id, movie) => {
+const renderActiveTab = (activeTab, movie) => {
   switch (activeTab) {
     case Tab.DETAILS:
       return <MovieDetails movie={movie} />;
     case Tab.REVIEWS:
-      return <MovieReviews movieId={id} />;
+      return <MovieReviews />;
     default:
       return <MovieOverview movie={movie} />;
   }
@@ -53,15 +50,10 @@ class MoviePage extends React.PureComponent<Props> {
     super(props);
   }
 
-  componentDidMount() {
-    const {id, changeSelectedMovieId} = this.props;
-    changeSelectedMovieId(id);
-  }
-
   render() {
     const {
       id,
-      movie,
+      activeMovie,
       movies,
       onMovieCardClick,
       activeTab,
@@ -71,30 +63,20 @@ class MoviePage extends React.PureComponent<Props> {
       removeMovieFromFavorite
     } = this.props;
 
-    const {
-      title,
-      posterUrl,
-      backgroundUrl,
-      genre,
-      release,
-      backgroundColor,
-      isFavorite,
-      id: movieId
-    } = movie;
-
     const tabNames = Object.keys(Tab).map((key) => Tab[key]);
     const isAuth = authorizationStatus === AuthorizationStatus.AUTH;
 
     return (
-      movieId !== id ? <Loading /> :
+
+      activeMovie.id !== id ? <MovieError /> :
         <React.Fragment>
           <section
             className="movie-card movie-card--full"
-            style={{backgroundColor: `${backgroundColor}`}}
+            style={{backgroundColor: `${activeMovie.backgroundColor}`}}
           >
             <div className="movie-card__hero">
               <div className="movie-card__bg">
-                <img src={backgroundUrl} alt={title} />
+                <img src={activeMovie.backgroundUrl} alt={activeMovie.title} />
               </div>
 
               <h1 className="visually-hidden">WTW</h1>
@@ -103,17 +85,17 @@ class MoviePage extends React.PureComponent<Props> {
 
               <div className="movie-card__wrap">
                 <div className="movie-card__desc">
-                  <h2 className="movie-card__title">{title}</h2>
+                  <h2 className="movie-card__title">{activeMovie.title}</h2>
                   <p className="movie-card__meta">
-                    <span className="movie-card__genre">{genre}</span>
-                    <span className="movie-card__year">{release}</span>
+                    <span className="movie-card__genre">{activeMovie.genre}</span>
+                    <span className="movie-card__year">{activeMovie.release}</span>
                   </p>
 
                   <div className="movie-card__buttons">
                     <button className="btn btn--play movie-card__button" type="button"
                       onClick={() =>
                         history.push(
-                            `${AppRoute.MOVIE_PAGE}/${movieId}${AppRoute.PLAYER}`
+                            `${AppRoute.MOVIE_PAGE}/${activeMovie.id}${AppRoute.PLAYER}`
                         )
                       }
                     >
@@ -126,14 +108,14 @@ class MoviePage extends React.PureComponent<Props> {
                       className="btn btn--list movie-card__button"
                       type="button"
                       onClick={() => {
-                        if (isFavorite) {
-                          removeMovieFromFavorite(movieId);
+                        if (activeMovie.isFavorite) {
+                          removeMovieFromFavorite(activeMovie.id);
                         } else {
-                          addMovieToFavorite(movieId);
+                          addMovieToFavorite(activeMovie.id);
                         }
                       }}
                     >
-                      {isFavorite ? (
+                      {activeMovie.isFavorite ? (
                         <svg viewBox="0 0 18 14" width="18" height="14">
                           <use xlinkHref="#in-list"></use>
                         </svg>
@@ -145,19 +127,20 @@ class MoviePage extends React.PureComponent<Props> {
                       <span>My list</span>
                     </button>
                     {isAuth && (
-                      <Link to={`${AppRoute.MOVIE_PAGE}/${movie.id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">
+                      <Link to={`${AppRoute.MOVIE_PAGE}/${activeMovie.id}${AppRoute.ADD_REVIEW}`} className="btn movie-card__button">
                         Add review
                       </Link>
                     )}
                   </div>
                 </div>
               </div>
+
             </div>
 
             <div className="movie-card__wrap movie-card__translate-top">
               <div className="movie-card__info">
                 <div className="movie-card__poster movie-card__poster--big">
-                  <img src={posterUrl} alt={title} width="218" height="327" />
+                  <img src={activeMovie.posterUrl} alt={activeMovie.title} width="218" height="327" />
                 </div>
                 <div className="movie-card__desc">
                   <nav className="movie-nav movie-card__nav">
@@ -170,7 +153,7 @@ class MoviePage extends React.PureComponent<Props> {
                       />
                     </ul>
                   </nav>
-                  {renderActiveTab(activeTab, id, movie)}
+                  {renderActiveTab(activeTab, activeMovie)}
                 </div>
               </div>
             </div>
@@ -181,7 +164,7 @@ class MoviePage extends React.PureComponent<Props> {
               <h2 className="catalog__title">More like this</h2>
               <MoviesSimilar
                 movies={movies}
-                movie={movie}
+                movie={activeMovie}
                 onMovieCardClick={onMovieCardClick}
               />
             </section>
@@ -197,12 +180,10 @@ class MoviePage extends React.PureComponent<Props> {
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
+  isReviewsLoading: getLoadingReviewsStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeSelectedMovieId(id) {
-    dispatch(ActionCreator.changeSelectedMovieId(id));
-  },
   addMovieToFavorite(id) {
     dispatch(DataOperation.addMovieToFavorite(id));
   },

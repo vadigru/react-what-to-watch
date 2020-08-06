@@ -59,7 +59,6 @@ it(`Click by Play, Exit and FullScreen button calls callback`, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 0
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -72,18 +71,17 @@ it(`Click by Play, Exit and FullScreen button calls callback`, () => {
   const handleFullscreenButtonClick = jest.fn();
   const handleExitButtonClick = jest.fn();
 
-  const ref = React.createRef();
   const wrapper = mount(
       <Provider store={store}>
         <VideoPlayerBig
-          id={2}
-          movie={movie}
+          videoLink={movie.videoUrl}
+          videoBackground={movie.backgroundUrl}
+          videoTitle={movie.title}
           isPlaying={false}
           duration={100}
           progress={0}
-          videoRef={ref}
-          autoPlay={false}
-          src={movie.videoUrl}
+          autoPlay={true}
+          videoRef={React.createRef()}
           onPlayButtonClick={hadleBigPlayerPlay}
           onFullscreenButtonClick={handleFullscreenButtonClick}
           onExitButtonClick={handleExitButtonClick}

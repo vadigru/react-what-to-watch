@@ -26,6 +26,11 @@ const withActiveTab = (Component) => {
       this._handleTabClick = this._handleTabClick.bind(this);
     }
 
+    componentDidMount() {
+      const {getMovieReviews, activeMovie} = this.props;
+      getMovieReviews(activeMovie.id);
+    }
+
     _handleTabClick(tabName) {
       this.setState({
         activeTab: tabName

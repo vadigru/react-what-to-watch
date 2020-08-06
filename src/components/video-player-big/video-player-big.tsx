@@ -1,14 +1,11 @@
 import * as React from "react";
-import {connect} from "react-redux";
 
-import {ActionCreator} from "../../reducer/state/state";
-
-import {Movie} from "../../prop-types/types";
 import {formatTime} from "../../utils/common";
 
 interface Props {
-  id: number;
-  movie: Movie;
+  videoLink: string;
+  videoBackground: string;
+  videoTitle: string;
   isPlaying: boolean;
   duration: number;
   progress: number;
@@ -19,12 +16,6 @@ interface Props {
   onExitButtonClick: () => {};
   onLoadedMetadata: (evt: React.SyntheticEvent<EventTarget>) => void;
   onTimeUpdate: (evt: React.SyntheticEvent<EventTarget>) => void;
-  changeSelectedMovieId: (
-    id: string | number
-  ) => {
-    type: string;
-    payload: string;
-  };
 }
 
 class VideoPlayerBig extends React.PureComponent<Props> {
@@ -33,27 +24,22 @@ class VideoPlayerBig extends React.PureComponent<Props> {
     super(props);
   }
 
-  componentDidMount() {
-    const {id, changeSelectedMovieId} = this.props;
-    changeSelectedMovieId(id);
-  }
-
   render() {
     const {
-      movie,
-      isPlaying,
+      autoPlay,
+      videoRef,
       duration,
       progress,
-      videoRef,
-      autoPlay,
+      isPlaying,
+      videoLink,
+      videoBackground,
+      videoTitle,
       onPlayButtonClick,
       onFullscreenButtonClick,
       onExitButtonClick,
       onLoadedMetadata,
       onTimeUpdate,
     } = this.props;
-
-    const {videoUrl, backgroundUrl} = movie;
 
     const progressInPct = progress / duration * 100;
     const timeLeft = formatTime(duration - progress);
@@ -62,9 +48,9 @@ class VideoPlayerBig extends React.PureComponent<Props> {
       <div className="player">
         <video
           ref={videoRef}
-          src={videoUrl}
+          src={videoLink}
           className="player__video"
-          poster={backgroundUrl}
+          poster={videoBackground}
           width="100%"
           autoPlay={autoPlay}
           onClick={onPlayButtonClick}
@@ -116,7 +102,7 @@ class VideoPlayerBig extends React.PureComponent<Props> {
                 </React.Fragment>
               )}
             </button>
-            <div className="player__name">{movie.title}</div>
+            <div className="player__name">{videoTitle}</div>
 
             <button
               type="button"
@@ -135,11 +121,4 @@ class VideoPlayerBig extends React.PureComponent<Props> {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  changeSelectedMovieId(id) {
-    dispatch(ActionCreator.changeSelectedMovieId(id));
-  }
-});
-
-export {VideoPlayerBig};
-export default connect(null, mapDispatchToProps)(VideoPlayerBig);
+export default VideoPlayerBig;

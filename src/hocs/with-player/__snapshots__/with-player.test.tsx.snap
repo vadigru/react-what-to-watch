@@ -10,8 +10,6 @@ exports[`render withPlayer 1`] = `
     onClick={[Function]}
     onLoadedMetadata={[Function]}
     onTimeUpdate={[Function]}
-    poster="https://url.com"
-    src="https://url.com"
     width="100%"
   />
   <button
@@ -75,9 +73,7 @@ exports[`render withPlayer 1`] = `
       </button>
       <div
         className="player__name"
-      >
-        Movie Name
-      </div>
+      />
       <button
         className="player__full-screen"
         onClick={[Function]}

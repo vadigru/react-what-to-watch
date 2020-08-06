@@ -34,6 +34,10 @@ export const getReviewSendingError = (state) => {
   return state[Namespace.DATA].isReviewSendingError;
 };
 
+export const getDataLoadingError = (state) => {
+  return state[Namespace.DATA].isDataLoadingError;
+};
+
 export const filterMoviesByGenre = (state) => {
   const movies = state[Namespace.DATA].films;
   const genre = state[Namespace.STATE].genre;

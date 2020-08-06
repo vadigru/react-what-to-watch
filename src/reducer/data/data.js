@@ -11,6 +11,7 @@ const initialState = {
   isReviewsLoading: false,
   isReviewPosting: false,
   isReviewSendingError: false,
+  isDataLoadingError: false,
 };
 
 const ActionType = {
@@ -25,6 +26,7 @@ const ActionType = {
   IS_REVIEWS_LOADING: `IS_REVIEWS_LOADING`,
   IS_REVIEW_POSTING: `IS_REVIEW_POSTING`,
   IS_REVIEW_SENDING_ERROR: `IS_REVIEW_SENDING_ERROR`,
+  IS_DATA_LOADING_ERROR: `IS_DATA_LOADING_ERROR`,
 };
 
 const ActionCreator = {
@@ -36,7 +38,7 @@ const ActionCreator = {
     type: ActionType.GET_PROMO,
     payload: movie,
   }),
-  getReviews: (reviews) => ({
+  getMovieReviews: (reviews) => ({
     type: ActionType.GET_REVIEWS,
     payload: reviews,
   }),
@@ -71,38 +73,50 @@ const ActionCreator = {
   sendingReviewError: (isSendingError) => ({
     type: ActionType.IS_REVIEW_SENDING_ERROR,
     payload: isSendingError
+  }),
+  dataLoadingError: (isLoading) => ({
+    type: ActionType.IS_DATA_LOADING_ERROR,
+    payload: isLoading
   })
 };
 
 const Operation = {
   getMovies: () => (dispatch, getState, api) => {
     dispatch(ActionCreator.loadingFilms(true));
+    dispatch(ActionCreator.dataLoadingError(false));
     return api.get(`/films`)
       .then((response) => {
         dispatch(ActionCreator.getMovies(rebuildMoviesData(response.data)));
         dispatch(ActionCreator.loadingFilms(false));
+        dispatch(ActionCreator.dataLoadingError(false));
       })
       .catch((err) => {
         dispatch(ActionCreator.loadingFilms(false));
+        dispatch(ActionCreator.dataLoadingError(true));
+
         throw err;
       });
   },
   getPromo: () => (dispatch, getState, api) => {
     dispatch(ActionCreator.loadingPromo(true));
+    dispatch(ActionCreator.dataLoadingError(false));
     return api.get(`/films/promo`)
       .then((response) => {
         dispatch(ActionCreator.getPromo(rebuildMovieData(response.data)));
         dispatch(ActionCreator.loadingPromo(false));
+        dispatch(ActionCreator.dataLoadingError(false));
       })
       .catch((err) => {
         dispatch(ActionCreator.loadingPromo(false));
+        dispatch(ActionCreator.dataLoadingError(true));
         throw err;
       });
   },
-  getReviews: (id) => (dispatch, getState, api) => {
+  getMovieReviews: (id) => (dispatch, getState, api) => {
+    dispatch(ActionCreator.loadingReviews(true));
     return api.get(`/comments/${id}`)
       .then((response) => {
-        dispatch(ActionCreator.getReviews(response.data));
+        dispatch(ActionCreator.getMovieReviews(response.data));
         dispatch(ActionCreator.loadingReviews(false));
       })
       .catch((err) => {
@@ -118,7 +132,7 @@ const Operation = {
       comment: reviewData.comment
     })
     .then(() => {
-      dispatch(Operation.getReviews(reviewData.movieId));
+      dispatch(Operation.getMovieReviews(reviewData.movieId));
       dispatch(ActionCreator.sendingReviewError(false));
       dispatch(ActionCreator.postingReview(false));
       onSuccess();
@@ -202,6 +216,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.IS_REVIEW_SENDING_ERROR:
       return extend(state, {
         isReviewSendingError: action.payload,
+      });
+    case ActionType.IS_DATA_LOADING_ERROR:
+      return extend(state, {
+        isDataLoadingError: action.payload,
       });
   }
   return state;

@@ -4,6 +4,7 @@ import {AxiosPromise} from "axios";
 
 import Header from "../header/header";
 import Footer from "../footer/footer";
+import MovieError from "../../components/movie-error/movie-error";
 import MoviesList from "../movies-list/movies-list";
 import ShowMoreButton from "../show-more-button/show-more-button";
 import Tabs from "../tabs/tabs";
@@ -12,9 +13,7 @@ import {Operation} from "../../reducer/data/data";
 import {
   getMovies,
   getPromo,
-  getMoviesByGenre,
-  getLoadingFilmsStatus,
-  getLoadingPromoStatus
+  getMoviesByGenre
 } from "../../reducer/data/selectors";
 import {ActionCreator} from "../../reducer/state/state";
 import {getGenre, getShowedMovies} from "../../reducer/state/selectors";
@@ -25,6 +24,7 @@ import {ALL_GENRES, MOVIES_DEFAULT_AMOUNT, AppRoute} from "../../const";
 import history from "../../history";
 
 interface Props {
+  id: number;
   promo: Movie;
   movies: Movie[];
   showedMovies: number;
@@ -34,8 +34,7 @@ interface Props {
   changeGenre: (genre: string) => void;
   onMovieCardClick: (id: number) => void;
   filteredMovies: Movie[];
-  loadingFilmsStatus: boolean;
-  loadingPromoStatus: boolean;
+  isDataLoadingError: boolean;
   addMovieToFavorite: (id: number) => AxiosPromise;
   removeMovieFromFavorite: (id: number) => AxiosPromise;
 }
@@ -51,10 +50,9 @@ const Main: React.FunctionComponent<Props> = (props: Props) => {
     onMovieCardClick,
     changeGenre,
     showDefaultMovies,
-    loadingFilmsStatus,
-    loadingPromoStatus,
     addMovieToFavorite,
-    removeMovieFromFavorite
+    removeMovieFromFavorite,
+    isDataLoadingError
   } = props;
 
   const genresList = getMaxGenresCount(getGenresList(movies));
@@ -62,18 +60,17 @@ const Main: React.FunctionComponent<Props> = (props: Props) => {
         showedMovies < movies.length && genre === ALL_GENRES;
 
   return (
-    <React.Fragment>
-      <section className="movie-card">
-        <div className="movie-card__bg">
-          <img src={promo.backgroundUrl} alt={promo.title} />
-        </div>
+    isDataLoadingError ? <MovieError /> :
+      <React.Fragment>
+        <section className="movie-card">
+          <div className="movie-card__bg">
+            <img src={promo.backgroundUrl} alt={promo.title} />
+          </div>
 
-        <h1 className="visually-hidden">WTW</h1>
+          <h1 className="visually-hidden">WTW</h1>
 
-        <Header className={`movie-card__head`} />
+          <Header className={`movie-card__head`} />
 
-        {loadingPromoStatus ?
-          <div style={{textAlign: `center`}}>UNABLE TO FIND PROMO MOVIE DUE TO THE SERVER ERROR</div> :
           <div className="movie-card__wrap">
             <div className="movie-card__info">
               <div className="movie-card__poster">
@@ -128,14 +125,13 @@ const Main: React.FunctionComponent<Props> = (props: Props) => {
                 </div>
               </div>
             </div>
-          </div>}
-      </section>
+          </div>
+        </section>
 
-      <div className="page-content">
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
-          {loadingFilmsStatus ?
-            <div style={{textAlign: `center`}}>UNABLE TO FIND ANY MOVIES DUE TO THE SERVER ERROR</div> :
+        <div className="page-content">
+          <section className="catalog">
+            <h2 className="catalog__title visually-hidden">Catalog</h2>
+
             <React.Fragment>
               <Tabs
                 className={`catalog__genres-`}
@@ -150,17 +146,16 @@ const Main: React.FunctionComponent<Props> = (props: Props) => {
                 onMovieCardClick={onMovieCardClick}
               />
             </React.Fragment>
-          }
 
-          {isThereMoreMovies
-            ? <ShowMoreButton onShowMoreButtonClick={showMoreMovies}/>
-            : null}
-        </section>
+            {isThereMoreMovies
+              ? <ShowMoreButton onShowMoreButtonClick={showMoreMovies}/>
+              : null}
+          </section>
 
-        <Footer />
+          <Footer />
 
-      </div>
-    </React.Fragment>
+        </div>
+      </React.Fragment>
   );
 };
 
@@ -170,8 +165,6 @@ const mapStateToProps = (state) => ({
   movies: getMovies(state),
   showedMovies: getShowedMovies(state),
   filteredMovies: getMoviesByGenre(state),
-  loadingFilmsStatus: getLoadingFilmsStatus(state),
-  loadingPromoStatus: getLoadingPromoStatus(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

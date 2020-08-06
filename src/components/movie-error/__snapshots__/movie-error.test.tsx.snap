@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`render withActiveTAb 1`] = `
+exports[`Should render Header component 1`] = `
 <section
   className="movie-card movie-card--full"
 >

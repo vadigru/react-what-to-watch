@@ -15,9 +15,9 @@ import withActiveTab from "../../hocs/with-active-tab/with-active-tab";
 import withForm from "../../hocs/with-form/with-form";
 import withPlayer from "../../hocs/with-player/with-player";
 
-import {ActionCreator} from "../../reducer/state/state";
-import {getSelectedMovie} from "../../reducer/state/selectors";
-import {getLoadingFilmsStatus, getLoadingPromoStatus} from "../../reducer/data/selectors";
+import {Operation as DataOperation} from "../../reducer/data/data";
+
+import {getLoadingFilmsStatus, getLoadingPromoStatus, getDataLoadingError} from "../../reducer/data/selectors";
 import {Operation as UserOperation} from "../../reducer/user/user";
 import {getInvalidAuthorizationStatus} from "../../reducer/user/selectors";
 
@@ -28,17 +28,13 @@ import history from "../../history";
 
 interface Props {
   movies: Movie[];
-  movie: Movie;
   promo: Movie;
-  login: (authData: {email: string; password: string}) => AxiosPromise;
   isValidAuthorization: boolean;
   isFilmsLoading: boolean;
   isPromoLoading: boolean;
-  getReviews: (id: number) => AxiosPromise;
-  changeSelectedMovieId: (id: number) => {
-    type: string;
-    payload: string;
-  };
+  isDataLoadingError: boolean;
+  login: (authData: {email: string; password: string}) => AxiosPromise;
+  getMovieReviews: (id: number) => AxiosPromise;
 }
 
 const MoviePageWithActiveTab = withActiveTab(MoviePage);
@@ -53,11 +49,11 @@ class App extends React.PureComponent<Props> {
   }
 
   _handleMovieCardClick(id) {
-    const {getReviews, changeSelectedMovieId} = this.props;
+    const {getMovieReviews} = this.props;
+
     return () => {
-      getReviews(id);
-      changeSelectedMovieId(id);
-      history.push(`${AppRoute.MOVIE_PAGE}/${id}`);
+      getMovieReviews(id);
+      history.push(`${AppRoute.MOVIE_PAGE}/${id}`, {});
     };
   }
 
@@ -65,14 +61,15 @@ class App extends React.PureComponent<Props> {
     const {
       promo,
       movies,
-      movie,
       login,
       isValidAuthorization,
       isFilmsLoading,
       isPromoLoading,
+      isDataLoadingError,
+      getMovieReviews
     } = this.props;
 
-    if (isFilmsLoading || isPromoLoading) {
+    if (isPromoLoading || isFilmsLoading) {
       return <Loading />;
     }
 
@@ -87,6 +84,7 @@ class App extends React.PureComponent<Props> {
                 <Main
                   {...routeProps}
                   onMovieCardClick={this._handleMovieCardClick}
+                  isDataLoadingError={isDataLoadingError}
                 />
               );
             }}>
@@ -96,12 +94,16 @@ class App extends React.PureComponent<Props> {
             exact
             path={`${AppRoute.MOVIE_PAGE}/:id`}
             render = {(routeProps) => {
+              const activeMovieId = Number(routeProps.match.params.id);
+              const activeMovie = (movies.find((film) => film.id === activeMovieId));
+
               return (
                 <MoviePageWithActiveTab
                   {...routeProps}
                   id={Number(routeProps.match.params.id)}
-                  movie={movie || promo}
+                  getMovieReviews={getMovieReviews}
                   movies={movies}
+                  activeMovie={activeMovie || promo}
                   onMovieCardClick={this._handleMovieCardClick}
                 />
               );
@@ -112,11 +114,14 @@ class App extends React.PureComponent<Props> {
             exact
             path={`${AppRoute.MOVIE_PAGE}/:id${AppRoute.ADD_REVIEW}`}
             render={(routeProps) => {
+              const activeMovieId = Number(routeProps.match.params.id);
+              const activeMovie = (movies.find((film) => film.id === activeMovieId));
+
               return (
                 <AddReviewWithForm
                   {...routeProps}
                   id={Number(routeProps.match.params.id)}
-                  movie={movie}
+                  activeMovie={activeMovie}
                 />
               );
             }}>
@@ -125,14 +130,18 @@ class App extends React.PureComponent<Props> {
           <Route
             exact
             path={`${AppRoute.MOVIE_PAGE}/:id${AppRoute.PLAYER}`}
-            render={(routeProps) => (
-              <VideoPlayerBigWithPlayer
-                onExitButtonClick={routeProps.history.goBack}
-                movie={movie || promo}
+            render={(routeProps) => {
+              const activeMovieId = Number(routeProps.match.params.id);
+              const activeMovie = (movies.find((film) => film.id === activeMovieId));
+
+              return <VideoPlayerBigWithPlayer
                 autoPlay={false}
-                id={Number(routeProps.match.params.id) || promo.id}
-              />
-            )}>
+                videoLink={activeMovie.videoUrl}
+                videoBackground={activeMovie.backgroundUrl}
+                videoTitle={activeMovie.title}
+                onExitButtonClick={routeProps.history.goBack}
+              />;
+            }}>
           </Route>
 
           <PrivateRoute
@@ -170,18 +179,18 @@ class App extends React.PureComponent<Props> {
 const mapStateToProps = (state) => ({
   promo: state.DATA.promo,
   movies: state.DATA.films,
-  movie: getSelectedMovie(state),
   isValidAuthorization: getInvalidAuthorizationStatus(state),
   isFilmsLoading: getLoadingFilmsStatus(state),
-  isPromoLoading: getLoadingPromoStatus(state)
+  isPromoLoading: getLoadingPromoStatus(state),
+  isDataLoadingError: getDataLoadingError(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   login(authData) {
     return dispatch(UserOperation.login(authData));
   },
-  changeSelectedMovieId(id) {
-    dispatch(ActionCreator.changeSelectedMovieId(id));
+  getMovieReviews(id) {
+    dispatch(DataOperation.getMovieReviews(id));
   },
 });
 

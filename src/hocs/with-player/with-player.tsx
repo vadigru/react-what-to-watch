@@ -1,11 +1,7 @@
 import * as React from "react";
 import {Subtract} from "utility-types";
 
-import {Movie} from "../../prop-types/types";
-
 interface Props {
-  id: number;
-  movie: Movie;
   autoPlay: boolean;
   onExitButtonClick: () => void;
 }
@@ -110,13 +106,12 @@ const withPlayer = (Component) => {
     }
 
     render() {
-      const {onExitButtonClick, id} = this.props;
+      const {onExitButtonClick} = this.props;
       const {isPlaying, videoDuration, currentTime} = this.state;
 
       return (
         <Component
           {...this.props}
-          id={id}
           isPlaying={isPlaying}
           duration={videoDuration}
           progress={currentTime}

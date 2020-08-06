@@ -9,7 +9,7 @@ import {AuthorizationStatus} from "../../reducer/user/user";
 
 const mockStore = configureStore([]);
 
-const mock = [
+const review = [
   {
     id: 1,
     user: {
@@ -51,7 +51,7 @@ it(`Should render MovieDetails component`, () => {
         <Provider store={store}>
           <MovieReviews
             loadingReviews={true}
-            reviews={mock}
+            reviews={review}
           />
         </Provider>
     )

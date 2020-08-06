@@ -48,7 +48,6 @@ it(`Should render AddReview component`, () => {
     [Namespace.STATE]: {
       genre: ALL_GENRES,
       showedMovies: MOVIES_DEFAULT_AMOUNT,
-      selectedMovieId: 1
     },
     [Namespace.USER]: {
       authorizationStatus: AuthorizationStatus.NO_AUTH,
@@ -62,8 +61,7 @@ it(`Should render AddReview component`, () => {
         <Provider store={store}>
           <Router history={history}>
             <AddReview
-              id={1}
-              movie={movie}
+              avctiveMovie={movie}
               isReviewPosting={false}
               isReviewSendingError={false}
               avatarUrl={``}
