@@ -67,12 +67,12 @@ exports[`Should render MoviePage component 1`] = `
         style={
           Object {
             "lineHeight": "2",
-            "marginBottom": "150px",
+            "marginBottom": "50px",
             "textAlign": "center",
           }
         }
       >
-        Something went wrong, it seems that there is no such movie in our database :(
+        Something went wrong, it looks like we have some kind of unexplained server problem or God knows what else. Sorry and try again later.
       </h1>
     </div>
     <footer
