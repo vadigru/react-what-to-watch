@@ -73,9 +73,9 @@ class AddReview extends React.PureComponent<Props> {
     } = this.props;
 
     const isDisabled = isReviewPosting;
-    const emptyRating = rating === 0;
-    const emptyComment = (comment < ReviewLength.MIN || comment > ReviewLength.MAX);
-    const isInvalid = emptyRating || emptyComment;
+    const isRatingEmpty = rating === 0;
+    const isCommentEmpty = (comment < ReviewLength.MIN || comment > ReviewLength.MAX);
+    const isInvalid = isRatingEmpty || isCommentEmpty;
 
     return (
       !activeMovie ? <MovieError /> :
