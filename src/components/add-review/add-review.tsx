@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {AxiosPromise} from "axios";
 
 import Header from "../header/header";
-
+import MovieError from "../../components/movie-error/movie-error";
 import {Operation as DataOperation} from "../../reducer/data/data";
 import {getReviewPosting, getReviewSendingError} from "../../reducer/data/selectors";
 
@@ -47,9 +47,8 @@ class AddReview extends React.PureComponent<Props> {
   }
 
   _handleSubmit(evt, movie) {
-    const {onSubmit} = this.props;
+    const {onSubmit, activeMovie} = this.props;
     evt.preventDefault();
-
 
     onSubmit(
         {
@@ -58,7 +57,7 @@ class AddReview extends React.PureComponent<Props> {
           comment: this.commentRef.current.value
         },
         () => {
-          history.goBack();
+          history.push(`${AppRoute.MOVIE_PAGE}/${activeMovie.id}`);
         }
     );
   }
@@ -74,12 +73,17 @@ class AddReview extends React.PureComponent<Props> {
     } = this.props;
 
     const isDisabled = isReviewPosting;
-    const isInvalid = rating === 0 || (comment < ReviewLength.MIN || comment > ReviewLength.MAX);
+    const emptyRating = rating === 0;
+    const emptyComment = (comment < ReviewLength.MIN || comment > ReviewLength.MAX);
+    const isInvalid = emptyRating || emptyComment;
 
     return (
-      !activeMovie ? `ERROR` :
+      !activeMovie ? <MovieError /> :
         <React.Fragment>
-          <section className="movie-card movie-card--full">
+          <section
+            className="movie-card movie-card--full"
+            style={{backgroundColor: `${activeMovie.backgroundColor}`}}
+          >
             <div className="movie-card__header">
               <div className="movie-card__bg">
                 <img src={activeMovie.backgroundUrl} alt={activeMovie.title} />
@@ -121,13 +125,13 @@ class AddReview extends React.PureComponent<Props> {
               >
                 <div className="rating">
                   <div className="rating__stars">
-                    <input className="rating__input" id="star-1" type="radio" name="rating" value="1" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled}/>
+                    <input className="rating__input" id="star-1" type="radio" name="rating" value="1" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled} />
                     <label className="rating__label" htmlFor="star-1" >Rating 1</label>
 
-                    <input className="rating__input" id="star-2" type="radio" name="rating" value="2" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled}/>
+                    <input className="rating__input" id="star-2" type="radio" name="rating" value="2" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled} />
                     <label className="rating__label" htmlFor="star-2">Rating 2</label>
 
-                    <input className="rating__input" id="star-3" type="radio" name="rating" value="3" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled}/>
+                    <input className="rating__input" id="star-3" type="radio" name="rating" value="3" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled} defaultChecked/>
                     <label className="rating__label" htmlFor="star-3">Rating 3</label>
 
                     <input className="rating__input" id="star-4" type="radio" name="rating" value="4" onChange={(evt) => onFormDataChange(evt)} disabled={isDisabled} />
@@ -141,6 +145,7 @@ class AddReview extends React.PureComponent<Props> {
                 <div className="add-review__text">
                   <textarea
                     className="add-review__textarea"
+                    style={{backgroundColor: `${activeMovie.backgroundColor}`, opacity: `0.9`}}
                     name="review-text"
                     id="review-text"
                     placeholder="Review text"
@@ -150,20 +155,26 @@ class AddReview extends React.PureComponent<Props> {
                     maxLength={ReviewLength.MAX}
                     onChange={(evt) => onFormDataChange(evt)}
                   />
-                  <div className="add-review__submit">
+                  <div
+                    className="add-review__submit"
+                    style={{backgroundColor: `${activeMovie.backgroundColor}`, opacity: `0.9`}}
+                  >
                     <button
                       className="add-review__btn"
                       type="submit"
                       ref={this.sendReviewButtonRef}
                       disabled={isDisabled || isInvalid}
-                      style={{cursor: `${isDisabled || isInvalid ? `default` : `pointer`}`}}
+                      style={{
+                        cursor: `${isDisabled || isInvalid ? `default` : `pointer`}`,
+                        color: `${isDisabled || isInvalid ? `rgba(73, 84, 76, 0.5)` : `rgb(73, 84, 76)`}`
+                      }}
                     >Post</button>
                   </div>
 
                 </div>
               </form>
-              {isReviewSendingError ?
-                <div style={{color: `#212121`}}>We cannot post your comment right now due to the server problem. Please try again soon.</div> : ``}
+              {isReviewSendingError && !isInvalid ?
+                <div style={{color: `indianred`}}>Error while sending data. Please, try again later.</div> : ``}
             </div>
 
           </section>

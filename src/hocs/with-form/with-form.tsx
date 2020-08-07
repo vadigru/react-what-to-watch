@@ -21,8 +21,8 @@ const withForm = (Component) => {
       super(props);
 
       this.state = {
-        rating: 0,
-        comment: 0
+        rating: 3,
+        comment: 0,
       };
 
       this._handleFormDataChange = this._handleFormDataChange.bind(this);

@@ -1,3 +1,116 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should render AddReview component 1`] = `"ERROR"`;
+exports[`Should render AddReview component 1`] = `
+<section
+  className="movie-card movie-card--full"
+>
+  <div
+    className="movie-card__hero"
+  >
+    <div
+      className="movie-card__bg"
+    />
+    <h1
+      className="visually-hidden"
+    >
+      WTW
+    </h1>
+    <header
+      className="page-header movie-card__head"
+    >
+      <div
+        className="logo"
+      >
+        <a
+          className="logo__link "
+          href="/"
+          onClick={[Function]}
+        >
+          <span
+            className="logo__letter logo__letter--1"
+          >
+            W
+          </span>
+          <span
+            className="logo__letter logo__letter--2"
+          >
+            T
+          </span>
+          <span
+            className="logo__letter logo__letter--3"
+          >
+            W
+          </span>
+        </a>
+      </div>
+      <div
+        className="user-block"
+      >
+        <a
+          className="user-block__link"
+          href="/login"
+          onClick={[Function]}
+        >
+          Sign in
+        </a>
+      </div>
+    </header>
+    <div
+      style={
+        Object {
+          "margin": "0 auto",
+          "width": "50%",
+        }
+      }
+    >
+      <h1
+        style={
+          Object {
+            "lineHeight": "2",
+            "marginBottom": "50px",
+            "textAlign": "center",
+          }
+        }
+      >
+        Something went wrong, it looks like we have some kind of unexplained server problem or God knows what else. Sorry and try again later.
+      </h1>
+    </div>
+    <footer
+      className="page-footer"
+    >
+      <div
+        className="logo"
+      >
+        <a
+          className="logo__link logo__link--light"
+          href="/"
+          onClick={[Function]}
+        >
+          <span
+            className="logo__letter logo__letter--1"
+          >
+            W
+          </span>
+          <span
+            className="logo__letter logo__letter--2"
+          >
+            T
+          </span>
+          <span
+            className="logo__letter logo__letter--3"
+          >
+            W
+          </span>
+        </a>
+      </div>
+      <div
+        className="copyright"
+      >
+        <p>
+          © 2019 What to watch Ltd.
+        </p>
+      </div>
+    </footer>
+  </div>
+</section>
+`;
