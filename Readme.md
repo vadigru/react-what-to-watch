@@ -2,7 +2,7 @@
 
 * Студент: [Vadim Grunenko](https://up.htmlacademy.ru/react/4/user/507341).
 * Наставник: [Илья Шайна](https://htmlacademy.ru/profile/id1517699).
-* Онлайн версия: what-to-watch-kappa.vercel.app
+* Онлайн версия: https://what-to-watch-kappa.vercel.app
 ---
 
 <a href="https://htmlacademy.ru/intensive/react"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/react/logo-for-github.png"></a>
