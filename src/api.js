@@ -11,7 +11,7 @@ const Error = {
 
 export const createAPI = (onUnauthorized) => {
   const api = axios.create({
-    baseURL: `https://4.react.pages.academy/wtw`,
+    baseURL: `https://5.react.pages.academy/wtw`,
     timeout: TIMEOUT,
     withCredentials: true,
   });
