@@ -4,14 +4,14 @@ import history from "./history.js";
 
 
 const TIMEOUT = 5000;
-const LOGIN_URL = `https://5.react.pages.academy/wtw/login`;
+const LOGIN_URL = `https://6.react.pages.academy/wtw/login`;
 const Error = {
   UNAUTHORIZED: 401,
 };
 
 export const createAPI = (onUnauthorized) => {
   const api = axios.create({
-    baseURL: `https://5.react.pages.academy/wtw`,
+    baseURL: `https://6.react.pages.academy/wtw`,
     timeout: TIMEOUT,
     withCredentials: true,
   });
